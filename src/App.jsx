@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Products } from './components/products.jsx'
 import { Header } from './components/Header.jsx' 
+import { Footer } from './components/Footer.jsx'
 
 function App() {
   const[filter,setFilter] = useState(
@@ -16,6 +17,8 @@ function App() {
     <Header changeFilters={setFilter}/>
 
     <Products filter={filter} />
+
+    <Footer />
     </>
   )
 }
