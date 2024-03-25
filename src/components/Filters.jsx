@@ -1,16 +1,13 @@
-import { useState, useId, useContext } from 'react';
+import { useId, useContext } from 'react';
 import { FilterContext } from '../context/filters';
 import './Filters.css';
 
 export function Filters() {
-    const { setFilters } = useContext(FilterContext);
-    const [minPrice, setPrice] = useState(0);
+    const { filters, setFilters } = useContext(FilterContext);
     const minPriceFilterId = useId();
     const categoryFilterId = useId();
 
     const handleChangeMinPrice = (event) => {
-        setPrice(event.target.value);
-
         setFilters(prevState => ({
             ...prevState,
             minprice: event.target.value
@@ -33,10 +30,10 @@ export function Filters() {
                 min='0'
                 max='1000'
                 onChange={handleChangeMinPrice}/>
-               <span>${minPrice}</span>
+               <span>${filters.minprice}</span>
             </div>
             <div>
-                <label htmlFor={categoryFilterId}>Categoria</label>
+                <label htmlFor={categoryFilterId} id='category'>Categoria</label>
                 <select id={categoryFilterId} onChange={handleChangeCategory}>
                     <option value="all">Todos</option>
                     <option value="men's clothing">Ropa Hombre </option>

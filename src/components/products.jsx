@@ -2,10 +2,12 @@ import { useContext } from 'react';
 import { FilterContext } from '../context/filters';
 import { useFilters } from '../hooks/useFilters.js';
 import { AddToCartIcon } from './icons.jsx';
+import { useCart } from '../hooks/useCart.js';
 import './Products.css';
 
 export function Products() {
     const { filters } = useContext(FilterContext);
+    const { addToCart, cart } = useCart();
     const { filteredProducts, isLoading, error } = useFilters(filters);
 
     if (isLoading) {
@@ -32,7 +34,7 @@ export function Products() {
                             <strong>{product.title}</strong> - ${product.price}
                         </div>
                         <div>
-                            <button>
+                            <button onClick={()=>addToCart(product)}>
                                 <AddToCartIcon />
                             </button>
                         </div>

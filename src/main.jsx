@@ -1,10 +1,11 @@
 import { FiltersProvider } from './context/filters.jsx'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root');
+createRoot(root).render(
   <FiltersProvider>
     <App />
   </FiltersProvider>
-)
+);

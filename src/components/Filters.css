@@ -25,6 +25,11 @@
     border: none;
     transition: border-color 0.5s;
 }
+
+#category{
+    margin-left: 10%;
+}
+
 @media screen and (max-width: 619px) {
     .filters, nav ul {
         flex-direction: column;
