@@ -1,22 +1,46 @@
-.filters{
+.filters {
     display: flex;
     align-items: center;
-    justify-content:space-around;
+    justify-content: space-around;
     font-size: 16px;
     font-weight: 700;
 }
 
-.filters > div{
+.filters > div {
     display: flex;
     gap: 1rem;
 }
 
-@media screen and (max-width: 619px){
-    .filters{
+.filter-icon{
+    display: none;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background-color:darkslategrey;
+}
+
+.filter-icon:hover{
+    color: #646cff;
+    border: none;
+    transition: border-color 0.5s;
+}
+@media screen and (max-width: 619px) {
+    .filters, nav ul {
+        flex-direction: column;
+        display: none;
+        position: absolute;
+    }
+
+    .filters.open, nav ul.open {
+        display: flex;
+    }
+
+    .filters > div {
         flex-direction: column;
     }
-    .filters > div{
-        flex-direction: column;
+
+    .filter-icon{
+        display: block;
     }
-    
 }
