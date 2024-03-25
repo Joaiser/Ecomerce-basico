@@ -1,41 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { FilterContext } from '../context/filters';
+import { useFilters } from '../hooks/useFilters.js';
 import { AddToCartIcon } from './icons.jsx';
 import './Products.css';
 
-export function Products({ filter }) {
-    const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    throw new Error('Error al cargar los productos');
-                }
-            })
-            .then((data) => {
-                setProducts(data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setError(error.message);
-                setIsLoading(false);
-            });
-    }, []);
-
-    let filteredProducts = products;
-    if (filter) {
-      filteredProducts = products.filter(product => {
-        return (
-          product.price >= filter.minprice &&
-          (filter.category === 'all' || 
-          product.category === filter.category)
-        )
-      });
-    }
+export function Products() {
+    const { filters } = useContext(FilterContext);
+    const { filteredProducts, isLoading, error } = useFilters(filters);
 
     if (isLoading) {
         return <div>Cargando productos...</div>;
@@ -43,6 +14,12 @@ export function Products({ filter }) {
 
     if (error) {
         return <div>Error: {error}</div>;
+    }
+
+    if (filteredProducts.length === 0) {
+        return <div style={{padding: '2rem', textDecoration: 'underline',
+         textDecorationThickness: '2px', textUnderlineOffset: '.3rem'}}>
+        No hay productos que coincidan con los criterios de filtro.</div>;
     }
 
     return (

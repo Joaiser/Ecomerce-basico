@@ -1,10 +1,11 @@
-import {Filters} from './Filters.jsx';
+import { Filters } from './Filters.jsx';
+import { CartIcon } from './icons.jsx';
 
-export function Header ({changeFilters}){
+export function Header({ changeFilters }) {
     return (
-      <header>
-        <h1>Shopping Cart</h1>
-        <Filters onChange={changeFilters}/>
-      </header>
-    )
+        <header>
+            <h1>Tienda <CartIcon /></h1>
+            <Filters onChange={changeFilters} />
+        </header>
+    );
 }

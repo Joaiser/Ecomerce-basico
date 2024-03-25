@@ -1,22 +1,17 @@
-// App.jsx
-import { useState } from 'react'
+import { useContext } from 'react'
 import { Products } from './components/products.jsx'
 import { Header } from './components/Header.jsx' 
 import { Footer } from './components/Footer.jsx'
+import { FilterContext } from './context/filters.jsx'
 
 function App() {
-  const[filter,setFilter] = useState(
-    {
-      category: 'all',
-      minprice: 0
-    }
-  )
+  const { filters, setFilters } = useContext(FilterContext)
 
   return (
     <>
-    <Header changeFilters={setFilter}/>
+    <Header changeFilters={setFilters}/>
 
-    <Products filter={filter} />
+    <Products filter={filters} />
 
     <Footer />
     </>
