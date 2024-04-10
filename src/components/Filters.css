@@ -1,12 +1,12 @@
 .filters {
-    display: flex;
+    display: block;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     font-size: 16px;
     font-weight: 700;
 }
 
-.filters > div {
+.filters div {
     display: flex;
     gap: 1rem;
 }
@@ -24,10 +24,6 @@
     color: #646cff;
     border: none;
     transition: border-color 0.5s;
-}
-
-#category{
-    margin-left: 10%;
 }
 
 @media screen and (max-width: 619px) {

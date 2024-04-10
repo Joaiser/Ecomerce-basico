@@ -7,7 +7,7 @@ export function Cart () {
     return (
         <>
         <label htmlFor={cartCheckboxId} className="cart-button">
-            <CartIcon />
+            <CartIcon /> <p>Tu carrito</p>
         </label>
         <input type="checkbox" id={cartCheckboxId} hidden/>
 
