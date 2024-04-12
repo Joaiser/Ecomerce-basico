@@ -16,7 +16,7 @@ function App() {
 
     <Init/>
 
-    <Products/>
+    {/*<Products/>*/}
 
     <Footer />
     </CartProvider>
