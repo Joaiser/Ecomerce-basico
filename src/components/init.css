@@ -1,48 +1,120 @@
+/*estilos globales*/
+body {
+    overflow-x: hidden;
+}
+
+#presentation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* gap: 50px; */
+    flex-direction: column;
+    margin: 0 0;
+}
+
 #images-init{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     gap: 50px;
+    margin-block: 3%;
 }
 
 #section-init{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 50px;
-    flex-direction: column;
+    width: 100%;  
 }
 
 
-.carousel .slide .legend {
+#div-carusell {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 80px;
+    transition: transform 0.5s ease-in-out;
+    margin: 0 0;
+    margin-left: 2%; 
+}
+
+.slide {
+    flex: 0 0 auto;
+}
+
+.slide a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.slide a {
+    position: relative;
+    text-decoration: none;
+}
+
+.slide a::after {
+    content: '';
     position: absolute;
-    bottom: 0; /* Alinea la leyenda con la parte inferior de la imagen */
-    left: 50%; /* Centra horizontalmente la leyenda */
-    transform: translate(-50%, 50%); /* Ajusta la posición para que esté centrada exactamente */
-    width: 200px;
-    border-radius: 10px;
-    background: #000;
-    color: #fff;
-    padding: 10px;
-    font-size: 12px;
-    text-align: center;
-    align-items: center;
-    opacity: 0.25;
-}
-
-#div-carusel{
+    left: 0;
+    bottom: 0;
+    height: 1px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
 }
 
-#div-carusel > div > div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.slide a:hover::after {
+    transform: scaleX(1);
 }
+    
+
+#carusell-article {
+    position: relative; /* nuevo */
+}
+
+.carousel-button {
+    background-color: #161616;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #fff; /* color del texto */
+    position: absolute; /* nuevo */
+    top: 50%; /* nuevo */
+    transform: translateY(-50%); /* nuevo */
+}
+
+.carousel-button:hover {
+    background-color: #161616;
+}
+
+.carousel-button:first-child {
+    left: 0; /* nuevo */
+}
+
+.carousel-button:last-child {
+    right: 0; /* nuevo */
+}
+
+#buttons{
+    width: 100%;
+    position: absolute; /* nuevo */
+    top: -29px; /* nuevo */
+    left: 0; /* nuevo */
+    height: 100%; /* nuevo */
+}
+
+.prueba{
+    width: 140%;
+    height: auto;
+}
+
+@media screen and (max-width: 1405px) {
+    #div-carusell {
+        justify-content: flex-end;   
+    }
+}
+
+/*tengo que arreglar centrado de esta seccion
+Arreglar botones en pantallas muy grandes*/

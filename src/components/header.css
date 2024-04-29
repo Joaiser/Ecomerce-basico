@@ -12,12 +12,11 @@ nav{
     display: flex;
     color: #fff;
     align-items: center;
-    justify-content: space-around;
 }
 
 nav ul {
     display: flex;
-    gap: 20px;
+    gap: 76px;
 }
 
 nav a {
@@ -37,8 +36,6 @@ nav a:hover{
 header{
     background-color: var(--background-color);
     width: 100%;
-    justify-content: center;
-    align-items: center;
 
 }
 
@@ -46,15 +43,14 @@ header h1{
     color: var(--letter-color);
     text-align: left;
     height: auto;
-    width: 170px;
-    float: left;
+    width: auto;
+    margin:0;
 }
 
 header div{
     display: flex;
     align-items: center;
     gap: 40px;
-    justify-content: space-between;
 }
 
 #state-product{
@@ -73,11 +69,11 @@ header div{
 }
 
 .max-width{
-    max-width: 1440px;
+    max-width: 100%;
     margin:0;
     height: auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
