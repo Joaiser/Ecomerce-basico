@@ -95,7 +95,7 @@ body {
 }
 
 .carousel-button:last-child {
-    right: 0; /* nuevo */
+    right: 0px; /* nuevo */
 }
 
 #buttons{

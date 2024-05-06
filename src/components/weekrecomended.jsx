@@ -65,7 +65,7 @@ export function WeekRecomended() {
 
     return(
         <section>
-            <h1>Recomemdación de la semana</h1>
+            <h1>Recomendación de la semana</h1>
             <article id='carusell-article'>
                     <div ref={carouselRef} id='div-carusell'>
                         {data.map((item, i) => (
