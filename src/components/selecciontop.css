@@ -1,0 +1,152 @@
+:root{
+    font-size: 16px;
+}
+
+.container{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.aside-container{
+    width: 20%;
+    margin-left: 0;
+    z-index: 2;
+}
+
+.aside-container h2{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.aside-container p{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.aside-container a {
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.aside-container a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.5s ease-in-out;
+}
+
+.aside-container a:hover::after {
+    width: 100%;
+}
+
+.aside-container a:active {
+    color: rgb(238, 98, 11); 
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.content ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    gap: 60px;
+}
+
+.content ul li a {
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.content ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.8s ease-in-out;
+}
+
+.content ul li a:hover::after {
+    width: 100%;
+}
+
+.content ul li a.selected {
+    text-decoration: underline;
+}
+
+.content ul li a.selected::after {
+    width: 0;
+}
+
+.content ul li a.selected:hover {
+    text-decoration: underline;
+}
+
+#carousel-container-seleccion{
+   width: 80%;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: transform 0.5s ease-in-out;
+}
+
+#section-center-seleccion{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+#section-center-seleccion article{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#section-center-seleccion article img{
+    width: 194px;
+    height: 201px;
+}
+
+
+#section-center-seleccion article h2{
+    width:auto;
+    font-size: 1.1rem;
+}
+
+#section-center-seleccion article p{
+    width: auto;
+    font-size: 1rem;
+}
+
+#button-center{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.carousel-button-seleccion{
+    top: 40%;
+    position: relative;
+}

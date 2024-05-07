@@ -26,7 +26,7 @@ footer div ul{
     gap: 10px;
 }
 
-aside{
+#aside-footer{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -34,7 +34,7 @@ aside{
     gap: 10px;
 }
 
-aside div{
+#aside-footer div{
     display: flex;
     justify-content: space-around;
     align-items: center;

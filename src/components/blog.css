@@ -29,6 +29,20 @@ section{
     height: 400px;
 }
 
+
+#section-center article div h2{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+#section-center article div p{
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
 article{
     display: flex;
     align-items: center;
@@ -56,6 +70,3 @@ article{
     top: 34%;
     position: relative;    
 }
-
-
-/*arreglar los bootones y carrusell
