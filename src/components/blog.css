@@ -1,4 +1,4 @@
-section{
+#blog-section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,7 +11,8 @@ section{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    max-width: 1500px;
+    overflow: hidden;
 }
 
 #section-center {
@@ -24,26 +25,25 @@ section{
     transition: transform 0.5s ease; 
 }
 
-#section-center img{
+.carousel-article .article-img {
     width: 600px;
     height: 400px;
 }
 
-
-#section-center article div h2{
+.carousel-article .article-content .article-title {
     font-size: 1.2rem;
     font-weight: bold;
     margin: 0;
     padding: 0;
 }
 
-#section-center article div p{
+.carousel-article .article-content .article-text {
     font-size: 1rem;
     margin: 0;
     padding: 0;
 }
 
-article{
+.carousel-article {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -59,7 +59,7 @@ article{
     transform: translateY(-50%);
 }
 
-.carousel-button-blog{
+.carousel-button-blog {
     background-color: #161616;
     border: none;
     padding: 10px 20px;

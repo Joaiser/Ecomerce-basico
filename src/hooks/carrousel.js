@@ -1,14 +1,14 @@
 import { useState, useRef, useLayoutEffect } from 'react';
 
-export const useCarousel = (initialIndex = 0) => {
+export const useCarousel = (totalSlides, initialIndex = 0) => {
     const carouselRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
     const [showCarousel, setShowCarousel] = useState(false);
 
     const nextSlide = () => {
         setShowCarousel(true);
-        if (currentIndex < 3) {
-            setCurrentIndex(currentIndex + 2);
+        if (currentIndex < totalSlides - 1) {
+            setCurrentIndex(currentIndex + 1);
         } else {
             setCurrentIndex(0); // Vuelve al inicio cuando llega al final
         }
@@ -16,10 +16,10 @@ export const useCarousel = (initialIndex = 0) => {
     
     const prevSlide = () => {
         setShowCarousel(true);
-        if (currentIndex > 2) {
+        if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
         } else {
-            setCurrentIndex(0); 
+            setCurrentIndex(totalSlides - 1); // Vuelve al final cuando llega al inicio
         }
     }
 

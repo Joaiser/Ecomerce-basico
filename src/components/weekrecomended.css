@@ -1,9 +1,4 @@
-/*estilos globales*/
-body {
-    overflow-x: hidden;
-}
-
-#presentation{
+#week-recomended-container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,46 +9,40 @@ body {
     top: 8px;
 }
 
-#section-init-center{
-    max-width: 1580px;
+#week-recomended-container-center{
+    max-width: 1510px;
+    overflow: hidden;
 }
 
-#images-init{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 1440px;
-    gap: 50px;
-    margin-block: 3%;
-}
-
-#div-carusell{
+#div-carusell-week-recomended{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 100px;
     transition: transform 0.5s ease-in-out;
     margin: 0 0;
-    margin-left: 5%; 
 }
 
-.slide {
-    flex: 0 0 auto;
+.slide-week-recomended {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
 }
 
-.slide a{
+.slide-week-recomended a{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.slide a {
+.slide-week-recomended a {
     position: relative;
     text-decoration: none;
 }
 
-.slide a::after {
+.slide-week-recomended a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -65,12 +54,11 @@ body {
     transition: transform 0.3s ease-in-out;
 }
 
-.slide a:hover::after {
+.slide-week-recomended a:hover::after {
     transform: scaleX(1);
 }
-    
 
-#carusell-article {
+#carusell-article-week-recomended {
     position: relative; 
     overflow: hidden;
 }
@@ -106,13 +94,17 @@ body {
     height: 100%; /* nuevo */
 }
 
-.prueba{
-    width: 140%;
+.img-week-recomended{
+    width: 140px;
     height: auto;
+    border-radius: 10px;
 }
 
-
-/*tengo que arreglar centrado de esta seccion de carrusell
-Arreglar botones en pantallas muy grandes
-comprobar los comentarios
-*/
+.legend{
+    width: 150px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 19%;
+}

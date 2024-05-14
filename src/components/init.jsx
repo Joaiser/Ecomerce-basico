@@ -3,7 +3,6 @@ import './init.css';
 import { useCarousel } from '../hooks/carrousel';
 
 export function Init() {
-    const { carouselRef, nextSlide, prevSlide } = useCarousel();
 
     const data = [
         {
@@ -40,6 +39,8 @@ export function Init() {
         },
     ];
 
+    const { carouselRef, nextSlide, prevSlide } = useCarousel(data.length);
+
     return (
         <>
         <section id='presentation'>
@@ -47,7 +48,7 @@ export function Init() {
         <p>En nuestra tienda encontrarás una amplia variedad de productos informáticos, tanto nuevos como de segunda mano. ¡Esperamos que encuentres lo que buscas!</p>
         <p>Si tienes alguna pregunta, no dudes en contactar con nosotros.</p>
         
-        <div id='section-init'>
+        <div id='section-init-center'>
                 <article id='images-init'>
                     <div>
                         <a href=""><img src="" alt="Imagen de portatiles" /></a>

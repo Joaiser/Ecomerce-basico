@@ -1,41 +1,8 @@
-import { useState, useRef, useLayoutEffect } from 'react';
 import './blog.css';
 import { useCarousel as useCarouselFromHooks } from '../hooks/carrousel';
 
-export const useCarousel = (initialIndex = 0) => {
-    const carouselRef = useRef(null);
-    const [currentIndex, setCurrentIndex] = useState(initialIndex);
-
-    const nextSlide = () => {
-        if (currentIndex < 5) { 
-            setCurrentIndex(currentIndex + 1);
-        } else {
-            setCurrentIndex(0); // Vuelve al inicio cuando llega al final
-        }
-    }
-    
-    const prevSlide = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex(currentIndex - 1);
-        } else {
-            setCurrentIndex(5); // Vuelve al final cuando llega al inicio
-        }
-    }
-
-    useLayoutEffect(() => {
-        const updateCarousel = () => {
-            const slideWidth = carouselRef.current.children[0].getBoundingClientRect().width;
-            const transformValue = -currentIndex * slideWidth;
-            carouselRef.current.style.transform = `translateX(${transformValue}px)`;
-        }
-        updateCarousel();
-    }, [currentIndex]);
-
-    return { carouselRef, nextSlide, prevSlide };
-}
-
 export function Blog() {
-    const { carouselRef, nextSlide, prevSlide } = useCarouselFromHooks();
+    
     const articles = [
         { title: 'Diferencias entre pantallas OLED, AMOLED, QLED y NanoCell: ¿cuál es mejor?',
           content: 'En este artículo te explicamos las diferencias entre las tecnologías de pantallas OLED, AMOLED, QLED y NanoCell, y te ayudamos a elegir la mejor para ti.', 
@@ -63,29 +30,31 @@ export function Blog() {
           link: '#'}
     ];
 
+    const { carouselRef, nextSlide, prevSlide } = useCarouselFromHooks(articles.length);
+
     return (
-        <section>
-            <h1>Nuestro Blog</h1>
-            <div id='carousel-container'>
-                <div id='section-center' ref={carouselRef}>
-                    {articles.map((article, index) => (
-                        <article key={index}>
-                            <a href={article.link}>
-                                <img src={article.imgSrc} alt={article.title} />
-                                <div>
-                                    <h2>{article.title}</h2>
-                                    <p>{article.content}</p>
-                                    <a href={article.link}>Leer más</a>
-                                </div>
-                            </a>
-                        </article>
-                    ))}
-                </div>
-                <div id='buttons'>
-                    <button className="carousel-button-blog" onClick={prevSlide}>←</button>
-                    <button className="carousel-button-blog" onClick={nextSlide}>→</button>
-                </div>
-            </div>
-        </section>
+        <section id="blog-section">
+    <h1>Nuestro Blog</h1>
+    <div id='carousel-container'>
+        <div id='section-center' ref={carouselRef}>
+            {articles.map((article, index) => (
+                <article key={index} className="carousel-article">
+                    <a href={article.link} className="article-link">
+                        <img src={article.imgSrc} alt={article.title} className="article-img" />
+                        <div className="article-content">
+                            <h2 className="article-title">{article.title}</h2>
+                            <p className="article-text">{article.content}</p>
+                            <a href={article.link} className="read-more-link">Leer más</a>
+                        </div>
+                    </a>
+                </article>
+            ))}
+        </div>
+        <div id='buttons'>
+            <button className="carousel-button-blog" onClick={prevSlide}>←</button>
+            <button className="carousel-button-blog" onClick={nextSlide}>→</button>
+        </div>
+    </div>
+</section>
     );
 }

@@ -7,6 +7,13 @@
     width: 100%;
     flex-direction: row;
 }
+.container-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+}
 
 .aside-container{
     width: 20%;
