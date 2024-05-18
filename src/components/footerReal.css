@@ -7,9 +7,10 @@ footer{
 
 #footer-center{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     max-width: 1440px;
+    gap: 122px;
 }
 
 #footer-center div{

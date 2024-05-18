@@ -6,6 +6,7 @@
     display: flex;
     width: 100%;
     flex-direction: row;
+    margin-block: 5%;
 }
 .container-center{
     display: flex;
@@ -108,7 +109,7 @@
 }
 
 #carousel-container-seleccion{
-   width: 80%;
+   width: 100%;
   position: relative;
   z-index: 1;
   overflow: hidden;

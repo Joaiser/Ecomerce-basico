@@ -99,8 +99,8 @@ export function WeekRecomended() {
                         ))}
                     </div>
                     <div id='buttons'>
-                        <button className="carousel-button" onClick={prevSlide}>←</button>
-                        <button className="carousel-button" onClick={nextSlide}>→</button>
+                        <button className="carousel-button-week-recomended" onClick={prevSlide}>←</button>
+                        <button className="carousel-button-week-recomended" onClick={nextSlide}>→</button>
                     </div>
                 </article>
          </div>
