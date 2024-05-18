@@ -7,7 +7,9 @@ import { Cart } from './components/Cart.jsx'
 import { CartProvider } from './context/cart.jsx'
 import {Init} from './components/init.jsx'
 import { WeekRecomended } from './components/weekrecomended.jsx'
+import { SelectionTop } from './components/selecciontop.jsx'
 import { FooterReal } from './components/footerReal.jsx'
+import {Blog} from './components/blog.jsx'
 
 function App() {
   const { filters, setFilters } = useContext(FilterContext)
@@ -18,6 +20,8 @@ function App() {
       <Init/>
       {/*<Products/>*/}
       <WeekRecomended/>
+      <SelectionTop/>
+      <Blog/>
       <Footer />
       <FooterReal/> 
     </CartProvider>

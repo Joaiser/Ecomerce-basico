@@ -1,4 +1,4 @@
-import '../footerReal.css';
+import './footerReal.css';
 
 export function FooterReal() {
     return(
@@ -40,7 +40,7 @@ export function FooterReal() {
                         <li><a href="#">Politita de cookies</a></li>
                     </ul>
                 </div>
-                <aside>
+                <aside id='aside-footer'>
                 <div>
                     <img className="img-footer-aside" src="/static/img/visa-logo-visa-icon-free-free-vector.jpg" alt="imagen de pagar con visa" />
                     <img className="img-footer-aside" src="/static/img/img-mastercard.png" alt="Imagen de pagar con mastercard" />

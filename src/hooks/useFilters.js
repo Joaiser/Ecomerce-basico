@@ -37,5 +37,10 @@ export function useFilters(filter) {
       });
     }
 
+    // Añadir filtrado por categoría
+    if (filter && filter.category !== 'all') {
+        filteredProducts = filteredProducts.filter(product => product.category === filter.category);
+    }
+
     return { filteredProducts, isLoading, error };
 }

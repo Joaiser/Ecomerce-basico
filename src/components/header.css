@@ -34,6 +34,10 @@ nav a:hover{
 }
 
 header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     background-color: var(--background-color);
     width: 100%;
     position: sticky;
@@ -71,7 +75,7 @@ header div{
 }
 
 .max-width{
-    max-width: 100%;
+    max-width: 1440px;
     margin:0;
     height: auto;
     display: flex;

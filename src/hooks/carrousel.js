@@ -1,36 +1,77 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-export const useCarousel = (initialIndex = 0) => {
+export const useCarousel = (totalSlides, initialIndex = 0) => {
     const carouselRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
-    const [showCarousel, setShowCarousel] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
 
     const nextSlide = () => {
-        setShowCarousel(true);
-        if (currentIndex < 3) {
-            setCurrentIndex(currentIndex + 2);
-        } else {
-            setCurrentIndex(0); // Vuelve al inicio cuando llega al final
-        }
+        setCurrentIndex((currentIndex + 1) % totalSlides);
     }
-    
+
     const prevSlide = () => {
-        setShowCarousel(true);
-        if (currentIndex > 2) {
-            setCurrentIndex(currentIndex - 1);
-        } else {
-            setCurrentIndex(0); 
+        setCurrentIndex((currentIndex - 1 + totalSlides) % totalSlides);
+    }
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.clientX);
+    }
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    }
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        const x = e.clientX;
+        const walk = (x - startX);
+        if (Math.abs(walk) > 50) {
+            if (walk > 0) prevSlide();
+            else nextSlide();
+            setIsDragging(false);
         }
     }
 
-    useLayoutEffect(() => {
-        const updateCarousel = () => {
-            const slideWidth = carouselRef.current.children[0].getBoundingClientRect().width;
-            const transformValue = -currentIndex * slideWidth;
-            carouselRef.current.style.transform = `translateX(${transformValue}px)`;
+    const handleDragStart = (e) => {
+        e.preventDefault();
+    }
+
+    useEffect(() => {
+        const carouselElement = carouselRef.current;
+        if (!carouselElement) {
+            console.log('Carousel element not found');
+            return;
         }
-        updateCarousel();
-    }, [currentIndex]);
+        carouselElement.addEventListener('mousedown', handleMouseDown);
+        carouselElement.addEventListener('dragstart', handleDragStart);
+        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            carouselElement.removeEventListener('mousedown', handleMouseDown);
+            carouselElement.removeEventListener('dragstart', handleDragStart);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('mousemove', handleMouseMove);
+        }
+    }, [currentIndex, totalSlides]);
+
+    useEffect(() => {
+        const carouselElement = carouselRef.current;
+        if (!carouselElement) {
+            console.log('Carousel element not found');
+            return;
+        }
+        const totalWidth = Array.from(carouselElement.children).reduce((total, child) => {
+            const style = window.getComputedStyle(child);
+            const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+            return total + child.getBoundingClientRect().width + margin;
+        }, 0);
+        const averageSlideWidth = totalWidth / totalSlides;
+        const transformValue = -currentIndex * averageSlideWidth;
+        carouselElement.style.transform = `translateX(${transformValue}px)`;
+    }, [currentIndex, totalSlides]);
 
     return { carouselRef, nextSlide, prevSlide };
 }
