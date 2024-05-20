@@ -14,10 +14,6 @@ export function Init() {
             description: 'Reacondicionados'
         },
         {
-            src: '/static/img/concursos.webp',
-            description: 'concursos'
-        },
-        {
             src: '/static/img/blog.webp',
             description: 'Blog'
         },

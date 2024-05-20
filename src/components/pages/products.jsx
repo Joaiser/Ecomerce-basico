@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { FilterContext } from '../context/filters';
-import { useFilters } from '../hooks/useFilters.js';
-import { AddToCartIcon } from './icons.jsx';
-import { useCart } from '../hooks/useCart.js';
+import { FilterContext } from '../../context/filters.jsx';
+import { useFilters } from '../../hooks/useFilters.js';
+import { AddToCartIcon } from '../icons.jsx';
+import { useCart } from '../../hooks/useCart.js';
 import './Products.css';
 
 export function Products() {

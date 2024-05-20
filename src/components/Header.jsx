@@ -3,6 +3,7 @@ import { Filters } from './Filters.jsx';
 import { CartIcon } from './icons.jsx';
 import './header.css';
 import { Cart } from './Cart.jsx';
+import { Link } from 'react-router-dom';
 
 export function Header({ changeFilters }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,13 +45,12 @@ export function Header({ changeFilters }) {
                 
                 <nav>
                     <ul className={isMenuOpen ? 'open' : ''}>
-                        <li><a href="/">Inicio</a></li>
-                        <li><a href="/productos">Productos</a></li>
-                        <li><a href="/intercambios">Intercambios</a></li>
-                        <li><a href='Filters.jsx'>Filtrar Productos</a></li>
-                        <li><a href="/Foro">Foro</a></li>
-                        <li><a href="/nosotros">Nosotros</a></li>
-                        <li><a href="/contacto">Contacto</a></li>
+                        <li><Link to="/">Inicio</Link></li>
+                        <li><Link to="/productos">Productos</Link></li>
+                        <li><Link to="/intercambios">Intercambios</Link></li>
+                        <li><Link to="/foro">Foro</Link></li>
+                        <li><Link to="/nosotros">Nosotros</Link></li>
+                        <li><Link to="/contacto">Contacto</Link></li>
                     </ul>
                 </nav>
             </div>
