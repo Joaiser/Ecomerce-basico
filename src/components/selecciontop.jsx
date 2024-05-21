@@ -115,9 +115,9 @@ export function SelectionTop(){
         {
             link: '/product/13',
             image: '/static/img/imgpc/more-link.webp',
-            title: 'Servicios',
-            price: '800€',
-            category: 'Ordenadores'
+            title: '',
+            price: '',
+            category: ''
         }
     ];
     const { carouselRef, nextSlide, prevSlide } = useCarousel(productsToShow);
