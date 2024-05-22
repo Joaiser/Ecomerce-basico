@@ -129,62 +129,66 @@ export function SelectionTop(){
 
     return(
         <section className="container">
-        <div className='container-center'>
-            <aside className='aside-container'>
-                <h2>Seleccion Top</h2>
-                <p>Tus productos favoritos de tecnología con ofertas y descuentos increíbles.</p>
-                <a href="">Ver más</a>
-            </aside>
-            <article className="content">
-                <ul>
-                    <li>
-                        <a href="#" className={selectedCategory === 'Ordenadores' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Ordenadores', event)}>
-                            Ordenadores
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className={selectedCategory === 'Componentes' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Componentes', event)}>
-                            Componentes
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className={selectedCategory === 'Móviles' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Móviles', event)}>
-                            Móviles
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className={selectedCategory === 'Televisores' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Televisores', event)}>
-                            Televisores
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className={selectedCategory === 'Hogar tech' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Hogar tech', event)}>
-                            Hogar tech
-                        </a>
-                    </li>
-                </ul>
-                <div id='carousel-container-seleccion'>
-                    <div id='section-center-seleccion' ref={carouselRef}>
-                        {productsToShow.filter(product => product.category === selectedCategory || selectedCategory === 'Todos').map((product, index) => (
-                            <article key={index}>
-                                <a href={product.link}>
-                                    <img src={product.image} alt={product.title} />
-                                </a>
-                                <div>
-                                    <h2>{product.title}</h2>
-                                    <p>Precio: {product.price}</p>
-                                    <a href={product.link}>Leer más</a>
-                                </div>
-                            </article>
-                        ))}
+            <div className='container-center'>
+                <aside className='aside-container'>
+                    <h2>Seleccion Top</h2>
+                    <p>Tus productos favoritos de tecnología con ofertas y descuentos increíbles.</p>
+                    <a href="">Ver más</a>
+                </aside>
+                <article className="content">
+                    <ul>
+                        <li>
+                            <a href="#" className={selectedCategory === 'Ordenadores' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Ordenadores', event)}>
+                                Ordenadores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className={selectedCategory === 'Componentes' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Componentes', event)}>
+                                Componentes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className={selectedCategory === 'Móviles' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Móviles', event)}>
+                                Móviles
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className={selectedCategory === 'Televisores' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Televisores', event)}>
+                                Televisores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className={selectedCategory === 'Hogar tech' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Hogar tech', event)}>
+                                Hogar tech
+                            </a>
+                        </li>
+                    </ul>
+                    <div id='carousel-container-seleccion'>
+                        <div id='section-center-seleccion' ref={carouselRef}>
+                            {productsToShow.filter(product => product.category === selectedCategory || selectedCategory === 'Todos').map((product, index) => (
+                                <article key={index}>
+                                    <a href={product.link}>
+                                        <img src={product.image} alt={product.title} />
+                                    </a>
+                                    {product.title && product.price ? (
+                                        <div>
+                                            <h2>{product.title}</h2>
+                                            <p>Precio: {product.price}</p>
+                                            <a href={product.link}>Leer más</a>
+                                        </div>
+                                    ) : (
+                                        <div style={{height: 'auto', marginBottom:'120px'}}></div>
+                                    )}
+                                </article>
+                            ))}
+                        </div>
+                        <div id='button-center'>
+                            <button className="carousel-button-seleccion" onClick={prevSlide}>←</button>
+                            <button className="carousel-button-seleccion" onClick={nextSlide}>→</button>
+                        </div>
                     </div>
-                    <div id='button-center'>
-                        <button className="carousel-button-seleccion" onClick={prevSlide}>←</button>
-                        <button className="carousel-button-seleccion" onClick={nextSlide}>→</button>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
+                </article>
+            </div>
+        </section>
     )   
 }

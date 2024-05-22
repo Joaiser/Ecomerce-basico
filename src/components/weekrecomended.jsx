@@ -90,7 +90,7 @@ export function WeekRecomended() {
                                 <a href="#"> {/*arreglar el a href*/}
                                     <img className="img-week-recomended" src={item.src} alt={`Slide ${i + 1}`} />
                                     <p className="legend">{item.description}</p>
-                                    <span className='price'>{item.precio}</span>
+                                    <span className='price'>Precio: {item.precio}</span>
                                     <span className='stars'>{item.estrellas}</span>
                                     <span className='shipping'>{item.envio}</span>
                                     <span className='shipping-date'>{item.fechaEnvio}</span>

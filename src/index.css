@@ -54,6 +54,10 @@ a {
   position: relative;
 }
 
+a:hover{
+  color: #646cff;
+}
+
 a::after {
   content: '';
   position: absolute;

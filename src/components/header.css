@@ -88,6 +88,11 @@ header div{
     transition: ease-in-out .3s;
 }
 
+#account a {
+    color: #fff;
+    text-decoration: none;
+}
+
 #account:hover {
     transform: scale(1.1);
 }
