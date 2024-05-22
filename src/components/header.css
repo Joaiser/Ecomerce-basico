@@ -1,7 +1,7 @@
 :root{
     --font-size: 16px;
     --letter-color: black;
-    --background-color:rgba(255, 255, 255, 0.693);
+    --background-color:aliceblue;
 }
 
 #root{
@@ -81,6 +81,19 @@ header div{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#account {
+    background-color: #09f;
+    transition: ease-in-out .3s;
+}
+
+#account:hover {
+    transform: scale(1.1);
+}
+
+#account a:hover::after {
+    content: none;
 }
 
 @media screen and (max-width: 768px) {

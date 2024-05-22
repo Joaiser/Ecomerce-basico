@@ -1,7 +1,4 @@
 /*estilos globales*/
-body {
-    overflow-x: hidden;
-}
 
 #presentation{
     display: flex;
@@ -12,17 +9,18 @@ body {
     margin: 0 0;
     position: relative;
     top: 8px;
+    background-color: white;
 }
 
 #section-init-center{
-    max-width: 1500px;
+    max-width: 93.75rem;
 }
 
 #images-init{
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 1500px;
+    max-width: 93.75rem;
     gap: 50px;
     margin-block: 3%;
 }

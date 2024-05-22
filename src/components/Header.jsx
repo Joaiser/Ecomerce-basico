@@ -35,7 +35,7 @@ export function Header({ changeFilters }) {
                         <input type="text" placeholder='Introduzca el nombre del producto que desea buscar' id='search'/>
                     </div>
                     <div>
-                        <button><a href="">Mi Cuenta</a></button>
+                        <button id='account'><a href="">Mi Cuenta</a></button>
                         <Cart />
                     </div>
                 </div>
