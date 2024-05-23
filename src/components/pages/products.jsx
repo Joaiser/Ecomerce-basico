@@ -5,6 +5,7 @@ import { AddToCartIcon } from '../icons.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import './Products.css';
 
+
 export function Products() {
     const { filters } = useContext(FilterContext);
     const { addToCart, cart } = useCart();
@@ -23,6 +24,8 @@ export function Products() {
          textDecorationThickness: '2px', textUnderlineOffset: '.3rem'}}>
         No hay productos que coincidan con los criterios de filtro.</div>;
     }
+
+    
 
     return (
         <main className='products'>

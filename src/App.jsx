@@ -16,6 +16,9 @@ import { Intercambios } from './components/pages/exchanges.jsx';
 import { Foro } from './components/pages/forum.jsx';
 import { Contact } from './components/pages/contact.jsx';
 import { AboutUs } from './components/pages/aboutUs.jsx';
+import { ScreensBlog } from './components/blogPages/screensBlog.jsx'; 
+import { Placabase } from './components/blogPages/placabase.jsx';
+import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 
 function App() {
   const { filters, setFilters } = useContext(FilterContext);
@@ -25,19 +28,22 @@ function App() {
       <Router>
         <Header changeFilters={setFilters} />
         <Routes>
-          <Route path="/contacto" element={<Contact />} />
-          <Route path="/nosotros" element={<AboutUs />} />
-          <Route path="/foro" element={<Foro />} />
-          <Route path="/intercambios" element={<Intercambios />} />
-          <Route path="/productos" element={<Products />} />
-          <Route path="/" element={
-            <>
-              <Init />
-              <SelectionTop />
-              <WeekRecomended />
-              <Blog />
-            </>
-          } />
+         <Route path="/contacto" element={<Contact />} />
+         <Route path="/nosotros" element={<AboutUs />} />
+         <Route path="/foro" element={<Foro />} />
+         <Route path="/intercambios" element={<Intercambios />} />
+         <Route path="/screens" element={<ScreensBlog />} />
+         <Route path="/placa" element={<Placabase />} />
+          <Route path="/tipoteclado" element={<Tipoteclado />} />
+         <Route path="/productos" element={<Products />} />
+         <Route path="/" element={
+           <>
+             <Init />
+             <SelectionTop />
+             <WeekRecomended />
+             <Blog />
+           </>
+         } />
         </Routes>
         <Footer />
         <FooterReal />
