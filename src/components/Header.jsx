@@ -22,7 +22,7 @@ export function Header({ changeFilters }) {
         <header>
             <div className='max-width'>
                 <div>
-                    <h1>PC Aitor <CartIcon /></h1>
+                <h1><Link to="/">PC Aitor <CartIcon /></Link></h1>
                     <div id='select-position'>
                         <select name="state-product" id="state-product">
                         <option value="all-categories">Todas las categorías</option>

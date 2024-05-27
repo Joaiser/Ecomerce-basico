@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useContext,useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/Header.jsx';
 import { Footer } from './components/Footer.jsx';
 import { FilterContext } from './context/filters.jsx';
@@ -19,6 +19,17 @@ import { AboutUs } from './components/pages/aboutUs.jsx';
 import { ScreensBlog } from './components/blogPages/screensBlog.jsx'; 
 import { Placabase } from './components/blogPages/placabase.jsx';
 import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
+import { ErgonomicChairs } from './components/blogPages/sillasErgonomicas.jsx';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const { filters, setFilters } = useContext(FilterContext);
@@ -26,6 +37,7 @@ function App() {
   return (
     <CartProvider>
       <Router>
+        <ScrollToTop />
         <Header changeFilters={setFilters} />
         <Routes>
          <Route path="/contacto" element={<Contact />} />
@@ -34,8 +46,9 @@ function App() {
          <Route path="/intercambios" element={<Intercambios />} />
          <Route path="/screens" element={<ScreensBlog />} />
          <Route path="/placa" element={<Placabase />} />
-          <Route path="/tipoteclado" element={<Tipoteclado />} />
+         <Route path="/tipoteclado" element={<Tipoteclado />} />
          <Route path="/productos" element={<Products />} />
+         <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
          <Route path="/" element={
            <>
              <Init />

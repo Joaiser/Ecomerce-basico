@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import './selecciontop.css';
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect,useEffect } from 'react';
 
 
 export const useCarousel = (productsToShow, initialIndex = 0) => {
@@ -40,86 +41,28 @@ export const useCarousel = (productsToShow, initialIndex = 0) => {
 
 
 export function SelectionTop(){
-    const [selectedCategory, setSelectedCategory] = useState('Todos');
-    const productsToShow = [
-        {
-            link: '/product/1',
-            image: '/static/img/imgpc/1710-alurin-go-start-intel-pentium-n4020-8gb-256gb-ssd-156-comprar.webp',
-            title: 'Ofertas especiales',
-            price: '100€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/2',
-            image: '/static/img/imgpc/198-lenovo-ideapad-1-15amn7-amd-ryzen-5-7520u-16-gb-512gb-ssd-156.webp',
-            title: 'Reacondicionados',
-            price: '200€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/3',
-            image: '/static/img/imgpc/1703-msi-katana-15-b13vfk-1854xes-intel-core-i7-13700h-16gb-1tb-ssd-rtx-4060-156-fe60fb00-dc49-4c2d-be95-adde65888774.webp',
-            title: 'Concursos',
-            price: '300€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/4',
-            image: '/static/img/imgpc/153-msi-thin-gf63-12uc-688xes-intel-core-i7-12650h-16gb-1tb-ssd-rtx-3050-156.webp',
-            title: 'Blog',
-            price: '400€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/5',
-            image: '/static/img/imgpc/1389-asus-vivobook-15-f1504va-nj766w-intel-core-i7-1355u-16gb-1tb-ssd-156.webp',
-            title: 'Novedades',
-            price: '500€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/6',
-            image: '/static/img/imgpc/1537-acer-aspire-3-a315-44p-amd-ryzen-7-5700u-16gb-512gb-ssd-156.webp',
-            title: 'Pccom',
-            price: '600€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/9',
-            image: '/static/img/imgpc/1686-lenovo-ideapad-slim-3-15iah8-intel-core-i5-12450h-16gb-1tb-ssd-156.webp',
-            title: 'Servicios',
-            price: '800€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/10',
-            image: '/static/img/imgpc/1703-msi-katana-15-b13vfk-1854xes-intel-core-i7-13700h-16gb-1tb-ssd-rtx-4060-156-fe60fb00-dc49-4c2d-be95-adde65888774.webp',
-            title: 'Servicios',
-            price: '800€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/11',
-            image: '/static/img/imgpc/153-msi-thin-gf63-12uc-688xes-intel-core-i7-12650h-16gb-1tb-ssd-rtx-3050-156.webp',
-            title: 'Servicios',
-            price: '800€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/12',
-            image: '/static/img/imgpc/198-lenovo-ideapad-1-15amn7-amd-ryzen-5-7520u-16-gb-512gb-ssd-156.webp',
-            title: 'Servicios',
-            price: '800€',
-            category: 'Ordenadores'
-        },
-        {
-            link: '/product/13',
-            image: '/static/img/imgpc/more-link.webp',
-            title: '',
-            price: '',
-            category: ''
-        }
-    ];
+    const [selectedCategory, setSelectedCategory] = useState('Ordenadores');
+    const [productsToShow, setProductsToShow] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/products')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const productsWithImageUrls = data.map(product => {
+                    const asciiCodes = product.imagen_producto.data;
+                    const imageUrl = asciiCodes.map(code => String.fromCharCode(code)).join('');
+                    return { ...product, image: imageUrl };
+                });
+                console.log(productsWithImageUrls);
+                setProductsToShow(productsWithImageUrls);
+            })
+            .catch(error => console.error('Error:', error));
+    }, []);
     const { carouselRef, nextSlide, prevSlide } = useCarousel(productsToShow);
 
     function handleCategoryClick(category, event) {
@@ -133,7 +76,7 @@ export function SelectionTop(){
                 <aside className='aside-container'>
                     <h2>Seleccion Top</h2>
                     <p>Tus productos favoritos de tecnología con ofertas y descuentos increíbles.</p>
-                    <a href="">Ver más</a>
+                    <Link to={"/productos"}>Ver más</Link>
                 </aside>
                 <article className="content">
                     <ul>
@@ -165,22 +108,22 @@ export function SelectionTop(){
                     </ul>
                     <div id='carousel-container-seleccion'>
                         <div id='section-center-seleccion' ref={carouselRef}>
-                            {productsToShow.filter(product => product.category === selectedCategory || selectedCategory === 'Todos').map((product, index) => (
-                                <article key={index}>
-                                    <a href={product.link}>
-                                        <img src={product.image} alt={product.title} />
-                                    </a>
-                                    {product.title && product.price ? (
-                                        <div>
-                                            <h2>{product.title}</h2>
-                                            <p>Precio: {product.price}</p>
-                                            <a href={product.link}>Leer más</a>
-                                        </div>
-                                    ) : (
-                                        <div style={{height: 'auto', marginBottom:'120px'}}></div>
-                                    )}
-                                </article>
-                            ))}
+                        {productsToShow.filter(product => product.Genero === selectedCategory || selectedCategory === 'Todos').map((product, index, self) => (
+    <article key={index}>
+        <a href={product.link}>
+            <img src={product.image} alt={product.Nombre || ''} />
+        </a>
+        {self.length - 1 === index || (product.Nombre && product.precio) ? (
+            <div>
+                <h2>{product.Nombre || ''}</h2>
+                <p>{product.precio ? `Precio: ${product.precio}€` : ''}</p>
+                <a href={product.link}>Leer más</a>
+            </div>
+        ) : (
+            <div style={{height: 'auto', marginBottom:'120px'}}></div>
+        )}
+    </article>
+))}
                         </div>
                         <div id='button-center'>
                             <button className="carousel-button-seleccion" onClick={prevSlide}>←</button>

@@ -30,7 +30,7 @@ export function Tipoteclado() {
                    la tecnología de los switch. Aunque históricamente siempre ha sido Cherry MX la unica que lo hacía,
                     a esta le han salido varios competidores en los últimos tiempo, como OUTEMU, Kailh o Razer.
                 </p>
-                <img src="static/img/imgblog/cherrymx.webp" alt="imagen teclado" />
+                <img src="static/img/imgblog/cherrymx.webp" alt="imagen teclado" loading='lazy'/>
                 <div>
                     <h2>
                     Características básicas de los teclados mecánicos
@@ -74,7 +74,7 @@ export function Tipoteclado() {
                         <p><strong>Clicky:</strong> tienen un punto de actuación y un sonido al pulsar la tecla.</p>
                     </li>
                 </ol>
-                <img src="static/img/imgblog/cherrybrown.webp" alt="teclado" />
+                <img src="static/img/imgblog/cherrybrown.webp" alt="teclado" loading='lazy'/>
                 <div>
                     <h2>
                     Switches Cherry Mx
@@ -83,7 +83,7 @@ export function Tipoteclado() {
                 <h3>
                 Teclados mecánicos silenciosos
                 </h3>
-                <img src="static/img/imgblog/switchnewskill.webp" alt="" />
+                <img src="static/img/imgblog/switchnewskill.webp" alt="imagen de un swtich" loading='lazy'/>
                 <ul>
                     <li>
                         <h4>

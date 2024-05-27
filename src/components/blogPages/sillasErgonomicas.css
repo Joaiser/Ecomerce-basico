@@ -1,0 +1,60 @@
+#sillas-ergonomicas{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1500px; 
+    margin: auto;
+}
+
+#sillas-ergonomicas h1{
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+#sillas-ergonomicas article{
+    max-width: 80%;
+}
+
+#sillas-ergonomicas-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+#sillas-ergonomicas h2,h4{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+#sillas-ergonomicas p{
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+#sillas-ergonomicas p span{
+    font-weight: bold;
+}
+
+#sillas-ergonomicas ol {
+    font-size: 1.2rem;
+    width: 80%;
+    margin: auto;
+    display: flex;   
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    list-style: outside;
+    gap: 1.5rem;
+}
+
+#sillas-ergonomicas img{
+    width: 100%;
+    height: auto;
+}

@@ -19,7 +19,7 @@ export function Blog() {
         { title: 'Las mejores sillas erogonómicas para trabajar desde casa de manera remota y cómoda',
           content: 'En este artículo te recomendamos las mejores sillas ergonómicas para trabajar desde casa, y te explicamos cómo elegir la mejor para ti.', 
           imgSrc: 'static/img/sillas-ergonomicas-1.webp',
-          link: '#'},
+          link: '/sillasergonomicas'},
        
     ];
 

@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:5000",
   "scripts": {
-    "dev": "vite --port 3000",
+    "start": "vite",
+    "dev": "concurrently \"cd server && node index.js\" \"npm start\"",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -20,6 +21,7 @@
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
