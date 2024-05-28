@@ -3,26 +3,22 @@ import './selecciontop.css';
 import { useState, useRef, useLayoutEffect,useEffect } from 'react';
 
 
+
 export const useCarousel = (productsToShow, initialIndex = 0) => {
     const carouselRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
     const nextSlide = () => {
         if (currentIndex < productsToShow.length - 1) { 
-            setCurrentIndex(currentIndex + 1); 
-        } else {
-            setCurrentIndex(0); 
+            setCurrentIndex((currentIndex + 1) % 11); // 11 is the number of productsToShow 
         }
     }
     
     const prevSlide = () => {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
-        } else {
-            setCurrentIndex(productsToShow.length - 1);
         }
     }
-    
 
     useLayoutEffect(() => {
         const updateCarousel = () => {
@@ -30,7 +26,7 @@ export const useCarousel = (productsToShow, initialIndex = 0) => {
                 const slideWidth = carouselRef.current.children[0].getBoundingClientRect().width;
                 const transformValue = -currentIndex * slideWidth * 0.8;
                 carouselRef.current.style.transform = `translateX(${transformValue}px)`;
-                carouselRef.current.style.transition = 'transform 0.5s ease-in-out'; // Agrega esta línea
+                carouselRef.current.style.transition = 'transform 0.5s ease-in-out'; 
             }
         }
         updateCarousel();
@@ -108,20 +104,17 @@ export function SelectionTop(){
                     </ul>
                     <div id='carousel-container-seleccion'>
                         <div id='section-center-seleccion' ref={carouselRef}>
-                        {productsToShow.filter(product => product.Genero === selectedCategory || selectedCategory === 'Todos').map((product, index, self) => (
+                        {productsToShow.filter(product => product.Genero === selectedCategory).map((product, index, self) => (
     <article key={index}>
         <a href={product.link}>
-            <img src={product.image} alt={product.Nombre || ''} />
+            <img src={product.image} alt={product.Nombre || ''} loading='lazy'/>
+            {self.length - 1 === index || (product.Nombre && product.precio) ? (
+                <div>
+                    <h2>{product.Nombre || ''}</h2>
+                    <p>{product.precio ? `Precio: ${product.precio}€` : ''}</p>
+                </div>
+            ) : null}
         </a>
-        {self.length - 1 === index || (product.Nombre && product.precio) ? (
-            <div>
-                <h2>{product.Nombre || ''}</h2>
-                <p>{product.precio ? `Precio: ${product.precio}€` : ''}</p>
-                <a href={product.link}>Leer más</a>
-            </div>
-        ) : (
-            <div style={{height: 'auto', marginBottom:'120px'}}></div>
-        )}
     </article>
 ))}
                         </div>
@@ -132,6 +125,7 @@ export function SelectionTop(){
                     </div>
                 </article>
             </div>
+            
         </section>
     )   
 }

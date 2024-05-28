@@ -11,7 +11,7 @@ export class Product {
     });
 
     // Ejecutar la consulta
-    const [rows] = await connection.execute('SELECT * FROM productos');
+    const [rows] = await connection.execute('SELECT * FROM products');
 
     // Cerrar la conexión a la base de datos
     await connection.end();

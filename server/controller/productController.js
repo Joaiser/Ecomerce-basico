@@ -1,6 +1,6 @@
 import { Product } from '../models/mysql/products.js'; 
 
-async function ProductController(req, res, next) {
+export async function ProductController(req, res, next) {
   try {
     // Obtén los productos de alguna manera
     const products = await Product.getAll();
@@ -10,4 +10,3 @@ async function ProductController(req, res, next) {
     next(err);
   }
 }
-export { ProductController };

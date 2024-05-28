@@ -120,16 +120,23 @@
 #section-center-seleccion{
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 40px;
     position: relative;
 }
 
-#section-center-seleccion article{
+#section-center-seleccion article {
+    background-color: #fdfdfb;
+    padding-bottom: 10px;
+}
+
+#section-center-seleccion article div{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+}
+
+#section-center-seleccion article a{
+    height: auto;
 }
 
 #section-center-seleccion article img{
@@ -140,11 +147,19 @@
 #section-center-seleccion article h2{
     width:auto;
     font-size: 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 #section-center-seleccion article p{
     width: auto;
     font-size: 1rem;
+    height: auto;
+    margin: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 #button-center{

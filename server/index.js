@@ -8,19 +8,7 @@ app.use(cors({ origin: 'http://localhost:5173',credentials: true }));
 app.use(express.json()); 
 
 // Definir la ruta para GET en "/products"
-app.get('/products', async (req, res, next) => {
-    try {
-      const products = await ProductController(req, res, next);
-      console.log('Productos obtenidos:', products);
-      if (products) {
-        res.json(products);
-      } else {
-        res.status(500).send('No se pudieron obtener los productos');
-      }
-    } catch (err) {
-      next(err);
-    }
-});
+app.get('/products', ProductController);
 
 // Definir la ruta para POST en "/products"
 // Aquí normalmente crearías un nuevo producto en tu base de datos
