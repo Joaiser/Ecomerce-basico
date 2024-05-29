@@ -29,3 +29,6 @@ dist-ssr
 #de la aplicación del código fuente, lo que facilita la gestión de diferentes entornos (desarrollo, pruebas, producción)
 # sin necesidad de modificar el código.
 .env
+
+/server/package-lock.json
+/server/package.json
