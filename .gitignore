@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#El archivo .env es utilizado para almacenar variables de entorno en una aplicación.
+# Estas variables pueden contener información sensible como contraseñas, claves de API u otras 
+#configuraciones específicas del entorno. Al utilizar un archivo .env, se puede separar la configuración 
+#de la aplicación del código fuente, lo que facilita la gestión de diferentes entornos (desarrollo, pruebas, producción)
+# sin necesidad de modificar el código.
+.env
+
+/server/package-lock.json
+/server/package.json
+
+package-lock.json
+package.json

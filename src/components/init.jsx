@@ -1,43 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './init.css';
 import { useCarousel } from '../hooks/carrousel';
 
 export function Init() {
+    const [data, setData] = useState([]);
 
-    const data = [
-        {
-            src: '/static/img/ofertas-especiales.webp',
-            description: 'Ofertas especiales'
-        },
-        {
-            src: '/static/img/reacondicionadosimg.webp',
-            description: 'Reacondicionados'
-        },
-        {
-            src: '/static/img/concursos.webp',
-            description: 'concursos'
-        },
-        {
-            src: '/static/img/blog.webp',
-            description: 'Blog'
-        },
-        {
-            src: '/static/img/novedades.webp',
-            description: 'Novedades'
-        },
-        {
-            src: '/static/img/pccom.webp',
-            description: 'Pccom'
-        },
-        {
-            src: '/static/img/ranking.webp',
-            description: 'Ranking'
-        },
-        {
-            src: '/static/img/servicios.webp',
-            description: 'Servicios'
-        },
-    ];
+    useEffect(() => {
+        fetch('http://localhost:3000/api/images')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la petición');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setData(data);
+                console.log(data); // Aquí
+            })
+            .catch(error => console.error(error));
+    }, []);
 
     const { carouselRef, nextSlide, prevSlide } = useCarousel(data.length);
 

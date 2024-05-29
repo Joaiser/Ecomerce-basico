@@ -6,7 +6,8 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    margin-block: 5%;
+    background-color: aliceblue;
+    padding-block: 5%;
 }
 .container-center{
     display: flex;
@@ -70,8 +71,8 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     list-style: none;
-    padding: 0;
-    gap: 60px;
+    padding-left: 50px;
+    gap: 100px;
 }
 
 .content ul li a {
@@ -119,16 +120,23 @@
 #section-center-seleccion{
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 40px;
     position: relative;
 }
 
-#section-center-seleccion article{
+#section-center-seleccion article {
+    background-color: #fdfdfb;
+    padding: 20px;
+}
+
+#section-center-seleccion article div{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+}
+
+#section-center-seleccion article a{
+    height: auto;
 }
 
 #section-center-seleccion article img{
@@ -136,15 +144,22 @@
     height: 201px;
 }
 
-
 #section-center-seleccion article h2{
     width:auto;
     font-size: 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 #section-center-seleccion article p{
     width: auto;
     font-size: 1rem;
+    height: auto;
+    margin: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 #button-center{
