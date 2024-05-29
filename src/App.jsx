@@ -58,7 +58,7 @@ function App() {
            </>
          } />
         </Routes>
-        <Footer />
+        {/*<Footer />*/}
         <FooterReal />
       </Router>
     </CartProvider>

@@ -66,7 +66,7 @@ export function SelectionTop(){
         setSelectedCategory(category);
     }
 
-    return(
+    return (
         <section className="container">
             <div className='container-center'>
                 <aside className='aside-container'>
@@ -74,50 +74,39 @@ export function SelectionTop(){
                     <p>Tus productos favoritos de tecnología con ofertas y descuentos increíbles.</p>
                     <Link to={"/productos"}>Ver más</Link>
                 </aside>
+    
                 <article className="content">
                     <ul>
-                        <li>
-                            <a href="#" className={selectedCategory === 'Ordenadores' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Ordenadores', event)}>
-                                Ordenadores
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className={selectedCategory === 'Componentes' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Componentes', event)}>
-                                Componentes
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className={selectedCategory === 'Móviles' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Móviles', event)}>
-                                Móviles
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className={selectedCategory === 'Televisores' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Televisores', event)}>
-                                Televisores
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className={selectedCategory === 'Hogar tech' ? 'selected' : ''} onClick={(event) => handleCategoryClick('Hogar tech', event)}>
-                                Hogar tech
-                            </a>
-                        </li>
+                        {['Ordenadores', 'Componentes', 'Móviles', 'Televisores'].map(category => (
+                            <li key={category}>
+                                <a 
+                                    href="#" 
+                                    className={selectedCategory === category ? 'selected' : ''} 
+                                    onClick={(event) => handleCategoryClick(category, event)}
+                                >
+                                    {category}
+                                </a>
+                            </li>
+                        ))}
                     </ul>
+    
                     <div id='carousel-container-seleccion'>
                         <div id='section-center-seleccion' ref={carouselRef}>
-                        {productsToShow.filter(product => product.Genero === selectedCategory).map((product, index, self) => (
-    <article key={index}>
-        <a href={product.link}>
-            <img src={product.image} alt={product.Nombre || ''} loading='lazy'/>
-            {self.length - 1 === index || (product.Nombre && product.precio) ? (
-                <div>
-                    <h2>{product.Nombre || ''}</h2>
-                    <p>{product.precio ? `Precio: ${product.precio}€` : ''}</p>
-                </div>
-            ) : null}
-        </a>
-    </article>
-))}
+                            {productsToShow.filter(product => product.Genero === selectedCategory).map((product, index, self) => (
+                                <article key={index}>
+                                    <Link to={product.link}>
+                                        <img src={product.image} alt={product.Nombre || ''} loading='lazy'/>
+                                        {(self.length - 1 === index || (product.Nombre && product.precio)) && (
+                                            <div>
+                                                <h2>{product.Nombre || ''}</h2>
+                                                <p>{product.precio ? `Precio: ${product.precio}€` : ''}</p>
+                                            </div>
+                                        )}
+                                    </Link>
+                                </article>
+                            ))}
                         </div>
+    
                         <div id='button-center'>
                             <button className="carousel-button-seleccion" onClick={prevSlide}>←</button>
                             <button className="carousel-button-seleccion" onClick={nextSlide}>→</button>
@@ -125,7 +114,6 @@ export function SelectionTop(){
                     </div>
                 </article>
             </div>
-            
         </section>
-    )   
+    )
 }

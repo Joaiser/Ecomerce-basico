@@ -1,10 +1,28 @@
 import { Product } from '../models/mysql/products.js'; 
 
-export async function ProductController(req, res, next) {
+export async function getAllProductsController(req, res, next) {
   try {
-    // Obtén los productos de alguna manera
-    const products = await Product.getAll();
-    // Enviar los productos como respuesta al cliente
+    const products = await Product.getAllProducts();
+    res.json(products);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getProductByIdController(req, res, next) {
+  try {
+    const id = req.params.id;
+    const product = await Product.getById(id);
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getProductsByCategoryController(req, res, next) {
+  try {
+    const category = req.params.genero;
+    const products = await Product.getByCategory(category);
     res.json(products);
   } catch (err) {
     next(err);

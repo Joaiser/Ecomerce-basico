@@ -1,21 +1,30 @@
-import { createConnection } from 'mysql2/promise';
+import { createPool } from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const pool = createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  supportBigNumbers: true,
+  bigNumberStrings: true
+});
 
 export class Product {
-  static async getAll() {
-    // Crear la conexión a la base de datos
-    const connection = await createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '1234',
-      database: 'EcomercePC'
-    });
+  static async getAllProducts() {
+    const [rows] = await pool.execute('SELECT * FROM products');
+    return rows;
+  }
 
-    // Ejecutar la consulta
-    const [rows] = await connection.execute('SELECT * FROM products');
+  static async getById(id) {
+    const [rows] = await pool.execute('SELECT * FROM products WHERE id = ?', [id]);
+    return rows[0] || null;
+  }
 
-    // Cerrar la conexión a la base de datos
-    await connection.end();
-
+  static async getByGender(gender) {
+    const [rows] = await pool.execute('SELECT * FROM products WHERE gender = ?', [gender]);
     return rows;
   }
 }

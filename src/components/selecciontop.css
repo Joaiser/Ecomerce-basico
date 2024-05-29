@@ -71,8 +71,8 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     list-style: none;
-    padding: 0;
-    gap: 60px;
+    padding-left: 50px;
+    gap: 100px;
 }
 
 .content ul li a {
@@ -127,7 +127,7 @@
 
 #section-center-seleccion article {
     background-color: #fdfdfb;
-    padding-bottom: 10px;
+    padding: 20px;
 }
 
 #section-center-seleccion article div{

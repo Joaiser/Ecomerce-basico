@@ -22,18 +22,18 @@ export function Header({ changeFilters }) {
         <header>
             <div className='max-width'>
                 <div>
-                <h1><Link to="/">PC Aitor <CartIcon /></Link></h1>
-                    <div id='select-position'>
-                        <select name="state-product" id="state-product">
-                        <option value="all-categories">Todas las categorías</option>
-                        <option value="reconditioned">Reacondicionado</option>
-                        </select>
+                    <h1><Link to="/">PC Aitor <CartIcon /></Link></h1>
+                        <div id='select-position'>
+                            <select name="state-product" id="state-product">
+                            <option value="all-categories">Todas las categorías</option>
+                            <option value="reconditioned">Reacondicionado</option>
+                            </select>
 
-                    {/*<div className={`filters ${isFiltersOpen ? 'open' : ''}`}>
-                        <Filters onChange={changeFilters} />
-                    </div>*/}
-                        <input type="text" placeholder='Introduzca el nombre del producto que desea buscar' id='search'/>
-                    </div>
+                            {/*<div className={`filters ${isFiltersOpen ? 'open' : ''}`}>
+                            <Filters onChange={changeFilters} />
+                            </div>*/}
+                            <input type="text" placeholder='Introduzca el nombre del producto que desea buscar' id='search'/>
+                        </div>
                     <div>
                         <button id='account'><a href="">Mi Cuenta</a></button>
                         <Cart />
