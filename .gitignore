@@ -32,3 +32,6 @@ dist-ssr
 
 /server/package-lock.json
 /server/package.json
+
+package-lock.json
+package.json
