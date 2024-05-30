@@ -28,4 +28,13 @@ export class Product {
     const [rows] = await pool.execute('SELECT * FROM products WHERE Genero = ?', [Genero]);
     return rows;
   }
+
+  static async getAllRecommendedProducts() {
+    try {
+      const [rows] = await pool.execute('SELECT * FROM recomendacionProductos');
+      return rows;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener los productos recomendados');
+    }
+  }
 }

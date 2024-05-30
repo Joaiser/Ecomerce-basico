@@ -48,7 +48,7 @@ export function FooterReal() {
             </aside>
             </div>
             <div id='center-div'>
-                <p>© 2021, Todos los derechos reservados</p>
+                <p>© 2024, Todos los derechos reservados</p>
             </div>
            
            

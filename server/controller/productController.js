@@ -28,3 +28,13 @@ export async function getProductsByCategoryController(req, res, next) {
     next(err);
   }
 }
+
+export async function getAllProductsRecommendedController(req, res, next) {
+  try {
+    const products = await Product.getAllRecommendedProducts();
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Hubo un error al obtener los productos recomendados' });
+  }
+}

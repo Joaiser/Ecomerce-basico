@@ -8,7 +8,7 @@ export function useFilters(filter) {
     useEffect(() => {   
         setIsLoading(true);
         setError(null);
-        fetch('https://fakestoreapi.com/products')
+        fetch('https://fakestoreapi.com/products/')
             .then((res) => {
                 if (res.ok) {
                     return res.json();

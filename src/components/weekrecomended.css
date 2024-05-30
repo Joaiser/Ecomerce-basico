@@ -7,6 +7,7 @@
     margin: 0 0;
     position: relative;
     top: 8px;
+    padding-bottom: 5%;
 }
 
 #week-recomended-container-center{
@@ -15,14 +16,19 @@
     background-color: white;
 }
 
+#week-recomended-container-center h1{
+    text-align: center;
+    padding-block: 4%;
+}
+
 #div-carusell-week-recomended{
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 100px;
+    align-items: flex-start;
+    gap: 60px;
     transition: transform 0.5s ease-in-out;
     margin: 0 0;
-    margin-left: 65%;
+    margin-left: 80%;
 }
 
 .slide-week-recomended {
@@ -30,18 +36,17 @@
     flex-direction: column;
     justify-content: space-between;
     height: auto;
+    background: #111;
+    padding: 2rem;
+    border-radius: 16px;
 }
 
-.slide-week-recomended a{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.slide-week-recomended a {
+.link-to-product {
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 9999;
     position: relative;
-    text-decoration: none;
+    pointer-events: auto;
 }
 
 .slide-week-recomended a::after {
@@ -54,6 +59,7 @@
     background-color: currentColor;
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
+    pointer-events: none;
 }
 
 .slide-week-recomended a:hover::after {
@@ -72,7 +78,7 @@
     cursor: pointer;
     color: #fff;
     position: absolute;
-    top: 28%;
+    top: 47%;
     transform: translateY(-50%);
 }
 
@@ -99,13 +105,21 @@
 .img-week-recomended{
     width: 180px;
     height: auto;
+    border-radius: 10px;
 }
 
 .legend{
-    width: 150px;
-    height: 60px;
+    width: auto;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-block: 19%;
+    margin-right: -18%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.slide-week-recomended span{
+    font-weight: bold;
+    color: #ffffff;
 }

@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { getAllProductsController, getProductByIdController,getProductsByCategoryController } from './controller/productController.js';
+import { getAllProductsController, getProductByIdController, getProductsByCategoryController,
+   getAllProductsRecommendedController } 
+from './controller/productController.js';
 
 const app = express();
 
@@ -15,6 +17,9 @@ app.get('/products/:Id_producto', getProductByIdController);
 
 // Definir la ruta para GET en "/products/category/:genero"
 app.get('/products/category/:Genero', getProductsByCategoryController);
+
+// Definir la ruta para GET en "/products/recommended"
+app.get('/productos/recomendados', getAllProductsRecommendedController);
 
 // Definir la ruta para POST en "/products"
 // Aquí normalmente crearías un nuevo producto en tu base de datos
