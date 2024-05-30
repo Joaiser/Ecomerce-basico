@@ -20,6 +20,8 @@ import { ScreensBlog } from './components/blogPages/screensBlog.jsx';
 import { Placabase } from './components/blogPages/placabase.jsx';
 import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 import { ErgonomicChairs } from './components/blogPages/sillasErgonomicas.jsx';
+import { ProductDetail } from './components/productDetails/productDetail.jsx'; 
+import { ProductGender } from './components/productGender/productGender.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -49,6 +51,8 @@ function App() {
          <Route path="/tipoteclado" element={<Tipoteclado />} />
          <Route path="/productos" element={<Products />} />
          <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
+         <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
+         <Route path="/productos/genero/:Genero" element={<ProductGender />} />
          <Route path="/" element={
            <>
              <Init />

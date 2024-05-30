@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+//es pool porque se va a estar haciendo varias consultas a la base de datos
 const pool = createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -18,13 +19,13 @@ export class Product {
     return rows;
   }
 
-  static async getById(id) {
-    const [rows] = await pool.execute('SELECT * FROM products WHERE id = ?', [id]);
+  static async getById(Id_producto) {
+    const [rows] = await pool.execute('SELECT * FROM products WHERE Id_producto = ?', [Id_producto]);
     return rows[0] || null;
   }
 
-  static async getByGender(gender) {
-    const [rows] = await pool.execute('SELECT * FROM products WHERE gender = ?', [gender]);
+  static async getByGender(Genero) {
+    const [rows] = await pool.execute('SELECT * FROM products WHERE Genero = ?', [Genero]);
     return rows;
   }
 }

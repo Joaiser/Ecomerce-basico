@@ -11,10 +11,10 @@ app.use(express.json());
 app.get('/products', getAllProductsController);
 
 // Definir la ruta para GET en "/products/:id"
-app.get('/products/:id', getProductByIdController);
+app.get('/products/:Id_producto', getProductByIdController);
 
 // Definir la ruta para GET en "/products/category/:genero"
-app.get('/products/category/:genero', getProductsByCategoryController);
+app.get('/products/category/:Genero', getProductsByCategoryController);
 
 // Definir la ruta para POST en "/products"
 // Aquí normalmente crearías un nuevo producto en tu base de datos

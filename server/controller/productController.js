@@ -11,7 +11,7 @@ export async function getAllProductsController(req, res, next) {
 
 export async function getProductByIdController(req, res, next) {
   try {
-    const id = req.params.id;
+    const id = req.params.Id_producto;
     const product = await Product.getById(id);
     res.json(product);
   } catch (err) {
@@ -21,8 +21,8 @@ export async function getProductByIdController(req, res, next) {
 
 export async function getProductsByCategoryController(req, res, next) {
   try {
-    const category = req.params.genero;
-    const products = await Product.getByCategory(category);
+    const category = req.params.Genero;
+    const products = await Product.getByGender(category); 
     res.json(products);
   } catch (err) {
     next(err);
