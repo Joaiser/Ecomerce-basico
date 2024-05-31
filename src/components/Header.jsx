@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Filters } from './Filters.jsx';
 import { CartIcon } from './icons.jsx';
 import './header.css';
@@ -8,6 +8,14 @@ import { Link } from 'react-router-dom';
 export function Header({ changeFilters }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+    const [username, setUsername] = useState(null);
+
+    useEffect(() => {
+        const storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
 
     const handleMenuClick = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -15,6 +23,11 @@ export function Header({ changeFilters }) {
 
     const handleFilterClick = () => {
         setIsFiltersOpen(!isFiltersOpen);
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem('username');
+        setUsername(null);
     }
 
     return (
@@ -35,7 +48,14 @@ export function Header({ changeFilters }) {
                             <input type="text" placeholder='Introduzca el nombre del producto que desea buscar' id='search'/>
                         </div>
                     <div>
-                        <button id='account'><a href="">Mi Cuenta</a></button>
+                        {username ? (
+                            <>
+                                <button id='account'>{username}</button>
+                                <button onClick={handleLogout}>Cerrar sesión</button>
+                            </>
+                        ) : (
+                            <button id='account'><Link to={"/login"}>Mi Cuenta</Link></button>
+                        )}
                         <Cart />
                     </div>
                 </div>

@@ -2,26 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './productDetail.css';
 
-export function ProductDetail() {
+export function ProductDetailWeekRecomended() {
     const { Id_producto } = useParams();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/products/${Id_producto}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+        fetch(`http://localhost:3000/productos/recomendados/${Id_producto}`)
+            .then(response => response.json())
             .then(data => {
-                if (data && data.imagen && Array.isArray(data.imagen.data)) {
-                    const asciiCodes = data.imagen.data;
-                    const imageUrl = asciiCodes.map(code => String.fromCharCode(code)).join('');
-                    setProduct({ ...data, image: imageUrl });
-                } else {
-                    console.error('Error: imagen is undefined or does not have a data property');
-                }
+                const asciiCodes = data.imagen_producto.data;
+                const imageUrl = asciiCodes.map(code => String.fromCharCode(code)).join('');
+                setProduct({ ...data, image: imageUrl });
             })
             .catch(error => console.error('Error:', error));
     }, [Id_producto]);
@@ -29,6 +20,7 @@ export function ProductDetail() {
     if (!product) {
         return 'Cargando...';
     }
+    console.log('Rendering ProductDetailWeekRecomended');
 
     return(
         <section>
@@ -39,6 +31,7 @@ export function ProductDetail() {
                     </div>
                 </aside>
                 <article>
+                    <h1>PORQUE NO VAS</h1>
                     <h1>{product.Nombre}</h1>
                     <p>{product.descripcion}</p>
                     <p>Precio: {product.precio}€</p>
@@ -48,3 +41,8 @@ export function ProductDetail() {
         </section>
     )
 }
+
+
+
+
+

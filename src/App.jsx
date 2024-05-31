@@ -21,7 +21,12 @@ import { Placabase } from './components/blogPages/placabase.jsx';
 import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 import { ErgonomicChairs } from './components/blogPages/sillasErgonomicas.jsx';
 import { ProductDetail } from './components/productDetails/productDetail.jsx'; 
+import { ProductDetailWeekRecomended } from './components/productDetails/productDetailWeekRecomended.jsx';
 import { ProductGender } from './components/productGender/productGender.jsx';
+// Importación de la página de inicio de sesión
+import { LoginPage } from './components/pages/login.jsx';
+//importaciones del footer
+import { HowToBuy } from './components/pages/footerPages/howBuy.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,6 +38,16 @@ function ScrollToTop() {
   return null;
 }
 
+export function Layout({ children }) {
+  return (
+    <>
+      <Header />
+      {children}
+      <FooterReal />
+    </>
+  );
+}
+
 function App() {
   const { filters, setFilters } = useContext(FilterContext);
 
@@ -40,30 +55,37 @@ function App() {
     <CartProvider>
       <Router>
         <ScrollToTop />
-        <Header changeFilters={setFilters} />
         <Routes>
-         <Route path="/contacto" element={<Contact />} />
-         <Route path="/nosotros" element={<AboutUs />} />
-         <Route path="/foro" element={<Foro />} />
-         <Route path="/intercambios" element={<Intercambios />} />
-         <Route path="/screens" element={<ScreensBlog />} />
-         <Route path="/placa" element={<Placabase />} />
-         <Route path="/tipoteclado" element={<Tipoteclado />} />
-         <Route path="/productos" element={<Products />} />
-         <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
-         <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
-         <Route path="/productos/genero/:Genero" element={<ProductGender />} />
-         <Route path="/" element={
-           <>
-             <Init />
-             <SelectionTop />
-             <WeekRecomended />
-             <Blog />
-           </>
+         <Route path="/login" element={<LoginPage />} />
+         <Route path="*" element={
+           <Layout>
+             <Routes>
+               <Route path="/contacto" element={<Contact />} />
+               <Route path="/nosotros" element={<AboutUs />} />
+               <Route path="/foro" element={<Foro />} />
+               <Route path="/intercambios" element={<Intercambios />} />
+               <Route path="/screens" element={<ScreensBlog />} />
+               <Route path="/placa" element={<Placabase />} />
+               <Route path="/tipoteclado" element={<Tipoteclado />} />
+               <Route path="/productos" element={<Products />} />
+               <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
+               <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
+               <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
+               <Route path="/productos/genero/:Genero" element={<ProductGender />} />
+               {/*Rutas del footer*/}
+               <Route path="/como-comprar" element={<HowToBuy />} />
+               <Route path="/" element={
+                 <>
+                   <Init />
+                   <SelectionTop />
+                   <WeekRecomended />
+                   <Blog />
+                 </>
+               } />
+             </Routes>
+           </Layout>
          } />
         </Routes>
-        {/*<Footer />*/}
-        <FooterReal />
       </Router>
     </CartProvider>
   );

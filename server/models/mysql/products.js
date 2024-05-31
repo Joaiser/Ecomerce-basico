@@ -15,18 +15,30 @@ const pool = createPool({
 
 export class Product {
   static async getAllProducts() {
-    const [rows] = await pool.execute('SELECT * FROM products');
-    return rows;
+    try {
+      const [rows] = await pool.execute('SELECT * FROM products');
+      return rows;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener todos los productos');
+    }
   }
 
   static async getById(Id_producto) {
-    const [rows] = await pool.execute('SELECT * FROM products WHERE Id_producto = ?', [Id_producto]);
-    return rows[0] || null;
+    try {
+      const [rows] = await pool.execute('SELECT * FROM products WHERE Id_producto = ?', [Id_producto]);
+      return rows[0] || null;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener el producto por ID');
+    }
   }
 
   static async getByGender(Genero) {
-    const [rows] = await pool.execute('SELECT * FROM products WHERE Genero = ?', [Genero]);
-    return rows;
+    try {
+      const [rows] = await pool.execute('SELECT * FROM products WHERE Genero = ?', [Genero]);
+      return rows;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener los productos por género');
+    }
   }
 
   static async getAllRecommendedProducts() {
@@ -37,4 +49,14 @@ export class Product {
       throw new Error('Hubo un error al obtener los productos recomendados');
     }
   }
+
+  static async getProductRecomendedById(id_producto) {
+    try {
+      const [rows] = await pool.execute('SELECT * FROM recomendacionProductos WHERE id_producto = ?', [id_producto]);
+      return rows[0] || null;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener el producto recomendado por ID');
+    }
+  }
+
 }

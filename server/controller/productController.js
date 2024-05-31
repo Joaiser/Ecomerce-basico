@@ -38,3 +38,13 @@ export async function getAllProductsRecommendedController(req, res, next) {
     res.status(500).json({ message: 'Hubo un error al obtener los productos recomendados' });
   }
 }
+
+  export async function getProductRecommendedByIdController(req, res, next) {
+    try {
+      const id = req.params.Id_producto;
+      const product = await Product.getProductRecomendedById(id);
+      res.json(product);
+    } catch (err) {
+      next(err);
+    }
+  }

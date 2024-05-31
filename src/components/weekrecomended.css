@@ -44,31 +44,12 @@
 .link-to-product {
     color: #ffffff;
     cursor: pointer;
-    z-index: 9999;
+    z-index: 1000;
     position: relative;
-    pointer-events: auto;
-}
-
-.slide-week-recomended a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 1px;
-    width: 100%;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-    pointer-events: none;
-}
-
-.slide-week-recomended a:hover::after {
-    transform: scaleX(1);
-}
-
-#carusell-article-week-recomended {
-    position: relative; 
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .carousel-button-week-recomended {
@@ -82,13 +63,6 @@
     transform: translateY(-50%);
 }
 
-.carousel-button:hover {
-    background-color: #161616;
-}
-
-.carousel-button-week-recomended:first-child {
-    left: 0;
-}
 
 .carousel-button-week-recomended:last-child {
     right: 0;
@@ -96,10 +70,9 @@
 
 #buttons{
     width: 100%;
-    position: absolute; /* nuevo */
-    top: -29px; /* nuevo */
-    left: 0; /* nuevo */
-    height: 100%; /* nuevo */
+    position: relative; 
+    top: -280px; 
+    height: 100%; 
 }
 
 .img-week-recomended{
