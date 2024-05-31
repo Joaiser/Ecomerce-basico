@@ -11,7 +11,6 @@ export function FooterReal() {
                         <li><Link to="/como-comprar">Como comprar</Link></li>
                         <li><Link to="/formas-de-pago">Formas de pago</Link></li>
                         <li><Link to="/gastos-de-envio">Gastos de envio</Link></li>
-                        <li><Link to="/preguntas-frecuentes">Preguntas frequentes</Link></li>
                     </ul>
                 </div>
                 <div>

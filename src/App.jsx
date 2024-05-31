@@ -27,6 +27,8 @@ import { ProductGender } from './components/productGender/productGender.jsx';
 import { LoginPage } from './components/pages/login.jsx';
 //importaciones del footer
 import { HowToBuy } from './components/pages/footerPages/howBuy.jsx';
+import { WaysToPay } from './components/pages/footerPages/waysToPay.jsx';
+import { ShippingCosts } from './components/pages/footerPages/shippingCosts.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -74,6 +76,8 @@ function App() {
                <Route path="/productos/genero/:Genero" element={<ProductGender />} />
                {/*Rutas del footer*/}
                <Route path="/como-comprar" element={<HowToBuy />} />
+               <Route path="/formas-de-pago" element={<WaysToPay />} />
+               <Route path="/gastos-de-envio" element={<ShippingCosts />} />
                <Route path="/" element={
                  <>
                    <Init />

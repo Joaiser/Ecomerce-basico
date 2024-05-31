@@ -85,23 +85,35 @@ header div{
     align-items: center;
 }
 
-#account {
+.account {
     background-color: #09f;
     transition: ease-in-out .3s;
 }
 
-#account a {
+#account-empty {
     color: #fff;
     text-decoration: none;
 }
 
-#account:hover {
+.account:hover {
     transform: scale(1.1);
 }
 
-#account a:hover::after {
+.account a:hover::after {
     content: none;
 }
+
+.account-2{
+    background-color: #09f;
+    transition: ease-in-out .3s;
+    padding: 0;
+    padding-inline: 3px;
+}
+
+.account-2:hover {
+    transform: scale(1.1);
+}
+
 
 @media screen and (max-width: 1311px) {
 

@@ -50,11 +50,11 @@ export function Header({ changeFilters }) {
                     <div>
                         {username ? (
                             <>
-                                <button id='account'>{username}</button>
-                                <button onClick={handleLogout}>Cerrar sesión</button>
+                                <button className='account'>{username}</button>
+                                <button className='account-2' onClick={handleLogout}><p style={{fontSize:'.8rem',color:'white'}}>Cerrar sesión</p></button>
                             </>
                         ) : (
-                            <button id='account'><Link to={"/login"}>Mi Cuenta</Link></button>
+                            <button className='account'><Link to={"/login"} id='account-empty'>Mi Cuenta</Link></button>
                         )}
                         <Cart />
                     </div>
