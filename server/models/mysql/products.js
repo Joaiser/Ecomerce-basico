@@ -59,4 +59,12 @@ export class Product {
     }
   }
 
+  static async get_all_products() {
+    try {
+      const [rows] = await pool.execute('SELECT * FROM all_products');
+      return rows;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener todos los productos');
+    }
+  }
 }

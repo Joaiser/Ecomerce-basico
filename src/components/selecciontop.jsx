@@ -71,7 +71,7 @@ export function SelectionTop(){
                 <aside className='aside-container'>
                     <h2>Seleccion Top</h2>
                     <p>Tus productos favoritos de tecnología con ofertas y descuentos increíbles.</p>
-                    <Link to={"/products"} onClick={(e) => e.stopPropagation()}>Ver más</Link>
+                    <Link to={"/todosproductos"} onClick={(e) => e.stopPropagation()}>Ver más</Link>
                 </aside>
     
                 <article className="content">

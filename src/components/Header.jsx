@@ -66,7 +66,7 @@ export function Header({ changeFilters }) {
                 <nav>
                     <ul className={isMenuOpen ? 'open' : ''}>
                         <li><Link to="/">Inicio</Link></li>
-                        <li><Link to="/productos">Productos</Link></li>
+                        <li><Link to="/todosproductos">Productos</Link></li>
                         <li><Link to="/intercambios">Intercambios</Link></li>
                         <li><Link to="/foro">Foro</Link></li>
                         <li><Link to="/nosotros">Nosotros</Link></li>

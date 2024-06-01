@@ -37,9 +37,26 @@ class User {
           );
           return rows[0];
         } catch (err) {
-            console.error(err);
             throw new Error('Hubo un error al buscar el usuario: ' + err.message);
           }
       }
+
+      static async getUserByEmail(users_correo){
+        const [result] = await pool.execute('SELECT * FROM clientes WHERE users_correo = ?', [users_correo]);
+        if (result.length > 0) {
+          return result[0];
+        } else {
+          return null;
+        }
+      };
+
+      static async getUserById(Id_cliente){
+        const [result] = await pool.execute('SELECT * FROM clientes WHERE Id_cliente = ?', [Id_cliente]);
+        if (result.length > 0) {
+          return result[0];
+        } else {
+          return null;
+        }
+      };
 }
 export default User;

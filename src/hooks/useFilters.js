@@ -1,14 +1,26 @@
 import { useState, useEffect } from 'react';
 
 export function useFilters(filter) {
-    const [products, setProducts] = useState([]);
+    const initialProduct = {
+        "id": 1,
+        "nombre_producto": "Intel Pentium N4020",
+        "imagen_producto": "/static/img/imgpc/1710-alurin-go-start-intel-pentium-n4020-8gb-256gb-ssd-156-comprar.webp",
+        "descripcion": "Procesador económico Intel Pentium N4020, ideal para tareas básicas y navegación web.",
+        "precio": "100.00",
+        "categoria": "Ordenadores"
+    };
+
+    const [products, setProducts] = useState([initialProduct]);
+    const [recommendedProducts, setRecommendedProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {   
         setIsLoading(true);
         setError(null);
-        fetch('https://fakestoreapi.com/products/')
+    
+        fetch('http://localhost:3000/todosproductos')
             .then((res) => {
                 if (res.ok) {
                     return res.json();
@@ -26,20 +38,15 @@ export function useFilters(filter) {
             });
     }, []);
 
-    let filteredProducts = products;
+    let filteredProducts = [...products, ...recommendedProducts, ...allProducts];
     if (filter) {
-      filteredProducts = products.filter(product => {
+      filteredProducts = filteredProducts.filter(product => {
         return (
-          product.price >= filter.minprice &&
+          product.precio >= filter.minprice &&
           (filter.category === 'all' || 
-          product.category === filter.category)
+          product.categoria === filter.category)
         )
       });
-    }
-
-    // Añadir filtrado por categoría
-    if (filter && filter.category !== 'all') {
-        filteredProducts = filteredProducts.filter(product => product.category === filter.category);
     }
 
     return { filteredProducts, isLoading, error };

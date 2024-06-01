@@ -10,7 +10,7 @@ export function ProductDetailWeekRecomended() {
         fetch(`http://localhost:3000/productos/recomendados/${Id_producto}`)
             .then(response => response.json())
             .then(data => {
-                const asciiCodes = data.imagen_producto.data;
+                const asciiCodes = data.imagen.data;
                 const imageUrl = asciiCodes.map(code => String.fromCharCode(code)).join('');
                 setProduct({ ...data, image: imageUrl });
             })
@@ -31,7 +31,6 @@ export function ProductDetailWeekRecomended() {
                     </div>
                 </aside>
                 <article>
-                    <h1>PORQUE NO VAS</h1>
                     <h1>{product.Nombre}</h1>
                     <p>{product.descripcion}</p>
                     <p>Precio: {product.precio}€</p>

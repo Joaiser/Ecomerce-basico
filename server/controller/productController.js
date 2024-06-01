@@ -48,3 +48,12 @@ export async function getAllProductsRecommendedController(req, res, next) {
       next(err);
     }
   }
+
+  export async function get_All_Products_Controller(req, res, next) {
+    try {
+      const products = await Product.get_all_products();
+      res.json(products);
+    } catch (err) {
+      next(err);
+    }
+  }

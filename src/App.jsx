@@ -69,7 +69,7 @@ function App() {
                <Route path="/screens" element={<ScreensBlog />} />
                <Route path="/placa" element={<Placabase />} />
                <Route path="/tipoteclado" element={<Tipoteclado />} />
-               <Route path="/productos" element={<Products />} />
+               <Route path="/todosproductos" element={<Products />} />
                <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
                <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
                <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />

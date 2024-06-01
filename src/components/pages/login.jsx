@@ -8,7 +8,7 @@ export function LoginPage () {
   const [users_correo, setEmail] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
-  const [validationErrors, setValidationErrors] = useState({}); // Nuevo estado para los errores de validación
+  const [validationErrors, setValidationErrors] = useState({}); 
 
   const validateForm = () => {
     const errors = {};
@@ -32,30 +32,19 @@ export function LoginPage () {
       Nickname: Nickname,
       Password_clientes: Password_clientes
     };
-  
     // Hacer una solicitud POST al servidor
     try {
-      const response = await fetch('http://localhost:3000/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
-  
-      // Verificar si la solicitud fue exitosa
-      if (response.ok) {
-        const data = await response.json();
-        // Guardar el token en el almacenamiento local
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('username', Nickname);
-        window.location.href = '/';
-      } else {
-        setErrorMessage('Datos incorrectos, por favor intenta de nuevo.'); 
-      }
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
+      const response = await axios.post('http://localhost:3000/users/login', userData);
+
+          // Guardar el token, el username y el Id_cliente en el almacenamiento local
+          localStorage.setItem('authToken', response.data.token);
+          localStorage.setItem('username', Nickname);
+          localStorage.setItem('Id_cliente', response.data.Id_cliente); // Asegúrate de que 'Id_cliente' es la clave correcta en la respuesta
+           window.location.href = '/';
+        } catch (error) {
+        // axios expone el mensaje de error a través de error.response.data
+        setErrorMessage(error.response.data.message);
+        }
   };
   
   const handleRegister = async () => {
@@ -71,12 +60,21 @@ export function LoginPage () {
         users_correo
       });
       if (response.data) {
-        // Guardar el token en el almacenamiento local
+        // Guardar el token, el username y el Id_cliente en el almacenamiento local
         localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('username', Nickname);
+        localStorage.setItem('Id_cliente', response.data.Id_cliente); // Asegúrate de que 'Id_cliente' es la clave correcta en la respuesta
         setIsRegistering(false); // Redirige al usuario a la página de inicio de sesión
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      // Si el mensaje de error es 'El nombre de usuario ya existe' o 'El correo electrónico ya está en uso', mostrarlo al usuario
+      if (error.response.data.message === 'El nombre de usuario ya existe') {
+        setErrorMessage('El nombre de usuario ya existe');
+      } else if (error.response.data.message === 'El correo electrónico ya está en uso') {
+        setErrorMessage('El correo electrónico ya está en uso');
+      } else {
+        setErrorMessage(error.message);
+      }
     }
   };
   

@@ -15,13 +15,11 @@ export function ProductDetail() {
                 return response.json();
             })
             .then(data => {
-                if (data && data.imagen && Array.isArray(data.imagen.data)) {
-                    const asciiCodes = data.imagen.data;
+                if (data && data.imagen_producto && Array.isArray(data.imagen_producto.data)) {
+                    const asciiCodes = data.imagen_producto.data;
                     const imageUrl = asciiCodes.map(code => String.fromCharCode(code)).join('');
                     setProduct({ ...data, image: imageUrl });
-                } else {
-                    console.error('Error: imagen is undefined or does not have a data property');
-                }
+                } 
             })
             .catch(error => console.error('Error:', error));
     }, [Id_producto]);
