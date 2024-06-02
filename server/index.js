@@ -9,6 +9,7 @@ import { createPostController, getPostsController } from './controller/forumCont
 import { getAllContestantsController, getContestantByIdController, registerContestantController } 
 from './controller/contestController.js'; 
 import { registerAdmin, loginAdmin } from './controller/adminController.js';
+import { sendMessageController } from './controller/contactController.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -107,6 +108,9 @@ app.get('/contestants/:id', getContestantByIdController);
 
 // Definir la ruta para POST en "/contestants/register"
 app.post('/contestants/register', registerContestantController);
+
+// Definir la ruta para POST en "/contact/send"
+app.post('/contact/send', sendMessageController);
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');

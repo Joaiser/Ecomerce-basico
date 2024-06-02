@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart.js';
 import './productGender.css';
 import { CartIcon } from '../icons.jsx';
@@ -30,17 +30,19 @@ export function ProductGender() {
     return(
         <section className="products">
         <ul>
-            {products.map(product => (
-                <li key={product.Id_producto}>
+        {products.map(product => (
+         <li key={product.Id_producto}>
+                <Link to={`/productos/${product.Id_producto}`}>
                     <article>
                         <img src={product.image} alt={product.Nombre} loading='lazy'/>
                         <h1 className="title">{product.Nombre}</h1>
                         <p className='title-p'>{product.descripcion}</p>
                         <p className='title-p'>Precio: {product.precio}€</p>
-                        <button className="btn btn-primary" onClick={() => addToCart(product)}><CartIcon/></button>
+                        <button className="btn btn-primary" onClick={(e) => {e.preventDefault(); addToCart(product);}}><CartIcon/></button>
                     </article>
-                </li>
-            ))}
+                </Link>
+        </li>
+        ))}
         </ul>
     </section>
     )

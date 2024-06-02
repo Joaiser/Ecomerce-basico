@@ -1,0 +1,45 @@
+#contact{
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#contact-center-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#contact-center-form label{
+    color: black;
+    font-family:sans-serif;
+}
+
+.dates{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-color: #ccc;
+    color:black
+}
+
+#sent-message{
+    background-color: #09f;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.message.error {
+    color: red;
+}
