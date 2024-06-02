@@ -33,3 +33,11 @@
     color: white;
     width: 100%;
 }
+
+@media screen  and (max-width: 350px){
+    .all-products ul{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        gap: 2rem;
+    }
+}

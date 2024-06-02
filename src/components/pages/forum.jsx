@@ -6,18 +6,18 @@ export function Foro() {
     const [newPostContent, setNewPostContent] = useState('');
     const [username, setUsername] = useState(null);
     const [newReplyContent, setNewReplyContent] = useState({});
-
-    // Cargar los posts y el username del almacenamiento local al iniciar
+    const [isAdmin, setIsAdmin] = useState(false);
     const [posts, setPosts] = useState(() => JSON.parse(localStorage.getItem('posts')) || []);
 
     useEffect(() => {
         const storedUsername = localStorage.getItem('username');
+        const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
         if (storedUsername) {
             setUsername(storedUsername);
+            setIsAdmin(storedIsAdmin);
         }
     }, []);
 
-    // Guardar los posts en el almacenamiento local cada vez que cambien
     useEffect(() => {
         localStorage.setItem('posts', JSON.stringify(posts));
     }, [posts]);
@@ -51,6 +51,18 @@ export function Foro() {
         setNewReplyContent(prevState => ({ ...prevState, [postIndex]: '' }));
     };
 
+    const handleDeletePost = (postIndex) => {
+        const updatedPosts = [...posts];
+        updatedPosts.splice(postIndex, 1);
+        setPosts(updatedPosts);
+    };
+
+    const handleDeleteReply = (postIndex, replyIndex) => {
+        const updatedPosts = [...posts];
+        updatedPosts[postIndex].replies.splice(replyIndex, 1);
+        setPosts(updatedPosts);
+    };
+
     return (
         <section id='foro'>
             <h1>Foro</h1>
@@ -74,10 +86,16 @@ export function Foro() {
                         <h2>{post.title}</h2>
                         <p>{post.content}</p>
                         <p>Publicado por: {post.username}</p>
+                        {isAdmin && (
+                            <button onClick={() => handleDeletePost(index)}>Borrar Post</button>
+                        )}
                         {Array.isArray(post.replies) && post.replies.map((reply, replyIndex) => (
                             <div key={replyIndex}>
                                 <p>{reply.content}</p>
                                 <p>Respondido por: {reply.username}</p>
+                                {isAdmin && (
+                                    <button onClick={() => handleDeleteReply(index, replyIndex)}>Borrar respuesta</button>
+                                )}
                             </div>
                         ))}
                         {username && (

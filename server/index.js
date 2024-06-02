@@ -6,6 +6,9 @@ import { getAllProductsController, getProductByIdController, getProductsByCatego
 from './controller/productController.js';
 import { createUser, login, getUserById } from './controller/usersController.js';
 import { createPostController, getPostsController } from './controller/forumController.js'; 
+import { getAllContestantsController, getContestantByIdController, registerContestantController } 
+from './controller/contestController.js'; 
+import { registerAdmin, loginAdmin } from './controller/adminController.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -77,13 +80,33 @@ app.post('/posts', createPostController);
 // Definir la ruta para GET en "/posts"
 app.get('/posts', getPostsController);
 
+// Definir la ruta para POST en "/admins/register"
+app.post('/admins/register', registerAdmin);
+
+// Definir la ruta para POST en "/admins/login"
+app.post('/admins/login', loginAdmin);
+
+// Definir la ruta para POST en "/users/create"
 app.post('/users/create', createUser);
 
+// Definir la ruta para POST en "/users/login"
 app.post('/users/login', login);
 
+// Definir la ruta para GET en "/todosproductos"
 app.get('/todosproductos', get_All_Products_Controller);
 
+// Definir la ruta para GET en "/users/:Id_cliente"
 app.get('/users/:Id_cliente', getUserById);
+
+// Definir la ruta para GET en "/contestants"
+app.get('/contestants', getAllContestantsController);
+
+// Definir la ruta para GET en "/contestants/:id"
+app.get('/contestants/:id', getContestantByIdController);
+
+
+// Definir la ruta para POST en "/contestants/register"
+app.post('/contestants/register', registerContestantController);
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');

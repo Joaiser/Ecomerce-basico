@@ -11,7 +11,7 @@
 }
 
 #week-recomended-container-center{
-    max-width: 1500px;
+    max-width: 1024px;
     overflow: hidden;
     background-color: white;
 }
@@ -23,12 +23,11 @@
 
 #div-carusell-week-recomended{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 60px;
     transition: transform 0.5s ease-in-out;
     margin: 0 0;
-    margin-left: 80%;
 }
 
 .slide-week-recomended {
@@ -95,4 +94,62 @@
 .slide-week-recomended span{
     font-weight: bold;
     color: #ffffff;
+}
+
+@media screen and (max-width: 1024px){
+    #week-recomended-container-center{
+        max-width: 90%;
+    }
+
+    #div-carusell-week-recomended{
+        gap: 30px;
+    }
+
+    .slide-week-recomended {
+        padding: 1rem;
+    }
+
+    .img-week-recomended{
+        width: 150px;
+    }
+
+    .carousel-button-week-recomended {
+        padding: 5px 10px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    #week-recomended-container-center h1{
+        padding-block: 8%;
+    }
+
+    #div-carusell-week-recomended{
+        gap: 20px;
+    }
+
+    .img-week-recomended{
+        width: 120px;
+    }
+
+    .legend{
+        margin-right: -10%;
+    }
+}
+
+@media screen and (max-width: 480px){
+    #week-recomended-container-center h1{
+        padding-block: 10%;
+    }
+
+    #div-carusell-week-recomended{
+        gap: 10px;
+    }
+
+    .img-week-recomended{
+        width: 100px;
+    }
+
+    .legend{
+        margin-right: -5%;
+    }
 }

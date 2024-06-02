@@ -18,7 +18,8 @@ export function Header({ changeFilters }) {
         }
     }, []);
 
-    const handleMenuClick = () => {
+    const handleMenuClick = (event) => {
+        event.stopPropagation();
         setIsMenuOpen(!isMenuOpen);
     }
 
@@ -31,12 +32,16 @@ export function Header({ changeFilters }) {
         setUsername(null);
     }
 
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    }
+
     return (
         <>
-        <header>
+        <header onClick={closeMenu}>
             <div className='max-width'>
                 <div>
-                    <h1><Link to="/">PC Aitor <CartIcon /></Link></h1>
+                    <h1><Link to="/" onClick={closeMenu}>PC Aitor <CartIcon /></Link></h1>
                         <div id='select-position'>
                             {location.pathname === '/todosproductos' && (
                                 <div className={`filters ${isFiltersOpen ? 'open' : ''}`}>
@@ -58,15 +63,14 @@ export function Header({ changeFilters }) {
                 </div>
             </div>
             <div className='max-width'>
-                <button className="menu-icon" onClick={handleMenuClick}>☰</button>
-                
+                    <button className="menu-icon" onClick={handleMenuClick}>☰</button>
                 <nav>
                     <ul className={isMenuOpen ? 'open' : ''}>
-                        <li><Link to="/">Inicio</Link></li>
-                        <li><Link to="/todosproductos">Productos</Link></li>
-                        <li><Link to="/foro">Foro</Link></li>
-                        <li><Link to="/nosotros">Nosotros</Link></li>
-                        <li><Link to="/contacto">Contacto</Link></li>
+                        <li><Link to="/" onClick={closeMenu}>Inicio</Link></li>
+                        <li><Link to="/todosproductos" onClick={closeMenu}>Productos</Link></li>
+                        <li><Link to="/foro" onClick={closeMenu}>Foro</Link></li>
+                        <li><Link to="/nosotros" onClick={closeMenu}>Nosotros</Link></li>
+                        <li><Link to="/contacto" onClick={closeMenu}>Contacto</Link></li>
                     </ul>
                 </nav>
             </div>

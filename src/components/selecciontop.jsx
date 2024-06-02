@@ -10,7 +10,7 @@ export const useCarousel = (productsToShow, initialIndex = 0) => {
 
     const nextSlide = () => {
         if (currentIndex < productsToShow.length - 1) { 
-            setCurrentIndex((currentIndex + 1) % 11); // 11 is the number of productsToShow 
+            setCurrentIndex((currentIndex + 1) % 13);  
         }
     }
     

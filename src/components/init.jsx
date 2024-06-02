@@ -7,7 +7,7 @@ export function Init() {
         <>
         <section id='presentation'>
         <h1>¡Bienvenido a la tienda!</h1>
-        <h2><a href="">Participa en nuestro concurso para ganar un PC Gaming</a></h2>
+        <h2><Link to={"/concurso"}>Participa en nuestro concurso para ganar un PC Gaming</Link></h2>
         
         <div id='section-init-center'>
                 <article id='images-init'>

@@ -23,7 +23,7 @@ export function LoginPage () {
   };
 
   const handleLogin = async () => {
-    if (!validateForm()) return; // Agregado para validar el formulario antes de enviar la solicitud
+    if (!validateForm()) return; // Validar el formulario antes de enviar la solicitud
   
     setErrorMessage(''); // Restablecer el mensaje de error
   
@@ -32,21 +32,45 @@ export function LoginPage () {
       Nickname: Nickname,
       Password_clientes: Password_clientes
     };
+
+    // Para Administradores
+    const adminData = {
+      username: Nickname,
+      password: Password_clientes
+    };
+  
     // Hacer una solicitud POST al servidor
     try {
       const response = await axios.post('http://localhost:3000/users/login', userData);
-
-          // Guardar el token, el username y el Id_cliente en el almacenamiento local
-          localStorage.setItem('authToken', response.data.token);
-          localStorage.setItem('username', Nickname);
-          localStorage.setItem('Id_cliente', response.data.Id_cliente); // Asegúrate de que 'Id_cliente' es la clave correcta en la respuesta
-           window.location.href = '/';
-        } catch (error) {
-        // axios expone el mensaje de error a través de error.response.data
-        setErrorMessage(error.response.data.message);
-        }
-  };
   
+      // Guardar el token, el username y el Id_cliente en el almacenamiento local
+      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('username', Nickname);
+      localStorage.setItem('Id_cliente', response.data.Id_cliente); // Asegúrate de que 'Id_cliente' es la clave correcta en la respuesta
+      localStorage.setItem('isAdmin', 'false'); // Añade esta línea
+      window.location.href = '/';
+    } catch (error) {
+      // Si el error es 'Usuario no encontrado', intentar iniciar sesión como administrador
+      if (error.response.data.message === 'Usuario no encontrado') {
+        try {
+          const adminResponse = await axios.post('http://localhost:3000/admins/login', adminData);
+  
+          // Guardar el token, el username y el Id_administrador en el almacenamiento local
+          localStorage.setItem('authToken', adminResponse.data.token);
+          localStorage.setItem('username', Nickname);
+          localStorage.setItem('Id_administrador', adminResponse.data.Id_administrador); // Asegúrate de que 'Id_administrador' es la clave correcta en la respuesta
+          localStorage.setItem('isAdmin', 'true'); // Añade esta línea
+          window.location.href = '/admin'; // Redirigir al usuario a la página de administrador
+        } catch (adminError) {
+          // Si el inicio de sesión como administrador también falla, mostrar el mensaje de error
+          setErrorMessage(adminError.response.data.message);
+        }
+      } else {
+        // Si el error no es 'Usuario no encontrado', mostrar el mensaje de error
+        setErrorMessage(error.response.data.message);
+      }
+    }
+};
   const handleRegister = async () => {
     if (!validateForm()) return; // Agregado para validar el formulario antes de enviar la solicitud
   

@@ -6,6 +6,7 @@ import { FilterContext } from './context/filters.jsx';
 import { Cart } from './components/Cart.jsx';
 import { CartProvider } from './context/cart.jsx';
 import { Init } from './components/init.jsx';
+import {Contest} from './components/pages/contest.jsx';
 import { WeekRecomended } from './components/weekrecomended.jsx';
 import { SelectionTop } from './components/selecciontop.jsx';
 import { FooterReal } from './components/footerReal.jsx';
@@ -67,6 +68,7 @@ function App() {
          <Route path="*" element={
            <Layout>
              <Routes>
+               <Route path="/concurso" element={<Contest />} />
                <Route path="/contacto" element={<Contact />} />
                <Route path="/nosotros" element={<AboutUs />} />
                <Route path="/foro" element={<Foro />} />
