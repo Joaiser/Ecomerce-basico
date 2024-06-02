@@ -25,89 +25,17 @@
     margin-block: 3%;
 }
 
-#div-carusell{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 100px;
-    transition: transform 0.5s ease-in-out;
-    margin: 0 0;
-    margin-left: 27%; 
-    user-select: none;
-}
-
-.slide {
-    flex: 0 0 auto;
-    box-sizing: border-box;
-}
-
-.slide a{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    text-decoration: none;
-}
-
-.slide a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 1px;
-    width: 100%;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-}
-
-.slide a:hover::after {
-    transform: scaleX(1);
-}
+@media screen and (max-width: 1545px){
+    #images-init{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
     
-
-#carusell-article {
-    position: relative; 
-    overflow: hidden;
 }
 
-.carousel-button {
-    background-color: #161616;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    color: #fff; /* color del texto */
-    position: absolute; /* nuevo */
-    top: 28%; /* modificado */
-    transform: translateY(-50%); /* nuevo */
+@media screen and (max-width: 643px){
+    #images-init{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
-
-.carousel-button:hover {
-    background-color: #161616;
-}
-
-.carousel-button:first-child {
-    left: 0; /* nuevo */
-}
-
-.carousel-button:last-child {
-    right: 0px; /* nuevo */
-}
-
-#buttons{
-    width: 100%;
-    position: absolute; /* nuevo */
-    height: 100%; /* nuevo */
-}
-
-.prueba{
-    width: 140%;
-    height: auto;
-}
-
-
-/*tengo que arreglar centrado de esta seccion de carrusell
-Arreglar botones en pantallas muy grandes
-comprobar los comentarios
-*/

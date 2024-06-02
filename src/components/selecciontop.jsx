@@ -10,7 +10,7 @@ export const useCarousel = (productsToShow, initialIndex = 0) => {
 
     const nextSlide = () => {
         if (currentIndex < productsToShow.length - 1) { 
-            setCurrentIndex((currentIndex + 1) % 11); // 11 is the number of productsToShow 
+            setCurrentIndex((currentIndex + 1) % 13);  
         }
     }
     
@@ -54,7 +54,6 @@ export function SelectionTop(){
                     const imageUrl = asciiCodes.map(code => String.fromCharCode(code)).join('');
                     return { ...product, image: imageUrl };
                 });
-                console.log(productsWithImageUrls);
                 setProductsToShow(productsWithImageUrls);
             })
             .catch(error => console.error('Error:', error));
@@ -72,7 +71,7 @@ export function SelectionTop(){
                 <aside className='aside-container'>
                     <h2>Seleccion Top</h2>
                     <p>Tus productos favoritos de tecnología con ofertas y descuentos increíbles.</p>
-                    <Link to={"/productos"}>Ver más</Link>
+                    <Link to={"/todosproductos"} onClick={(e) => e.stopPropagation()}>Ver más</Link>
                 </aside>
     
                 <article className="content">
@@ -94,7 +93,7 @@ export function SelectionTop(){
                         <div id='section-center-seleccion' ref={carouselRef}>
                             {productsToShow.filter(product => product.Genero === selectedCategory).map((product, index, self) => (
                                 <article key={index}>
-                                    <Link to={product.link}>
+                                   <Link to={product.Id_producto ? `/productos/${product.Id_producto}` : '/error'}>
                                         <img src={product.image} alt={product.Nombre || ''} loading='lazy'/>
                                         {(self.length - 1 === index || (product.Nombre && product.precio)) && (
                                             <div>

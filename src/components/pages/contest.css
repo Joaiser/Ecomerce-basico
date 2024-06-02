@@ -1,0 +1,10 @@
+#concurso{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#concurso li{
+    color: black;
+}

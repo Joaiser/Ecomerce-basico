@@ -7,22 +7,27 @@
     margin: 0 0;
     position: relative;
     top: 8px;
+    padding-bottom: 5%;
 }
 
 #week-recomended-container-center{
-    max-width: 1500px;
+    max-width: 1024px;
     overflow: hidden;
     background-color: white;
 }
 
+#week-recomended-container-center h1{
+    text-align: center;
+    padding-block: 4%;
+}
+
 #div-carusell-week-recomended{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 100px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 60px;
     transition: transform 0.5s ease-in-out;
     margin: 0 0;
-    margin-left: 65%;
 }
 
 .slide-week-recomended {
@@ -30,39 +35,20 @@
     flex-direction: column;
     justify-content: space-between;
     height: auto;
+    background: #111;
+    padding: 2rem;
+    border-radius: 16px;
 }
 
-.slide-week-recomended a{
+.link-to-product {
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 1000;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.slide-week-recomended a {
-    position: relative;
-    text-decoration: none;
-}
-
-.slide-week-recomended a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 1px;
-    width: 100%;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-}
-
-.slide-week-recomended a:hover::after {
-    transform: scaleX(1);
-}
-
-#carusell-article-week-recomended {
-    position: relative; 
-    overflow: hidden;
 }
 
 .carousel-button-week-recomended {
@@ -72,17 +58,10 @@
     cursor: pointer;
     color: #fff;
     position: absolute;
-    top: 28%;
+    top: 47%;
     transform: translateY(-50%);
 }
 
-.carousel-button:hover {
-    background-color: #161616;
-}
-
-.carousel-button-week-recomended:first-child {
-    left: 0;
-}
 
 .carousel-button-week-recomended:last-child {
     right: 0;
@@ -90,22 +69,87 @@
 
 #buttons{
     width: 100%;
-    position: absolute; /* nuevo */
-    top: -29px; /* nuevo */
-    left: 0; /* nuevo */
-    height: 100%; /* nuevo */
+    position: relative; 
+    top: -280px; 
+    height: 100%; 
 }
 
 .img-week-recomended{
     width: 180px;
     height: auto;
+    border-radius: 10px;
 }
 
 .legend{
-    width: 150px;
-    height: 60px;
+    width: auto;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-block: 19%;
+    margin-right: -18%;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.slide-week-recomended span{
+    font-weight: bold;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 1024px){
+    #week-recomended-container-center{
+        max-width: 90%;
+    }
+
+    #div-carusell-week-recomended{
+        gap: 30px;
+    }
+
+    .slide-week-recomended {
+        padding: 1rem;
+    }
+
+    .img-week-recomended{
+        width: 150px;
+    }
+
+    .carousel-button-week-recomended {
+        padding: 5px 10px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    #week-recomended-container-center h1{
+        padding-block: 8%;
+    }
+
+    #div-carusell-week-recomended{
+        gap: 20px;
+    }
+
+    .img-week-recomended{
+        width: 120px;
+    }
+
+    .legend{
+        margin-right: -10%;
+    }
+}
+
+@media screen and (max-width: 480px){
+    #week-recomended-container-center h1{
+        padding-block: 10%;
+    }
+
+    #div-carusell-week-recomended{
+        gap: 10px;
+    }
+
+    .img-week-recomended{
+        width: 100px;
+    }
+
+    .legend{
+        margin-right: -5%;
+    }
 }

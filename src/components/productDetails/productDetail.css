@@ -1,0 +1,32 @@
+section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.container-product{
+    max-width: 1024px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+}
+
+.container-product article { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-product article p{
+    width: 50%;
+}
+
+.container-product aside img{
+    width: 300px;
+    height: auto;
+}

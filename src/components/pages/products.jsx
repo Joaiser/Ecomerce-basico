@@ -1,16 +1,15 @@
-import { useContext } from 'react';
+import { useContext} from 'react';
 import { FilterContext } from '../../context/filters.jsx';
 import { useFilters } from '../../hooks/useFilters.js';
 import { AddToCartIcon } from '../icons.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import './Products.css';
 
-
 export function Products() {
     const { filters } = useContext(FilterContext);
     const { addToCart, cart } = useCart();
     const { filteredProducts, isLoading, error } = useFilters(filters);
-
+    
     if (isLoading) {
         return <div>Cargando productos...</div>;
     }
@@ -25,16 +24,14 @@ export function Products() {
         No hay productos que coincidan con los criterios de filtro.</div>;
     }
 
-    
-
     return (
-        <main className='products'>
+        <main className='all-products'>
             <ul>
                 {filteredProducts.map((product) => (
                     <li key={product.id}>
-                        <img src={product.image} alt={product.title} />
+                        <img src={product.imagen_producto} alt={product.nombre_producto} />
                         <div className='title'>
-                            <strong>{product.title}</strong> - ${product.price}
+                            <strong>{product.nombre_producto}</strong> - ${product.precio}
                         </div>
                         <div>
                             <button onClick={()=>addToCart(product)}>
