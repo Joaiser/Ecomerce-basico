@@ -24,23 +24,23 @@ export function Filters() {
     return (
         <section className="filters">
             <div>
-                <label htmlFor={categoryFilterId} id='category'>Categoria</label>
+                <label htmlFor={categoryFilterId} id='category' style={{color: 'black'}}>Categoria</label>
                 <select id={categoryFilterId} onChange={handleChangeCategory}>
                     <option value="all">Todos</option>
-                    <option value="men's clothing">Ropa Hombre </option>
-                    <option value="women's clothing">Ropa Mujer </option>
-                    <option value="jewelery">Joyas</option>
-                    <option value="electronics">Electronica </option>
+                    <option value="Ordenadores">Ordenadores</option>
+                    <option value="Componentes">Componentes</option>
+                    <option value="Móviles">Móviles</option>
+                    <option value="Televisores">Televisores</option>
                 </select>
             </div>
             <div>
-                <label htmlFor={minPriceFilterId}>Precio a partir de: </label>
+                <label htmlFor={minPriceFilterId} style={{color: 'black'}}>Precio a partir de: </label>
                 <input type="range"
                 id={minPriceFilterId} 
                 min='0'
                 max='1000'
                 onChange={handleChangeMinPrice}/>
-               <span>${filters.minprice}</span>
+               <span style={{color:'black'}}>€{filters.minprice}</span>
             </div>
         </section>
     )

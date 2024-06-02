@@ -16,28 +16,25 @@ export function FooterReal() {
                 <div>
                     <h2>Quienes somos</h2>
                     <ul>
-                        <li><a href="#">Sobre nosotros</a></li>
-                        <li><a href="#">Nuestras Marcas</a></li>
-                        <li><a href="#">Aviso legal</a></li>
-                        <li><a href="#">Politica de privacidad</a></li>
+                        <li><Link to="/nosotros">Sobre nosotros</Link></li>
+                        <li><Link to="/aviso-legal">Aviso legal</Link ></li>
+                        <li><Link to="/politica-de-privacidad">Politica de privacidad </Link></li>
                     </ul>
                 </div>
                 <div>
                     <h2>Atención al cliente</h2>
                     <ul>
-                        <li><a href="#">Contacto</a></li>
-                        <li><a href="#">Devoluciones</a></li>
-                        <li><a href="#">Reclamaciones</a></li>
-                        <li><a href="#">Garantias</a></li>
+                        <li><Link to= "/contacto">Contacto</Link></li>
+                        <li><Link to= "/devoluciones">Devoluciones</Link></li>
+                        <li><Link to= "/reclamaciones">Reclamaciones</Link></li>
                     </ul>
                 </div>
                 <div>
                     <h2>Contactar</h2>
                     <ul>
-                        <li><a href="#">Centro de soporte</a></li>
-                        <li><a href="#">Contacto</a></li>
-                        <li><a href="#">Trabaja con nosotros</a></li>
-                        <li><a href="#">Politita de cookies</a></li>
+                        <li><Link to= "/contacto">Centro de soporte</Link></li>
+                        <li><Link to= "/contacto">Contacto</Link></li>
+                        <li><Link to="/cookies">Politita de cookies</Link></li>
                     </ul>
                 </div>
                 <aside id='aside-footer'>

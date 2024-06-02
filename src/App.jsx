@@ -29,7 +29,12 @@ import { LoginPage } from './components/pages/login.jsx';
 import { HowToBuy } from './components/pages/footerPages/howBuy.jsx';
 import { WaysToPay } from './components/pages/footerPages/waysToPay.jsx';
 import { ShippingCosts } from './components/pages/footerPages/shippingCosts.jsx';
-
+import {AvisoLegal} from './components/pages/footerPages/avisoLegal.jsx';
+import { Privacidad } from './components/pages/footerPages/privacidad.jsx';
+import { Devoluciones } from './components/pages/footerPages/devoluciones.jsx';
+import { Cookies } from './components/pages/footerPages/cookies.jsx';
+import { Reclamaciones } from './components/pages/footerPages/reclamaciones.jsx';
+  
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -78,6 +83,11 @@ function App() {
                <Route path="/como-comprar" element={<HowToBuy />} />
                <Route path="/formas-de-pago" element={<WaysToPay />} />
                <Route path="/gastos-de-envio" element={<ShippingCosts />} />
+                <Route path="/aviso-legal" element={<AvisoLegal />} />
+                <Route path="/politica-de-privacidad" element={<Privacidad />} />
+                <Route path="/devoluciones" element={<Devoluciones />} />
+                <Route path="/cookies" element={<Cookies />} />
+                <Route path="/reclamaciones" element={<Reclamaciones />} />
                <Route path="/" element={
                  <>
                    <Init />

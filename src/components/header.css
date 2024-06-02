@@ -56,7 +56,7 @@ header h1{
 header div{
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 110px;
 }
 
 #state-product{

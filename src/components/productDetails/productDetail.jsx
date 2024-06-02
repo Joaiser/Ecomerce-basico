@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useCart } from '../../hooks/useCart.js';
 import './productDetail.css';
+import { CartIcon } from '../icons.jsx';
 
 export function ProductDetail() {
     const { Id_producto } = useParams();
+    const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
@@ -40,7 +43,7 @@ export function ProductDetail() {
                     <h1>{product.Nombre}</h1>
                     <p>{product.descripcion}</p>
                     <p>Precio: {product.precio}€</p>
-                    <button className="btn btn-primary">Agregar al carrito</button>
+                    <button className="btn btn-primary" onClick={() => addToCart(product)}><CartIcon/></button>
                 </article>
             </div>
         </section>
