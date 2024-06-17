@@ -35,6 +35,8 @@ import { Privacidad } from './components/pages/footerPages/privacidad.jsx';
 import { Devoluciones } from './components/pages/footerPages/devoluciones.jsx';
 import { Cookies } from './components/pages/footerPages/cookies.jsx';
 import { Reclamaciones } from './components/pages/footerPages/reclamaciones.jsx';
+//importación de la página de pago
+import { Pay } from './components/pages/payPage.jsx';
   
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -81,6 +83,7 @@ function App() {
                <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
                <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
                <Route path="/productos/genero/:Genero" element={<ProductGender />} />
+               <Route path='/payPage' element={<Pay />} />
                {/*Rutas del footer*/}
                <Route path="/como-comprar" element={<HowToBuy />} />
                <Route path="/formas-de-pago" element={<WaysToPay />} />
