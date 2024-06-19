@@ -37,6 +37,7 @@ import { Cookies } from './components/pages/footerPages/cookies.jsx';
 import { Reclamaciones } from './components/pages/footerPages/reclamaciones.jsx';
 //importación de la página de pago
 import { Pay } from './components/pages/payPage.jsx';
+import PayPalConfig from '/src/components/paypal/paypal.jsx';
   
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -62,6 +63,7 @@ function App() {
   const { filters, setFilters } = useContext(FilterContext);
 
   return (
+    <PayPalConfig>
     <CartProvider>
       <Router>
         <ScrollToTop />
@@ -107,6 +109,7 @@ function App() {
         </Routes>
       </Router>
     </CartProvider>
+    </PayPalConfig>
   );
 }
 
