@@ -39,21 +39,31 @@ export async function getAllProductsRecommendedController(req, res, next) {
   }
 }
 
-  export async function getProductRecommendedByIdController(req, res, next) {
-    try {
-      const id = req.params.Id_producto;
-      const product = await Product.getProductRecomendedById(id);
-      res.json(product);
-    } catch (err) {
-      next(err);
-    }
+export async function getProductRecommendedByIdController(req, res, next) {
+  try {
+    const id = req.params.Id_producto;
+    const product = await Product.getProductRecomendedById(id);
+    res.json(product);
+  } catch (err) {
+    next(err);
   }
+}
 
-  export async function get_All_Products_Controller(req, res, next) {
-    try {
-      const products = await Product.get_all_products();
-      res.json(products);
-    } catch (err) {
-      next(err);
-    }
+export async function get_All_Products_Controller(req, res, next) {
+  try {
+    const products = await Product.get_all_products();
+    res.json(products);
+  } catch (err) {
+    next(err);
   }
+}
+
+export async function searchProductsController(req, res, next) {
+  try {
+    const searchTerm = req.query.query;
+    const products = await Product.searchProducts(searchTerm);
+    res.json(products);
+  } catch (err) {
+    next(err);
+  }
+}

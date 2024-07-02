@@ -1,0 +1,47 @@
+
+  /* Clase para ocultar la lista de resultados cuando no debe ser visible */
+.search-results-hidden {
+    display: none;
+  }
+  
+  .search-results {
+    max-height: 200px; /* Altura máxima para la lista de resultados */
+    overflow-y: auto; /* Añade una barra de desplazamiento vertical si es necesario */
+    position: fixed; /* Mantiene la lista de resultados en una posición fija */
+    top: 50px; /* Posición debajo del campo de búsqueda */
+    width: calc(30% - 20px); /* Ajusta el ancho y deja espacio para el padding */
+    padding: 10px;
+    max-height: calc(100vh - 70px); /* Altura máxima para pantallas pequeñas */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    background-color: white; /* Fondo blanco */
+    border: 1px solid #ccc; /* Borde gris */
+    border-top: none; /* Sin borde superior */
+    z-index: 1; /* Coloca la lista de resultados encima de otros elementos */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    transition: all 0.3s ease; /* Transición suave */
+    color: black;
+  }
+  
+  /* Personalización de la barra de desplazamiento para Chrome, Edge y Safari */
+  .search-results::-webkit-scrollbar {
+    width: 8px; /* Ancho de la barra de desplazamiento */
+  }
+  
+  .search-results::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color de fondo de la pista */
+  }
+  
+  .search-results::-webkit-scrollbar-thumb {
+    background: #ccc; /* Color de la barra de desplazamiento */
+    border-radius: 4px; /* Bordes redondeados para la barra de desplazamiento */
+  }
+  
+  .search-results::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3; /* Color al pasar el mouse */
+  }
+
+  .search-results > *:hover {
+    background-color: #f2f2f2; /* Cambia el color de fondo al pasar el mouse */
+    cursor: pointer; /* Cambia el cursor a una mano para indicar que es clickeable */
+  }

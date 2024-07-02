@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import { getAllProductsController, getProductByIdController, getProductsByCategoryController,
-   getAllProductsRecommendedController, getProductRecommendedByIdController, get_All_Products_Controller} 
+   getAllProductsRecommendedController, getProductRecommendedByIdController, get_All_Products_Controller, searchProductsController} 
 from './controller/productController.js';
 import { createUser, login, getUserById } from './controller/usersController.js';
 import { createPostController, getPostsController } from './controller/forumController.js'; 
@@ -15,23 +15,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-
-app.use(cors({
-  origin: function (origin, callback) {
-      // Permitir solicitudes sin origen (por ejemplo, solicitudes de Postman)
-      if (!origin) return callback(null, true);
-
-      const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
-      if (allowedOrigins.includes(origin)) {
-          // Si el origen está en la lista de orígenes permitidos, aceptar la solicitud
-          return callback(null, true);
-      } else {
-          // De lo contrario, rechazar la solicitud
-          return callback(new Error('Not allowed by CORS'));
-      }
-  },
-  credentials: true
-}));
 
 app.use(express.json());
 
@@ -111,6 +94,9 @@ app.post('/contestants/register', registerContestantController);
 
 // Definir la ruta para POST en "/contact/send"
 app.post('/contact/send', sendMessageController);
+
+// Definir la ruta para GET en "/products/search" para buscar productos
+app.get('/products/search', searchProductsController);
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');

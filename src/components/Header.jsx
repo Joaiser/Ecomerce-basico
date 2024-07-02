@@ -4,6 +4,7 @@ import { CartIcon } from './icons.jsx';
 import './header.css';
 import { Cart } from './Cart.jsx';
 import { Link, useLocation } from 'react-router-dom';
+import {SearchProducts} from './searchProducts'; 
 
 export function Header({ changeFilters }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,6 +49,9 @@ export function Header({ changeFilters }) {
                                     <Filters onChange={changeFilters} />
                                 </div>
                             )}
+                        </div>
+                        <div>
+                            <SearchProducts />
                         </div>
                     <div>
                         {username ? (

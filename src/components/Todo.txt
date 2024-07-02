@@ -1,4 +1,5 @@
 
 
 
-Cosas que hacer: ARREGLAR LO DE PAYPAL, PONER PARA PAGAR FICTICIO
+Cosas que hacer: ARREGLAR LO DE PAYPAL, PONER PARA PAGAR FICTICIO(MÁS ADELANTE)
+ ARREGLAR RESPONSIVE, Usar userstorage en vez de localstorage en el carrito, arreglar el foro

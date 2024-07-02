@@ -56,7 +56,14 @@ header h1{
 header div{
     display: flex;
     align-items: center;
-    gap: 110px;
+    gap: 29px;
+}
+
+header div input{
+    width: 260px;
+    height: 20px;
+    font-size: 1rem;
+    margin-top: 11px;
 }
 
 #state-product{
