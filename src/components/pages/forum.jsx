@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './forum.css';
 
 export function Foro() {
@@ -7,7 +8,7 @@ export function Foro() {
     const [username, setUsername] = useState(null);
     const [newReplyContent, setNewReplyContent] = useState({});
     const [isAdmin, setIsAdmin] = useState(false);
-    const [posts, setPosts] = useState(() => JSON.parse(localStorage.getItem('posts')) || []);
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const storedUsername = localStorage.getItem('username');
@@ -16,51 +17,85 @@ export function Foro() {
             setUsername(storedUsername);
             setIsAdmin(storedIsAdmin);
         }
+
+        // Obtener publicaciones del backend
+        fetchPosts();
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem('posts', JSON.stringify(posts));
-    }, [posts]);
+    const fetchPosts = () => {
+        axios.get('http://localhost:3000/posts')
+            .then(response => {
+                setPosts(response.data);
+            })
+            .catch(error => {
+                console.error('Error al obtener publicaciones:', error);
+            });
+    };
 
     const handlePostSubmit = event => {
         event.preventDefault();
-    
+
         const postWithUsername = {
+            userId: 1, // Asegúrate de que este valor sea correcto
             title: newPostTitle,
             content: newPostContent,
-            username: username,
-            replies: []
+            parentPostId: null
         };
-    
-        setPosts([...posts, postWithUsername]);
-        setNewPostTitle('');
-        setNewPostContent('');
+
+        axios.post('http://localhost:3000/posts', postWithUsername)
+            .then(response => {
+                fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva
+                setNewPostTitle('');
+                setNewPostContent('');
+            })
+            .catch(error => {
+                console.error('Error al crear publicación:', error);
+            });
     };
 
     const handleReplySubmit = (event, postIndex) => {
         event.preventDefault();
 
         const replyWithUsername = {
-            content: newReplyContent[postIndex],
-            username: username
+            userId: 1, // Asegúrate de que este valor sea correcto
+            content: newReplyContent[postIndex]
         };
 
-        const updatedPosts = [...posts];
-        updatedPosts[postIndex].replies = [...updatedPosts[postIndex].replies, replyWithUsername];
-        setPosts(updatedPosts);
-        setNewReplyContent(prevState => ({ ...prevState, [postIndex]: '' }));
+        const postId = posts[postIndex].id;
+
+        axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
+            .then(response => {
+                fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva respuesta
+                setNewReplyContent(prevState => ({ ...prevState, [postIndex]: '' }));
+            })
+            .catch(error => {
+                console.error('Error al crear respuesta:', error);
+            });
     };
 
-    const handleDeletePost = (postIndex) => {
-        const updatedPosts = [...posts];
-        updatedPosts.splice(postIndex, 1);
-        setPosts(updatedPosts);
+    const handleDeletePost = postIndex => {
+        const postId = posts[postIndex].id;
+
+        axios.delete(`http://localhost:3000/posts/${postId}`)
+            .then(() => {
+                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una
+            })
+            .catch(error => {
+                console.error('Error al eliminar publicación:', error);
+            });
     };
 
     const handleDeleteReply = (postIndex, replyIndex) => {
-        const updatedPosts = [...posts];
-        updatedPosts[postIndex].replies.splice(replyIndex, 1);
-        setPosts(updatedPosts);
+        const postId = posts[postIndex].id;
+        const replyId = posts[postIndex].replies[replyIndex].id;
+
+        axios.delete(`http://localhost:3000/posts/${postId}/replies/${replyId}`)
+            .then(response => {
+                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una respuesta
+            })
+            .catch(error => {
+                console.error('Error al eliminar respuesta:', error);
+            });
     };
 
     return (
@@ -70,47 +105,56 @@ export function Foro() {
                 <p>
                     Bienvenido a nuestro foro{username ? `, ${username}` : ''}. Aquí puedes compartir tus pensamientos,
                     hacer preguntas e interactuar con otros miembros de nuestra comunidad.
-                </p>    
+                </p>
                 {username ? (
                     <form onSubmit={handlePostSubmit}>
-                        <input type="text" value={newPostTitle} onChange={e => setNewPostTitle(e.target.value)} placeholder="Título de la publicación" />
-                        <textarea value={newPostContent} onChange={e => setNewPostContent(e.target.value)} placeholder="Escribe tu publicación aquí..." />
+                        <input
+                            type="text"
+                            value={newPostTitle}
+                            onChange={e => setNewPostTitle(e.target.value)}
+                            placeholder="Título de la publicación"
+                        />
+                        <textarea
+                            value={newPostContent}
+                            onChange={e => setNewPostContent(e.target.value)}
+                            placeholder="Escribe tu publicación aquí..."
+                        />
                         <button type="submit">Publicar</button>
                     </form>
                 ) : (
                     <p>Debes iniciar sesión para publicar.</p>
                 )}
                 <div className="post-container">
-                {Array.isArray(posts) && posts.map((post, index) => (
-                    <div key={index} className="post">
-                        <h2>{post.title}</h2>
-                        <p>{post.content}</p>
-                        <p>Publicado por: {post.username}</p>
-                        {isAdmin && (
-                            <button onClick={() => handleDeletePost(index)}>Borrar Post</button>
-                        )}
-                        {Array.isArray(post.replies) && post.replies.map((reply, replyIndex) => (
-                            <div key={replyIndex}>
-                                <p>{reply.content}</p>
-                                <p>Respondido por: {reply.username}</p>
-                                {isAdmin && (
-                                    <button onClick={() => handleDeleteReply(index, replyIndex)}>Borrar respuesta</button>
-                                )}
-                            </div>
-                        ))}
-                        {username && (
-                            <form onSubmit={e => handleReplySubmit(e, index)}>
-                                <textarea 
-                                    value={newReplyContent[index] || ''} 
-                                    onChange={e => setNewReplyContent(prevState => ({ ...prevState, [index]: e.target.value }))}
-                                    placeholder="Escribe tu respuesta aquí..." 
-                                    style={{  width: '400px', height: '50px' }} 
-                                />
-                                <button type="submit">Responder</button>
-                            </form>
-                        )}
-                    </div>
-                ))}
+                    {Array.isArray(posts) && posts.map((post, index) => (
+                        <div key={index} className="post">
+                            <h2>{post.title}</h2>
+                            <p>{post.content}</p>
+                            <p>Publicado por: {post.username}</p>
+                            {isAdmin && (
+                                <button onClick={() => handleDeletePost(index)}>Borrar Post</button>
+                            )}
+                            {Array.isArray(post.replies) && post.replies.map((reply, replyIndex) => (
+                                <div key={replyIndex}>
+                                    <p>{reply.content}</p>
+                                    <p>Respondido por: {reply.username}</p>
+                                    {isAdmin && (
+                                        <button onClick={() => handleDeleteReply(index, replyIndex)}>Borrar respuesta</button>
+                                    )}
+                                </div>
+                            ))}
+                            {username && (
+                                <form onSubmit={e => handleReplySubmit(e, index)}>
+                                    <textarea
+                                        value={newReplyContent[index] || ''}
+                                        onChange={e => setNewReplyContent(prevState => ({ ...prevState, [index]: e.target.value }))}
+                                        placeholder="Escribe tu respuesta aquí..."
+                                        style={{ width: '400px', height: '50px' }}
+                                    />
+                                    <button type="submit">Responder</button>
+                                </form>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
