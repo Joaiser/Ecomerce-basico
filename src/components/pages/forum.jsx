@@ -34,14 +34,16 @@ export function Foro() {
 
     const handlePostSubmit = event => {
         event.preventDefault();
-
+    
         const postWithUsername = {
-            userId: 1, // Asegúrate de que este valor sea correcto
+            username: username, // Usar el username almacenado
             title: newPostTitle,
             content: newPostContent,
             parentPostId: null
         };
-
+    
+        console.log('Datos de la publicación:', postWithUsername); // Verificar los datos
+    
         axios.post('http://localhost:3000/posts', postWithUsername)
             .then(response => {
                 fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva
@@ -52,17 +54,19 @@ export function Foro() {
                 console.error('Error al crear publicación:', error);
             });
     };
-
+    
     const handleReplySubmit = (event, postIndex) => {
         event.preventDefault();
-
+    
         const replyWithUsername = {
-            userId: 1, // Asegúrate de que este valor sea correcto
+            username: username, // Usar el username almacenado
             content: newReplyContent[postIndex]
         };
-
+    
         const postId = posts[postIndex].id;
-
+    
+        console.log('Datos de la respuesta:', replyWithUsername); // Verificar los datos
+    
         axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
             .then(response => {
                 fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva respuesta
