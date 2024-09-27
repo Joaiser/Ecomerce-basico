@@ -106,28 +106,32 @@ export function Foro() {
         <section id='foro'>
             <h1>Foro</h1>
             <div id='foro-content'>
-                <p>
-                    Bienvenido a nuestro foro{username ? `, ${username}` : ''}. Aquí puedes compartir tus pensamientos,
-                    hacer preguntas e interactuar con otros miembros de nuestra comunidad.
-                </p>
-                {username ? (
-                    <form onSubmit={handlePostSubmit}>
-                        <input
-                            type="text"
-                            value={newPostTitle}
-                            onChange={e => setNewPostTitle(e.target.value)}
-                            placeholder="Título de la publicación"
-                        />
-                        <textarea
-                            value={newPostContent}
-                            onChange={e => setNewPostContent(e.target.value)}
-                            placeholder="Escribe tu publicación aquí..."
-                        />
-                        <button type="submit">Publicar</button>
-                    </form>
-                ) : (
-                    <p>Debes iniciar sesión para publicar.</p>
-                )}
+                <div id='foro-content-presentation'>  
+                    <p>
+                        Bienvenido a nuestro foro{username ? `, ${username}` : ''}. Aquí puedes compartir tus pensamientos,
+                        hacer preguntas e interactuar con otros miembros de nuestra comunidad.
+                    </p>
+                    {username ? (
+                        <form onSubmit={handlePostSubmit}>
+                            <input
+                                type="text"
+                                value={newPostTitle}
+                                onChange={e => setNewPostTitle(e.target.value)}
+                                placeholder="Título de la publicación"
+                                id='post-title'
+                            />
+                            <textarea
+                                id='post-content'
+                                value={newPostContent}
+                                onChange={e => setNewPostContent(e.target.value)}
+                                placeholder="Escribe tu publicación aquí..."
+                            />
+                            <button type="submit">Publicar</button>
+                        </form>
+                    ) : (
+                        <p>Debes iniciar sesión para publicar.</p>
+                    )}
+                </div>
                 <div className="post-container">
                     {Array.isArray(posts) && posts.map((post, index) => (
                         <div key={index} className="post">
@@ -152,7 +156,7 @@ export function Foro() {
                                         value={newReplyContent[index] || ''}
                                         onChange={e => setNewReplyContent(prevState => ({ ...prevState, [index]: e.target.value }))}
                                         placeholder="Escribe tu respuesta aquí..."
-                                        style={{ width: '400px', height: '50px' }}
+                                        style={{ height: '50px',width: '95%',margin: '10px 0' }}
                                     />
                                     <button type="submit">Responder</button>
                                 </form>
