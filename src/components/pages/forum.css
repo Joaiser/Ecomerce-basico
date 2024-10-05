@@ -24,6 +24,7 @@
     padding: 20px;
     margin: 10px;
     flex: 0 0 calc(50% - 20px);
+    cursor: pointer;
 }
 
 .post p{

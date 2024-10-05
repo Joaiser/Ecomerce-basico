@@ -146,3 +146,11 @@ export async function deleteRepliesByPostId(postId) {
   const [result] = await pool.execute(sql, [postId]);
   return result;
 }
+
+export async function getIdPost(postId) {
+  const sql = `
+      SELECT * FROM Publicaciones Where id = ?
+  `;
+  const [rows] = await pool.execute(sql, [postId]);
+  return rows[0];
+}

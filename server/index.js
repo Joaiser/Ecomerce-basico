@@ -24,7 +24,8 @@ import {
   getPostsController, 
   deletePostController, 
   createReplyController, 
-  deleteReplyController 
+  deleteReplyController,
+  getIdPostController
 } from './controller/forumController.js';
 
 import { 
@@ -83,6 +84,7 @@ app.get('/posts', getPostsController);
 app.delete('/posts/:postId', deletePostController);
 app.post('/posts/:postId/replies', createReplyController);
 app.delete('/posts/:postId/replies/:replyId', deleteReplyController);
+app.get('/posts/:postId', getIdPostController);
 
 // Definir las rutas para usuarios
 app.post('/users/create', createUser);

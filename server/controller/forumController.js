@@ -1,4 +1,5 @@
-import { createPost, getPosts, deletePost, createReply, deleteReply, getUserIdByUsername, deleteRepliesByPostId } from '../models/mysql/forum.js';
+import { createPost, getPosts, deletePost, createReply, 
+    deleteReply, getUserIdByUsername, deleteRepliesByPostId, getIdPost } from '../models/mysql/forum.js';
 
 export async function createPostController(req, res) {
     const { username, title, content, parentPostId } = req.body;
@@ -75,5 +76,20 @@ export async function deleteReplyController(req, res) {
     } catch (error) {
         console.error('Error al eliminar la respuesta:', error); // Agregar log de error
         res.status(500).json({ message: 'Error al eliminar la respuesta', error });
+    }
+}
+
+export async function getIdPostController(req, res) {
+    const { postId } = req.params;
+
+    try {
+        const post = await getIdPost(postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post no encontrado'})
+        }
+        res.status(200).json(post);
+    } catch (error) {
+        console.error('Error al obtener el post:', error); // Agregar log de error
+        res.status(500).json({ message: 'Error al obtener el post', error });
     }
 }

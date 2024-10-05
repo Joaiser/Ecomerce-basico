@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './forum.css';
 
 export function Foro() {
@@ -9,6 +10,7 @@ export function Foro() {
     const [newReplyContent, setNewReplyContent] = useState({});
     const [isAdmin, setIsAdmin] = useState(false);
     const [posts, setPosts] = useState([]);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const storedUsername = localStorage.getItem('username');
@@ -65,7 +67,7 @@ export function Foro() {
     
         const postId = posts[postIndex].id;
     
-        console.log('Datos de la respuesta:', replyWithUsername); // Verificar los datos
+        console.log('Datos de la respuesta:', replyWithUsername); //Verificar los datos
     
         axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
             .then(response => {
@@ -102,6 +104,10 @@ export function Foro() {
             });
     };
 
+    const handlePostClick = (postId) => {
+        navigate(`/foro/${postId}`);
+    };
+
     return (
         <section id='foro'>
             <h1>Foro</h1>
@@ -134,19 +140,19 @@ export function Foro() {
                 </div>
                 <div className="post-container">
                     {Array.isArray(posts) && posts.map((post, index) => (
-                        <div key={index} className="post">
+                        <div key={index} className="post" onClick={() => handlePostClick(post.id)}>
                             <h2>{post.title}</h2>
                             <p>{post.content}</p>
                             <p>Publicado por: {post.username}</p>
                             {isAdmin && (
-                                <button onClick={() => handleDeletePost(index)}>Borrar Post</button>
+                                <button onClick={(e) => { e.stopPropagation(); handleDeletePost(index); }}>Borrar Post</button>
                             )}
                             {Array.isArray(post.replies) && post.replies.map((reply, replyIndex) => (
                                 <div key={replyIndex}>
                                     <p>{reply.content}</p>
                                     <p>Respondido por: {reply.username}</p>
                                     {isAdmin && (
-                                        <button onClick={() => handleDeleteReply(index, replyIndex)}>Borrar respuesta</button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleDeleteReply(index, replyIndex); }}>Borrar respuesta</button>
                                     )}
                                 </div>
                             ))}
@@ -156,7 +162,7 @@ export function Foro() {
                                         value={newReplyContent[index] || ''}
                                         onChange={e => setNewReplyContent(prevState => ({ ...prevState, [index]: e.target.value }))}
                                         placeholder="Escribe tu respuesta aquí..."
-                                        style={{ height: '50px',width: '95%',margin: '10px 0' }}
+                                        style={{ height: '50px', width: '95%', margin: '10px 0' }}
                                     />
                                     <button type="submit">Responder</button>
                                 </form>

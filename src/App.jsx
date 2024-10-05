@@ -46,6 +46,9 @@ import { Reclamaciones } from './components/pages/footerPages/reclamaciones.jsx'
 import { ShippingCosts } from './components/pages/footerPages/shippingCosts.jsx';
 import { WaysToPay } from './components/pages/footerPages/waysToPay.jsx';
 
+// Componente de detalles del foro
+import { ForumDetails } from './components/pages/forumDetails.jsx';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -74,50 +77,49 @@ function App() {
       <Router>
         <ScrollToTop />
         <Routes>
-         <Route path="/login" element={<LoginPage />} />
-         <Route path="*" element={
-           <Layout>
-             <Routes>
-               <Route path="/concurso" element={<Contest />} />
-               <Route path="/contacto" element={<Contact />} />
-               <Route path="/nosotros" element={<AboutUs />} />
-               <Route path="/foro" element={<Foro />} />
-               <Route path="/intercambios" element={<Intercambios />} />
-               <Route path="/screens" element={<ScreensBlog />} />
-               <Route path="/placa" element={<Placabase />} />
-               <Route path="/tipoteclado" element={<Tipoteclado />} />
-               <Route path="/todosproductos" element={<Products />} />
-               <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
-               <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
-               <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
-               <Route path="/productos/genero/:Genero" element={<ProductGender />} />
-               <Route path='/payPage' element={<Pay />} />
-               {/*Rutas del footer*/}
-               <Route path="/como-comprar" element={<HowToBuy />} />
-               <Route path="/formas-de-pago" element={<WaysToPay />} />
-               <Route path="/gastos-de-envio" element={<ShippingCosts />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={
+            <Layout>
+              <Routes>
+                <Route path="/concurso" element={<Contest />} />
+                <Route path="/contacto" element={<Contact />} />
+                <Route path="/nosotros" element={<AboutUs />} />
+                <Route path="/foro" element={<Foro />} />
+                <Route path="/foro/:postId" element={<ForumDetails />} /> {/* Ruta para los detalles del foro */}
+                <Route path="/intercambios" element={<Intercambios />} />
+                <Route path="/screens" element={<ScreensBlog />} />
+                <Route path="/placa" element={<Placabase />} />
+                <Route path="/tipoteclado" element={<Tipoteclado />} />
+                <Route path="/todosproductos" element={<Products />} />
+                <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
+                <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
+                <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
+                <Route path="/productos/genero/:Genero" element={<ProductGender />} />
+                <Route path='/payPage' element={<Pay />} />
+                {/* Rutas del footer */}
+                <Route path="/como-comprar" element={<HowToBuy />} />
+                <Route path="/formas-de-pago" element={<WaysToPay />} />
+                <Route path="/gastos-de-envio" element={<ShippingCosts />} />
                 <Route path="/aviso-legal" element={<AvisoLegal />} />
                 <Route path="/politica-de-privacidad" element={<Privacidad />} />
                 <Route path="/devoluciones" element={<Devoluciones />} />
                 <Route path="/cookies" element={<Cookies />} />
                 <Route path="/reclamaciones" element={<Reclamaciones />} />
-               <Route path="/" element={
-                 <>
-                   <Init />
-                   <SelectionTop />
-                   <WeekRecomended />
-                   <Blog />
-                 </>
-               } />
-             </Routes>
-           </Layout>
-         } />
+                <Route path="/" element={
+                  <>
+                    <Init />
+                    <SelectionTop />
+                    <WeekRecomended />
+                    <Blog />
+                  </>
+                } />
+              </Routes>
+            </Layout>
+          } />
         </Routes>
       </Router>
     </CartProvider>
   );
 }
-
-
 
 export default App;
