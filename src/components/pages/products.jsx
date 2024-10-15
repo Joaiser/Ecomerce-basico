@@ -31,7 +31,7 @@ export function Products() {
                     <li key={product.id}>
                         <img src={product.imagen_producto} alt={product.nombre_producto} />
                         <div className='title'>
-                            <strong>{product.nombre_producto}</strong> - ${product.precio}
+                            <strong>{product.nombre_producto}</strong> - €{product.precio}
                         </div>
                         <div>
                             <button onClick={()=>addToCart(product)}>

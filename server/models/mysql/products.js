@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-//es pool porque se va a estar haciendo varias consultas a la base de datos
 const pool = createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -65,6 +64,19 @@ export class Product {
       return rows;
     } catch (err) {
       throw new Error('Hubo un error al obtener todos los productos');
+    }
+  }
+
+  static async searchProducts(searchTerm) {
+    try {
+      const query = `
+        SELECT * FROM products 
+        WHERE Nombre LIKE ? OR Genero LIKE ?`;
+      const values = [`%${searchTerm}%`, `%${searchTerm}%`];
+      const [rows] = await pool.execute(query, values);
+      return rows;
+    } catch (err) {
+      throw new Error('Hubo un error al buscar los productos');
     }
   }
 }

@@ -1,17 +1,21 @@
 #foro {
     background-color: #ffffff;
     color: #000000;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 95%;
+    width: 100%;
+}
+
+.foro-content p{
+    width: 100%; 
 }
 
 .post-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     justify-content: space-between;
+    gap: 20px;
 }
 
 .post {
@@ -20,6 +24,13 @@
     padding: 20px;
     margin: 10px;
     flex: 0 0 calc(50% - 20px);
+    cursor: pointer;
+}
+
+#post-buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .post p{
@@ -54,10 +65,45 @@ button {
     background-color: #888;
     color: #fff;
     cursor: pointer;
+    transition: transform 0.3s;
 }
 
-.post {
-    min-height: 200px; 
-    display: flex;
-    flex-direction: column;
+button:hover{
+    transform: scale(1.05);
+}
+
+#foro-content-presentation{
+    width: 95%;
+}
+
+@media (max-width: 337px) {
+    #foro {
+        padding: 10px;
+        width: 100%;
+    }
+
+    #foro-content {
+        width: 100%;
+    }
+
+    #foro-content-presentation {
+        width: 100%;
+    }
+
+    .post-container {
+        grid-template-columns: 1fr;
+    }
+
+    .post {
+        flex: 0 0 100%;
+        margin: 5px 0;
+    }
+
+    input, textarea {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
 }
