@@ -8,11 +8,23 @@ export function ForumDetails() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [newReplyContent, setNewReplyContent] = useState('');
+    const [username, setUsername] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
+        const storedUsername = localStorage.getItem('username');
+        const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
+        if (storedUsername) {
+            setUsername(storedUsername);
+            setIsAdmin(storedIsAdmin);
+        }
+
         axios.get(`http://localhost:3000/posts/${postId}`)
             .then(response => {
-                setPost(response.data);
+                const post = response.data;
+                post.username = storedUsername; // Asigna el username almacenado al post
+                setPost(post);
                 setLoading(false);
             })
             .catch(error => {
@@ -20,6 +32,27 @@ export function ForumDetails() {
                 setLoading(false);
             });
     }, [postId]);
+
+    const handleReplySubmit = (event) => {
+        event.preventDefault();
+
+        const replyWithUsername = {
+            username: username, // Usar el username almacenado
+            content: newReplyContent
+        };
+
+        axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
+            .then(response => {
+                setPost(prevPost => ({
+                    ...prevPost,
+                    replies: [...prevPost.replies, response.data]
+                }));
+                setNewReplyContent('');
+            })
+            .catch(error => {
+                console.error('Error al crear respuesta:', error);
+            });
+    };
 
     if (loading) {
         return <div>Cargando...</div>;
@@ -47,6 +80,17 @@ export function ForumDetails() {
                             ))}
                         </div>
                     )}
+                    {username && (
+                        <form onSubmit={handleReplySubmit}>
+                            <textarea
+                                value={newReplyContent}
+                                onChange={e => setNewReplyContent(e.target.value)}
+                                placeholder="Escribe tu respuesta aquí..."
+                                style={{ height: '50px', width: '95%', margin: '10px 0' }}
+                            />
+                            <button type="submit">Responder</button>
+                        </form>
+                    )}
                 </>
             ) : (
                 <p>Post no encontrado</p>
@@ -54,3 +98,9 @@ export function ForumDetails() {
         </div>
     );
 }
+
+export default ForumDetails;
+
+
+
+//ESTO HAY QUE ARREGLAR QUE COJA EL USERNAME DEL LOCALSTORAGE   

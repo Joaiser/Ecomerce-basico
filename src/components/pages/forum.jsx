@@ -140,7 +140,7 @@ export function Foro() {
                 </div>
                 <div className="post-container">
                     {Array.isArray(posts) && posts.map((post, index) => (
-                        <div key={index} className="post" onClick={() => handlePostClick(post.id)}>
+                        <div key={index} className="post">
                             <h2>{post.title}</h2>
                             <p>{post.content}</p>
                             <p>Publicado por: {post.username}</p>
@@ -164,7 +164,10 @@ export function Foro() {
                                         placeholder="Escribe tu respuesta aquí..."
                                         style={{ height: '50px', width: '95%', margin: '10px 0' }}
                                     />
+                                    <div id='post-buttons'>
                                     <button type="submit">Responder</button>
+                                    <button onClick={()=> handlePostClick(post.id)}>Ver publicación</button>
+                                    </div>
                                 </form>
                             )}
                         </div>
