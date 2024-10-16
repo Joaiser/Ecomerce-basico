@@ -43,6 +43,7 @@ import {
   sendMessageController 
 } from './controller/contactController.js';
 
+// Configurar dotenv para leer el archivo .env en la raíz del proyecto
 dotenv.config();
 
 const app = express();

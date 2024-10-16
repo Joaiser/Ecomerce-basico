@@ -1,107 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForum } from '../../hooks/useForum'; 
 import './forum.css';
 
 export function Foro() {
     const [newPostTitle, setNewPostTitle] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
-    const [username, setUsername] = useState(null);
-    const [newReplyContent, setNewReplyContent] = useState({});
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [posts, setPosts] = useState([]);
     const navigate = useNavigate(); 
 
-    useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
-        if (storedUsername) {
-            setUsername(storedUsername);
-            setIsAdmin(storedIsAdmin);
-        }
+    const {
+        username,
+        isAdmin,
+        posts,
+        newReplyContent,
+        setNewReplyContent,
+        fetchPosts,
+        handlePostSubmit,
+        handleReplySubmit
+    } = useForum();
 
-        // Obtener publicaciones del backend
-        fetchPosts();
-    }, []);
-
-    const fetchPosts = () => {
-        axios.get('http://localhost:3000/posts')
-            .then(response => {
-                setPosts(response.data);
-            })
-            .catch(error => {
-                console.error('Error al obtener publicaciones:', error);
-            });
-    };
-
-    const handlePostSubmit = event => {
-        event.preventDefault();
-    
-        const postWithUsername = {
-            username: username, // Usar el username almacenado
-            title: newPostTitle,
-            content: newPostContent,
-            parentPostId: null
-        };
-    
-        console.log('Datos de la publicación:', postWithUsername); // Verificar los datos
-    
-        axios.post('http://localhost:3000/posts', postWithUsername)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva
-                setNewPostTitle('');
-                setNewPostContent('');
-            })
-            .catch(error => {
-                console.error('Error al crear publicación:', error);
-            });
-    };
-    
-    const handleReplySubmit = (event, postIndex) => {
-        event.preventDefault();
-    
-        const replyWithUsername = {
-            username: username, // Usar el username almacenado
-            content: newReplyContent[postIndex]
-        };
-    
-        const postId = posts[postIndex].id;
-    
-        console.log('Datos de la respuesta:', replyWithUsername); //Verificar los datos
-    
-        axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva respuesta
-                setNewReplyContent(prevState => ({ ...prevState, [postIndex]: '' }));
-            })
-            .catch(error => {
-                console.error('Error al crear respuesta:', error);
-            });
-    };
-
-    const handleDeletePost = postIndex => {
-        const postId = posts[postIndex].id;
-
-        axios.delete(`http://localhost:3000/posts/${postId}`)
-            .then(() => {
-                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una
-            })
-            .catch(error => {
-                console.error('Error al eliminar publicación:', error);
-            });
-    };
-
-    const handleDeleteReply = (postIndex, replyIndex) => {
-        const postId = posts[postIndex].id;
-        const replyId = posts[postIndex].replies[replyIndex].id;
-
-        axios.delete(`http://localhost:3000/posts/${postId}/replies/${replyId}`)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una respuesta
-            })
-            .catch(error => {
-                console.error('Error al eliminar respuesta:', error);
-            });
+    const handlePostSubmitWrapper = (event) => {
+        handlePostSubmit(event, newPostTitle, newPostContent, fetchPosts);
+        setNewPostTitle('');
+        setNewPostContent('');
     };
 
     const handlePostClick = (postId) => {
@@ -118,7 +39,7 @@ export function Foro() {
                         hacer preguntas e interactuar con otros miembros de nuestra comunidad.
                     </p>
                     {username ? (
-                        <form onSubmit={handlePostSubmit}>
+                        <form onSubmit={handlePostSubmitWrapper}>
                             <input
                                 type="text"
                                 value={newPostTitle}
@@ -157,7 +78,7 @@ export function Foro() {
                                 </div>
                             ))}
                             {username && (
-                                <form onSubmit={e => handleReplySubmit(e, index)}>
+                                <form onSubmit={e => handleReplySubmit(e, index, fetchPosts)}>
                                     <textarea
                                         value={newReplyContent[index] || ''}
                                         onChange={e => setNewReplyContent(prevState => ({ ...prevState, [index]: e.target.value }))}
@@ -166,7 +87,7 @@ export function Foro() {
                                     />
                                     <div id='post-buttons'>
                                     <button type="submit">Responder</button>
-                                    <button onClick={()=> handlePostClick(post.id)}>Ver publicación</button>
+                                    <button type="button" onClick={() => handlePostClick(post.id)}>Ver publicación</button>
                                     </div>
                                 </form>
                             )}
