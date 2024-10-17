@@ -10,24 +10,19 @@ export function ForumDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [newReplyContent, setNewReplyContent] = useState('');
+    const [replyErrors, setReplyErrors] = useState({});
 
     const {
-        username,
-        isAdmin,
-        fetchPosts,
-        handleReplySubmit
+        username
     } = useForum();
 
     useEffect(() => {
-        console.log(`Fetching post details for postId: ${postId}`);
         axios.get(`http://localhost:3000/posts/${postId}`)
             .then(response => {
-                console.log('Post details fetched:', response.data);
                 setPost(response.data);
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Error fetching post details:', error);
                 setError(error);
                 setLoading(false);
             });
@@ -40,28 +35,23 @@ export function ForumDetails() {
             content: newReplyContent
         };
 
-        console.log('Submitting reply:', replyWithUsername);
-
         axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
             .then(response => {
-                console.log('Reply submitted:', response.data);
                 setNewReplyContent('');
                 fetchPostDetails(); // Volver a obtener los detalles del post después de crear una nueva respuesta
+                setReplyErrors(prevErrors => ({ ...prevErrors, [postId]: '' }));
             })
             .catch(error => {
-                console.error('Error al crear respuesta:', error);
+                setReplyErrors(prevErrors => ({ ...prevErrors, [postId]: 'Error al crear respuesta' }));
             });
     };
 
     const fetchPostDetails = () => {
-        console.log(`Fetching post details for postId: ${postId}`);
         axios.get(`http://localhost:3000/posts/${postId}`)
             .then(response => {
-                console.log('Post details fetched:', response.data);
                 setPost(response.data);
             })
             .catch(error => {
-                console.error('Error fetching post details:', error);
                 setError(error);
             });
     };
@@ -79,15 +69,16 @@ export function ForumDetails() {
             {post ? (
                 <>
                     <h1>{post.title}</h1>
-                    <p>{post.content}</p>
-                    <p>Publicado por: {post.username || 'Anónimo'}</p> {/* Mostrar 'Anónimo' si no hay username */}
+                    <p id="forum-post-content">{post.content}</p>
+                    <div id="forum-details-username">
+                        <p>Publicado por: {post.username || 'Anónimo'}</p> 
+                    </div>
                     {Array.isArray(post.replies) && post.replies.length > 0 ? (
                         <div className="replies">
-                            <h2>Respuestas</h2>
                             {post.replies.map((reply, index) => (
                                 <div key={index} className="reply">
-                                    <p>{reply.content}</p>
-                                    <p>Respondido por: {reply.username || 'Anónimo'}</p> {/* Mostrar 'Anónimo' si no hay username */}
+                                    <p>{reply.content}</p> 
+                                    <p>Respondido por: {reply.username }</p> 
                                 </div>
                             ))}
                         </div>
@@ -100,9 +91,10 @@ export function ForumDetails() {
                                 value={newReplyContent}
                                 onChange={e => setNewReplyContent(e.target.value)}
                                 placeholder="Escribe tu respuesta aquí..."
-                                style={{ height: '50px', width: '95%', margin: '10px 0' }}
+                                style={{ height: '50px', width: '99%', margin: '10px 0', overflowY: 'scroll' }}
                             />
                             <button type="submit">Responder</button>
+                            {replyErrors[postId] && <p style={{ color: 'red' }}>{replyErrors[postId]}</p>}
                         </form>
                     )}
                 </>

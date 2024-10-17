@@ -25,7 +25,8 @@ export const useForum = () => {
                 setPosts(response.data);
             })
             .catch(error => {
-                console.error('Error al obtener publicaciones:', error);
+                // Manejar el error sin imprimir en la consola
+                throw error;
             });
     };
 
@@ -39,14 +40,13 @@ export const useForum = () => {
             parentPostId: null
         };
     
-        console.log('Datos de la publicación:', postWithUsername); // Verificar los datos
-    
         axios.post('http://localhost:3000/posts', postWithUsername)
             .then(response => {
                 fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva
             })
             .catch(error => {
-                console.error('Error al crear publicación:', error);
+                // Manejar el error sin imprimir en la consola
+                throw error;
             });
     };
 
@@ -58,15 +58,36 @@ export const useForum = () => {
             content: newReplyContent[postId]
         };
     
-        console.log('Datos de la respuesta:', replyWithUsername); // Verificar los datos
-    
         axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
             .then(response => {
                 fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva respuesta
                 setNewReplyContent(prevState => ({ ...prevState, [postId]: '' }));
             })
             .catch(error => {
-                console.error('Error al crear respuesta:', error);
+                // Manejar el error sin imprimir en la consola
+                throw error;
+            });
+    };
+
+    const handleDeletePost = (postId, fetchPosts) => {
+        axios.delete(`http://localhost:3000/posts/${postId}`)
+            .then(response => {
+                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una
+            })
+            .catch(error => {
+                // Manejar el error sin imprimir en la consola
+                throw error;
+            });
+    };
+
+    const handleDeleteReply = (postId, replyId, fetchPosts) => {
+        axios.delete(`http://localhost:3000/posts/${postId}/replies/${replyId}`)
+            .then(response => {
+                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una respuesta
+            })
+            .catch(error => {
+                // Manejar el error sin imprimir en la consola
+                throw error;
             });
     };
 
@@ -78,6 +99,8 @@ export const useForum = () => {
         setNewReplyContent,
         fetchPosts,
         handlePostSubmit,
-        handleReplySubmit
+        handleReplySubmit,
+        handleDeletePost,
+        handleDeleteReply
     };
 };

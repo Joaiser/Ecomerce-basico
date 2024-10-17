@@ -4,18 +4,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
-.foro-content p{
-    width: 100%; 
+.foro-content{
+    width: 95%;
+}
+
+.foro-content p {
+    width: 100%;
 }
 
 .post-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
     justify-content: space-between;
     gap: 20px;
+    width: 100%;
 }
 
 .post {
@@ -23,17 +29,18 @@
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
-    flex: 0 0 calc(50% - 20px);
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#post-buttons{
+#post-buttons {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
-.post p{
+.post p {
     background-color: white;
 }
 
@@ -45,7 +52,7 @@ form {
 }
 
 input, textarea {
-    width: 100%;
+    width: 98%;
     margin-bottom: 10px;
     padding: 10px;
     border: none;
@@ -55,7 +62,7 @@ input, textarea {
 textarea {
     resize: none;
     height: 150px;
-    overflow: hidden;
+    margin: 10px 0;
 }
 
 button {
@@ -68,12 +75,26 @@ button {
     transition: transform 0.3s;
 }
 
-button:hover{
+button:hover {
     transform: scale(1.05);
 }
 
-#foro-content-presentation{
-    width: 95%;
+button.read-more {
+    align-self: flex-start;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#forum-details-username{
+    width: 100%;
+    align-content: flex-start;
 }
 
 @media (max-width: 337px) {
@@ -105,5 +126,11 @@ button:hover{
 
     button {
         width: 100%;
+    }
+}
+
+@media (min-width: 2300px){
+    .post-container {
+        max-width: 1500px;
     }
 }
