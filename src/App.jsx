@@ -26,7 +26,7 @@ import { ScreensBlog } from './components/blogPages/screensBlog.jsx';
 import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 
 // Componentes de detalles de productos
-import { ProductDetail } from './components/productDetails/productDetail.jsx';
+import { ProductAllDetail } from './components/productDetails/productAllDetail.jsx';
 import { ProductDetailWeekRecomended } from './components/productDetails/productDetailWeekRecomended.jsx';
 import { ProductGender } from './components/productGender/productGender.jsx';
 
@@ -85,14 +85,15 @@ function App() {
                 <Route path="/contacto" element={<Contact />} />
                 <Route path="/nosotros" element={<AboutUs />} />
                 <Route path="/foro" element={<Foro />} />
-                <Route path="/foro/:postId" element={<ForumDetails />} /> {/* Ruta para los detalles del foro */}
+                <Route path="/foro/:postId" element={<ForumDetails />} /> 
                 <Route path="/intercambios" element={<Intercambios />} />
                 <Route path="/screens" element={<ScreensBlog />} />
                 <Route path="/placa" element={<Placabase />} />
                 <Route path="/tipoteclado" element={<Tipoteclado />} />
                 <Route path="/todosproductos" element={<Products />} />
+                <Route path="/todosproductos/:id" element={<ProductAllDetail />} />
                 <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
-                <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
+                <Route path="/productos/:Id_producto" element={<ProductAllDetail />} /> 
                 <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
                 <Route path="/productos/genero/:Genero" element={<ProductGender />} />
                 <Route path='/payPage' element={<Pay />} />

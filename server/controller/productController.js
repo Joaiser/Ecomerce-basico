@@ -19,6 +19,16 @@ export async function getProductByIdController(req, res, next) {
   }
 }
 
+export async function getAllProductByIdController(req, res, next) {
+  try {
+    const id = req.params.Id_producto;
+    const product = await Product.getAllById(id);
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getProductsByCategoryController(req, res, next) {
   try {
     const category = req.params.Genero;

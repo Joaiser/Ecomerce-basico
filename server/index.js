@@ -10,7 +10,8 @@ import {
   getAllProductsRecommendedController, 
   getProductRecommendedByIdController, 
   get_All_Products_Controller, 
-  searchProductsController 
+  searchProductsController,
+  getAllProductByIdController
 } from './controller/productController.js';
 
 import { 
@@ -77,6 +78,7 @@ app.get('/products/category/:Genero', getProductsByCategoryController);
 app.get('/productos/recomendados', getAllProductsRecommendedController);
 app.get('/productos/recomendados/:Id_producto', getProductRecommendedByIdController);
 app.get('/todosproductos', get_All_Products_Controller);
+app.get('/todosproductos/:Id_producto', getAllProductByIdController);
 app.get('/products/search', searchProductsController);
 
 // Definir las rutas para publicaciones y respuestas en el foro
