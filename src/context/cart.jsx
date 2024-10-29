@@ -20,7 +20,7 @@ export function CartProvider ({children}) {
             setCart(prevState => ([
                 ...prevState, 
                 {
-                    ...product, // sintaxis de propagación, copia todas las propiedades del producto
+                    ...product, 
                     quantity: 1
                 }
             ]))

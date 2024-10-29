@@ -22,6 +22,15 @@ export class Product {
     }
   }
 
+  static async getAllById(id) {
+    try {
+      const [rows] = await pool.execute('SELECT * FROM all_products WHERE id = ?', [id]);
+      return rows[0] || null;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener el producto por ID');
+    }
+  }
+
   static async getById(Id_producto) {
     try {
       const [rows] = await pool.execute('SELECT * FROM products WHERE Id_producto = ?', [Id_producto]);

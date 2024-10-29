@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useForum } from '../../hooks/useForum'; 
 import "./forumDetails.css";
 
 export function ForumDetails() {
@@ -9,22 +10,16 @@ export function ForumDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [newReplyContent, setNewReplyContent] = useState('');
-    const [username, setUsername] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [replyErrors, setReplyErrors] = useState({});
+
+    const {
+        username
+    } = useForum();
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
-        if (storedUsername) {
-            setUsername(storedUsername);
-            setIsAdmin(storedIsAdmin);
-        }
-
         axios.get(`http://localhost:3000/posts/${postId}`)
             .then(response => {
-                const post = response.data;
-                post.username = storedUsername; // Asigna el username almacenado al post
-                setPost(post);
+                setPost(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -33,24 +28,31 @@ export function ForumDetails() {
             });
     }, [postId]);
 
-    const handleReplySubmit = (event) => {
+    const handleReplySubmitWrapper = (event) => {
         event.preventDefault();
-
         const replyWithUsername = {
-            username: username, // Usar el username almacenado
+            username: username,
             content: newReplyContent
         };
 
         axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
             .then(response => {
-                setPost(prevPost => ({
-                    ...prevPost,
-                    replies: [...prevPost.replies, response.data]
-                }));
                 setNewReplyContent('');
+                fetchPostDetails(); // Volver a obtener los detalles del post después de crear una nueva respuesta
+                setReplyErrors(prevErrors => ({ ...prevErrors, [postId]: '' }));
             })
             .catch(error => {
-                console.error('Error al crear respuesta:', error);
+                setReplyErrors(prevErrors => ({ ...prevErrors, [postId]: 'Error al crear respuesta' }));
+            });
+    };
+
+    const fetchPostDetails = () => {
+        axios.get(`http://localhost:3000/posts/${postId}`)
+            .then(response => {
+                setPost(response.data);
+            })
+            .catch(error => {
+                setError(error);
             });
     };
 
@@ -67,28 +69,32 @@ export function ForumDetails() {
             {post ? (
                 <>
                     <h1>{post.title}</h1>
-                    <p>{post.content}</p>
-                    <p>Publicado por: {post.username}</p>
-                    {Array.isArray(post.replies) && post.replies.length > 0 && (
+                    <p id="forum-post-content">{post.content}</p>
+                    <div id="forum-details-username">
+                        <p>Publicado por: {post.username || 'Anónimo'}</p> 
+                    </div>
+                    {Array.isArray(post.replies) && post.replies.length > 0 ? (
                         <div className="replies">
-                            <h2>Respuestas</h2>
                             {post.replies.map((reply, index) => (
                                 <div key={index} className="reply">
-                                    <p>{reply.content}</p>
-                                    <p>Respondido por: {reply.username}</p>
+                                    <p>{reply.content}</p> 
+                                    <p>Respondido por: {reply.username }</p> 
                                 </div>
                             ))}
                         </div>
+                    ) : (
+                        <p>No hay respuestas</p>
                     )}
                     {username && (
-                        <form onSubmit={handleReplySubmit}>
+                        <form onSubmit={handleReplySubmitWrapper}>
                             <textarea
                                 value={newReplyContent}
                                 onChange={e => setNewReplyContent(e.target.value)}
                                 placeholder="Escribe tu respuesta aquí..."
-                                style={{ height: '50px', width: '95%', margin: '10px 0' }}
+                                style={{ height: '50px', width: '99%', margin: '10px 0', overflowY: 'scroll' }}
                             />
                             <button type="submit">Responder</button>
+                            {replyErrors[postId] && <p style={{ color: 'red' }}>{replyErrors[postId]}</p>}
                         </form>
                     )}
                 </>
@@ -100,7 +106,3 @@ export function ForumDetails() {
 }
 
 export default ForumDetails;
-
-
-
-//ESTO HAY QUE ARREGLAR QUE COJA EL USERNAME DEL LOCALSTORAGE   
