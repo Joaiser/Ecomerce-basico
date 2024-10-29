@@ -30,8 +30,6 @@ dist-ssr
 # sin necesidad de modificar el código.
 .env
 
-/server/package-lock.json
-/server/package.json
+
 
 package-lock.json
-package.json
