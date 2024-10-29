@@ -6,6 +6,9 @@ import './forum.css';
 export function Foro() {
     const [newPostTitle, setNewPostTitle] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
+    const [error, setError] = useState('');
+    const [postErrors, setPostErrors] = useState({});
+    const [replyErrors, setReplyErrors] = useState({});
     const navigate = useNavigate(); 
 
     const {
@@ -16,10 +19,25 @@ export function Foro() {
         setNewReplyContent,
         fetchPosts,
         handlePostSubmit,
-        handleReplySubmit
+        handleReplySubmit,
+        handleDeletePost,
+        handleDeleteReply
     } = useForum();
 
+    const MAX_TITLE_LENGTH = 100; // Define el máximo de caracteres para el título
+    const MAX_CONTENT_PREVIEW_LENGTH = 200; // Define el máximo de caracteres para el contenido de vista previa
+
     const handlePostSubmitWrapper = (event) => {
+        event.preventDefault();
+        if (newPostTitle.trim() === '') {
+            setError('El título es obligatorio');
+            return;
+        }
+        if (newPostTitle.length > MAX_TITLE_LENGTH) {
+            setError(`El título no puede tener más de ${MAX_TITLE_LENGTH} caracteres`);
+            return;
+        }
+        setError('');
         handlePostSubmit(event, newPostTitle, newPostContent, fetchPosts);
         setNewPostTitle('');
         setNewPostContent('');
@@ -27,6 +45,24 @@ export function Foro() {
 
     const handlePostClick = (postId) => {
         navigate(`/foro/${postId}`);
+    };
+
+    const handleDeletePostWrapper = async (postId) => {
+        try {
+            await handleDeletePost(postId, fetchPosts);
+            setPostErrors(prevErrors => ({ ...prevErrors, [postId]: '' }));
+        } catch (error) {
+            setPostErrors(prevErrors => ({ ...prevErrors, [postId]: 'Error al eliminar la publicación' }));
+        }
+    };
+
+    const handleDeleteReplyWrapper = async (postId, replyId) => {
+        try {
+            await handleDeleteReply(postId, replyId, fetchPosts);
+            setReplyErrors(prevErrors => ({ ...prevErrors, [replyId]: '' }));
+        } catch (error) {
+            setReplyErrors(prevErrors => ({ ...prevErrors, [replyId]: 'Error al eliminar la respuesta' }));
+        }
     };
 
     return (
@@ -46,7 +82,9 @@ export function Foro() {
                                 onChange={e => setNewPostTitle(e.target.value)}
                                 placeholder="Título de la publicación"
                                 id='post-title'
+                                required
                             />
+                            {error && <p style={{ color: 'red' }}>{error}</p>}
                             <textarea
                                 id='post-content'
                                 value={newPostContent}
@@ -63,31 +101,46 @@ export function Foro() {
                     {Array.isArray(posts) && posts.map((post, index) => (
                         <div key={index} className="post">
                             <h2>{post.title}</h2>
-                            <p>{post.content}</p>
+                            <p>
+                                {post.content.length > MAX_CONTENT_PREVIEW_LENGTH
+                                    ? (
+                                        <>
+                                            {post.content.substring(0, MAX_CONTENT_PREVIEW_LENGTH)}
+                                            <span>...</span>
+                                        </>
+                                    )
+                                    : post.content}
+                            </p>
                             <p>Publicado por: {post.username}</p>
                             {isAdmin && (
-                                <button onClick={(e) => { e.stopPropagation(); handleDeletePost(index); }}>Borrar Post</button>
+                                <>
+                                    <button onClick={(e) => { e.stopPropagation(); handleDeletePostWrapper(post.id); }}>Borrar Post</button>
+                                    {postErrors[post.id] && <p style={{ color: 'red' }}>{postErrors[post.id]}</p>}
+                                </>
                             )}
                             {Array.isArray(post.replies) && post.replies.map((reply, replyIndex) => (
                                 <div key={replyIndex}>
-                                    <p>{reply.content}</p>
+                                    <p>{reply.content.substring(0,MAX_CONTENT_PREVIEW_LENGTH)}<span>...</span></p>
                                     <p>Respondido por: {reply.username}</p>
                                     {isAdmin && (
-                                        <button onClick={(e) => { e.stopPropagation(); handleDeleteReply(index, replyIndex); }}>Borrar respuesta</button>
+                                        <>
+                                            <button onClick={(e) => { e.stopPropagation(); handleDeleteReplyWrapper(post.id, reply.id); }}>Borrar respuesta</button>
+                                            {replyErrors[reply.id] && <p style={{ color: 'red' }}>{replyErrors[reply.id]}</p>}
+                                        </>
                                     )}
                                 </div>
                             ))}
                             {username && (
-                                <form onSubmit={e => handleReplySubmit(e, index, fetchPosts)}>
+                                <form onSubmit={e => handleReplySubmit(e, post.id, fetchPosts)}>
                                     <textarea
-                                        value={newReplyContent[index] || ''}
-                                        onChange={e => setNewReplyContent(prevState => ({ ...prevState, [index]: e.target.value }))}
+                                        value={newReplyContent[post.id] || ''}
+                                        onChange={e => setNewReplyContent(prevState => ({ ...prevState, [post.id]: e.target.value }))}
                                         placeholder="Escribe tu respuesta aquí..."
                                         style={{ height: '50px', width: '95%', margin: '10px 0' }}
                                     />
                                     <div id='post-buttons'>
-                                    <button type="submit">Responder</button>
-                                    <button type="button" onClick={() => handlePostClick(post.id)}>Ver publicación</button>
+                                        <button type="submit">Responder</button>
+                                        <button type="button" onClick={() => handlePostClick(post.id)}>Ver publicación</button>
                                     </div>
                                 </form>
                             )}

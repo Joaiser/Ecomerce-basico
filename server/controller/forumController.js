@@ -1,11 +1,11 @@
 import { createPost, getPosts, deletePost, createReply, 
-    deleteReply, getUserIdByUsername, deleteRepliesByPostId, getIdPost } from '../models/mysql/forum.js';
+    deleteReply, getUserIdByUsername, deleteRepliesByPostId, getPostById } from '../models/mysql/forum.js';
 
 export async function createPostController(req, res) {
     const { username, title, content, parentPostId } = req.body;
 
-    if (username === undefined || title === undefined || content === undefined) {
-        res.status(400).json({ message: 'Faltan datos necesarios' });
+    if (username === undefined || title === undefined || content === undefined || title.trim() === '') {
+        res.status(400).json({ message: 'Faltan datos necesarios o el título está vacío' });
         return;
     }
 
@@ -83,7 +83,7 @@ export async function getIdPostController(req, res) {
     const { postId } = req.params;
 
     try {
-        const post = await getIdPost(postId);
+        const post = await getPostById(postId);
         if (!post) {
             return res.status(404).json({ message: 'Post no encontrado'})
         }

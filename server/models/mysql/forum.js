@@ -74,14 +74,60 @@ export async function getPosts() {
   }
 }
 
-export async function getReplies(postId) {
+export async function getPostById(postId) {
   const sql = `
-    SELECT r.*, c.Nickname as username FROM Respuestas r
-    JOIN clientes c ON r.user_id = c.Id_clientes
-    WHERE r.post_id = ?
+      SELECT 
+          p.id,
+          p.title,
+          p.content,
+          p.created_at,
+          COALESCE(c.Nickname, a.username) AS post_username,
+          r.id AS reply_id,
+          r.content AS reply_content,
+          r.created_at AS reply_created_at,
+          COALESCE(rc.Nickname, ra.username) AS reply_username
+      FROM 
+          Publicaciones p
+      LEFT JOIN 
+          clientes c ON p.user_id = c.Id_clientes
+      LEFT JOIN 
+          administradores a ON p.user_id = a.id
+      LEFT JOIN 
+          Respuestas r ON r.post_id = p.id
+      LEFT JOIN 
+          clientes rc ON r.user_id = rc.Id_clientes
+      LEFT JOIN 
+          administradores ra ON r.user_id = ra.id
+      WHERE 
+          p.id = ?
+      ORDER BY 
+          r.created_at ASC;
   `;
-  const [rows] = await pool.execute(sql, [postId]);
-  return rows;
+  try {
+      const [rows] = await pool.execute(sql, [postId]);
+      if (rows.length === 0) {
+          return null;
+      }
+
+      const post = {
+          id: rows[0].id,
+          title: rows[0].title,
+          content: rows[0].content,
+          created_at: rows[0].created_at,
+          username: rows[0].post_username,
+          replies: rows.filter(row => row.reply_id).map(row => ({
+              id: row.reply_id,
+              content: row.reply_content,
+              created_at: row.reply_created_at,
+              username: row.reply_username
+          }))
+      };
+
+      return post;
+  } catch (error) {
+      console.error('Error en getPostById:', error); // Agregar log de error
+      throw error;
+  }
 }
 
 export async function deletePost(postId) {
@@ -98,8 +144,13 @@ export async function createReply(postId, userId, content) {
     VALUES (?, ?, ?, NOW())
   `;
   const params = [postId, userId, content];
-  const [result] = await pool.execute(sql, params);
-  return result;
+  try {
+      const [result] = await pool.execute(sql, params);
+      return result;
+  } catch (error) {
+      console.error('Error en createReply:', error); // Agregar log de error
+      throw error;
+  }
 }
 
 export async function deleteReply(replyId) {
