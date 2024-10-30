@@ -5,7 +5,6 @@ import { AddToCartIcon } from '../icons.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import { Link } from 'react-router-dom';
 import './Products.css';
-import { Link } from 'react-router-dom';
 
 export function Products() {
     const { filters } = useContext(FilterContext);

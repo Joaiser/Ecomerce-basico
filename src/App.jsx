@@ -26,14 +26,11 @@ import { ScreensBlog } from './components/blogPages/screensBlog.jsx';
 import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 
 // Componentes de detalles de productos
-<<<<<<< HEAD
-import { ProductAllDetail } from './components/productDetails/productAllDetail.jsx';
-=======
 import { ProductDetail } from './components/productDetails/productDetail.jsx';
 import {AllProductDetail} from './components/productDetails/allProductsDetail.jsx';
->>>>>>> recovery-branch
 import { ProductDetailWeekRecomended } from './components/productDetails/productDetailWeekRecomended.jsx';
 import { ProductGender } from './components/productGender/productGender.jsx';
+import { ProductAllDetail } from './components/productDetails/productAllDetail.jsx';
 
 // Componentes de la página principal
 import { Blog } from './components/blog.jsx';
@@ -98,12 +95,8 @@ function App() {
                 <Route path="/todosproductos" element={<Products />} />
                 <Route path="/todosproductos/:id" element={<ProductAllDetail />} />
                 <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
-<<<<<<< HEAD
-                <Route path="/productos/:Id_producto" element={<ProductAllDetail />} /> 
-=======
                 <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
                 <Route path="/todosproductos/:id" element={<AllProductDetail />} />
->>>>>>> recovery-branch
                 <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
                 <Route path="/productos/genero/:Genero" element={<ProductGender />} />
                 <Route path='/payPage' element={<Pay />} />
