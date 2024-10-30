@@ -76,6 +76,15 @@ export class Product {
     }
   }
 
+  static async get_all_products_by_id(id) {
+    try {
+      const [rows] = await pool.execute('SELECT * FROM all_products WHERE id = ?', [id]);
+      return rows[0] || null;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener el producto por ID');
+    }
+  }
+
   static async searchProducts(searchTerm) {
     try {
       const query = `

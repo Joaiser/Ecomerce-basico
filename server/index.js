@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
+<<<<<<< HEAD
 
 import { 
   getAllProductsController, 
@@ -43,6 +44,9 @@ import {
 import { 
   sendMessageController 
 } from './controller/contactController.js';
+=======
+import routes from './routes.js'; // Importa el archivo de rutas
+>>>>>>> recovery-branch
 
 // Configurar dotenv para leer el archivo .env en la raíz del proyecto
 dotenv.config();
@@ -71,6 +75,7 @@ app.use(cors({
   credentials: true
 }));
 
+<<<<<<< HEAD
 // Definir las rutas para productos
 app.get('/products', getAllProductsController);
 app.get('/products/:Id_producto', getProductByIdController);
@@ -105,6 +110,9 @@ app.post('/admins/login', loginAdmin);
 
 // Definir las rutas para contacto
 app.post('/contact/send', sendMessageController);
+=======
+app.use(routes);
+>>>>>>> recovery-branch
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');

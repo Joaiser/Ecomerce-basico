@@ -61,8 +61,18 @@ export async function getProductRecommendedByIdController(req, res, next) {
 
 export async function get_All_Products_Controller(req, res, next) {
   try {
-    const products = await Product.get_all_products();
-    res.json(products);
+    const product = await Product.get_all_products();
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function get_All_Products_Controller_Id(req, res, next) {
+  try {
+    const id = req.params.id;
+    const product = await Product.get_all_products_by_id(id);
+    res.json(product);
   } catch (err) {
     next(err);
   }
