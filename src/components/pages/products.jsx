@@ -4,6 +4,7 @@ import { useFilters } from '../../hooks/useFilters.js';
 import { AddToCartIcon } from '../icons.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import './Products.css';
+import { Link } from 'react-router-dom';
 
 export function Products() {
     const { filters } = useContext(FilterContext);
@@ -28,6 +29,7 @@ export function Products() {
         <main className='all-products'>
             <ul>
                 {filteredProducts.map((product) => (
+                <Link to={`/todosproductos/${product.id}`}>
                     <li key={product.id}>
                         <img src={product.imagen_producto} alt={product.nombre_producto} />
                         <div className='title'>
@@ -39,6 +41,7 @@ export function Products() {
                             </button>
                         </div>
                     </li>
+                </Link>
                 ))}
             </ul>
         </main>
