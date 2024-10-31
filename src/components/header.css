@@ -125,6 +125,10 @@ header div input{
 
 @media screen and (max-width: 878px) {
 
+    header{
+        position: relative;
+    }
+
     .max-width{
         display: flex;
         flex-direction: column;
@@ -264,7 +268,7 @@ header div input{
 }
 
 @media screen and (max-width: 473px){
-    .cart-button {
+    .header-products .cart-button {
         align-items: center;
         background: #09f;
         border-radius: 9999px;
@@ -279,7 +283,7 @@ header div input{
         top: 13px;
     }
 
-    .account {
+    .header-products .account {
         position: absolute;
         top: 6px;
         left: 32px;
@@ -289,7 +293,7 @@ header div input{
 }
 
 @media screen and (max-width: 473px){
-    .cart-button{
+    .header-products .cart-button{
         position: absolute;
         top: 6px;
         right: 32px;
@@ -297,10 +301,41 @@ header div input{
 }
 
 @media screen and (max-width: 341px) {
-    .menu-icon {
+    .header-products .menu-icon {
         display: block;
         position: relative;
         right: 0%;
     }
 }
 
+/*HEADER EN FORO */
+
+/* Estilos específicos para el header en la página de foro */
+@media screen and (max-width: 481px) {
+    .header-foro .cart-button {
+        position: absolute;
+        top: 216px;
+        right: 32px;
+    }
+}
+
+@media screen and (max-width: 412px) {
+    .header-foro .account {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 346px) {
+    .header-foro .menu-icon {
+        position: relative;
+        top: -77px;
+        display: block;
+        right: 0%;
+    }
+
+    .header-foro .account-2 {
+        top: 211px;
+        position: absolute;
+        left: 5%;
+    }
+}

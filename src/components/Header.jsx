@@ -38,10 +38,11 @@ export function Header({ changeFilters }) {
     }
 
     const isProductsPage = location.pathname === '/todosproductos';
+    const isForoPage = location.pathname === '/foro';
 
     return (
         <>
-        <header onClick={closeMenu} className={isProductsPage ? 'header-products' : ''}>
+        <header onClick={closeMenu} className={`${isProductsPage ? 'header-products' : ''} ${isForoPage ? 'header-foro' : ''}`}>
             <div className='max-width'>
                 <div>
                     <h1><Link to="/" onClick={closeMenu}>PC Aitor <CartIcon /></Link></h1>
