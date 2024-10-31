@@ -153,3 +153,9 @@
         margin-right: -5%;
     }
 }
+
+@media screen and (max-width: 337px){
+    .carousel-button-week-recomended{
+        width: 15%;
+    }
+}

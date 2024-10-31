@@ -4,7 +4,7 @@ import { CartIcon } from './icons.jsx';
 import './header.css';
 import { Cart } from './Cart.jsx';
 import { Link, useLocation } from 'react-router-dom';
-import {SearchProducts} from './searchProducts'; 
+import { SearchProducts } from './searchProducts'; 
 
 export function Header({ changeFilters }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,14 +37,16 @@ export function Header({ changeFilters }) {
         setIsMenuOpen(false);
     }
 
+    const isProductsPage = location.pathname === '/todosproductos';
+
     return (
         <>
-        <header onClick={closeMenu}>
+        <header onClick={closeMenu} className={isProductsPage ? 'header-products' : ''}>
             <div className='max-width'>
                 <div>
                     <h1><Link to="/" onClick={closeMenu}>PC Aitor <CartIcon /></Link></h1>
                         <div id='select-position'>
-                            {location.pathname === '/todosproductos' && (
+                            {isProductsPage && (
                                 <div className={`filters ${isFiltersOpen ? 'open' : ''}`}>
                                     <Filters onChange={changeFilters} />
                                 </div>
