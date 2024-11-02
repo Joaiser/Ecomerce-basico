@@ -161,7 +161,7 @@ header div input{
 
     
     nav ul.open {
-        overflow-y: scroll;
+        overflow-y: none;
         width: 100%;
         height: auto;
         flex-direction: column;
@@ -172,13 +172,17 @@ header div input{
         visibility: visible;
         opacity: 1;
         z-index: 200;
-        margin-top: 9%;
+        top: -10px;
     }
     
     nav ul.open li {
         display: block;
         text-align: center;
-        padding: 0.5rem;
+       
+    }
+
+    #last-menu-opne{
+        padding-bottom: 40px;
     }
 
     nav ul.open li a:hover {
@@ -186,7 +190,6 @@ header div input{
         transition: border-color 0.5s;
         border-radius: 8px;
         border: 1px solid transparent;
-        padding: 0.6em 1.2em;
     }
 
     .menu-icon {
@@ -228,10 +231,13 @@ header div input{
         top: -26px;
         position: relative;
     }
-}
 
-@media screen and (max-width: 420px){
-    .account{
+    .account-empty{
+        position: absolute;
+        top: 216px;
+    }
+
+    .account {
         display: none;
     }
 }
@@ -240,20 +246,17 @@ header div input{
     .menu-icon {
         display: block;
         position: relative;
-        right: 148%;
+        right: 0%;
     }
 
-    .account-2 {
-        top: 212px;
-        position: absolute;
-        left: 66%;
+}
+
+@media screen and (max-width: 381px) {
+    .menu-icon {
+        top: -73px;
+        position: relative;
     }
     
-    .cart-button {
-        position: absolute;
-        top: 126px;
-        right: 113px;
-    }
 }
 
 

@@ -87,3 +87,28 @@ export async function searchProductsController(req, res, next) {
     next(err);
   }
 }
+
+//Para comentarios de los productos
+
+
+// Obtener todos los comentarios de un producto
+export async function getCommentsByProductIdController(req, res, next) {
+  try {
+    const id = req.params.id;
+    const comments = await Product.getCommentsByProductId(id);
+    res.json(comments);
+  } catch (err) {
+    next(err);
+  }
+}
+
+// Añadir un comentario a un producto
+export async function addCommentController(req, res, next) {
+  try {
+    const { id_producto, comentario } = req.body;
+    const result = await Product.addComment(id_producto, comentario);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+}

@@ -63,7 +63,7 @@ export function Header({ changeFilters }) {
                                 <button className='account-2' onClick={handleLogout}><p style={{fontSize:'.8rem',color:'white'}}>Cerrar sesión</p></button>
                             </>
                         ) : (
-                            <button className='account'><Link to={"/login"} id='account-empty'>Mi Cuenta</Link></button>
+                            <button className='account account-empty'><Link to={"/login"} id='account-empty'>Mi Cuenta</Link></button>
                         )}
                         <Cart />
                     </div>
@@ -77,7 +77,7 @@ export function Header({ changeFilters }) {
                         <li><Link to="/todosproductos" onClick={closeMenu}>Productos</Link></li>
                         <li><Link to="/foro" onClick={closeMenu}>Foro</Link></li>
                         <li><Link to="/nosotros" onClick={closeMenu}>Nosotros</Link></li>
-                        <li><Link to="/contacto" onClick={closeMenu}>Contacto</Link></li>
+                        <li id='last-menu-opne'><Link to="/contacto" onClick={closeMenu}>Contacto</Link></li>
                     </ul>
                 </nav>
             </div>

@@ -27,7 +27,6 @@ import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 
 // Componentes de detalles de productos
 import { ProductDetail } from './components/productDetails/productDetail.jsx';
-import {AllProductDetail} from './components/productDetails/allProductsDetail.jsx';
 import { ProductDetailWeekRecomended } from './components/productDetails/productDetailWeekRecomended.jsx';
 import { ProductGender } from './components/productGender/productGender.jsx';
 import { ProductAllDetail } from './components/productDetails/productAllDetail.jsx';
@@ -96,7 +95,7 @@ function App() {
                 <Route path="/todosproductos/:id" element={<ProductAllDetail />} />
                 <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
                 <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
-                <Route path="/todosproductos/:id" element={<AllProductDetail />} />
+                <Route path="/todosproductos/:id" element={<ProductAllDetail />} />
                 <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
                 <Route path="/productos/genero/:Genero" element={<ProductGender />} />
                 <Route path='/payPage' element={<Pay />} />

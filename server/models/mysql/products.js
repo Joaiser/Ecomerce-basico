@@ -97,4 +97,26 @@ export class Product {
       throw new Error('Hubo un error al buscar los productos');
     }
   }
+
+  //Para los comentarios de los productos
+
+  static async getCommentsByProductId(id) {
+    try {
+      const [rows] = await pool.execute('SELECT * FROM comentariosProductos WHERE id_producto = ?', [id]);
+      return rows;
+    } catch (err) {
+      throw new Error('Hubo un error al obtener los comentarios del producto');
+    }
+  }
+
+  static async addComment(id_producto, comentario) {
+    try {
+      const [result] = await pool.execute('INSERT INTO comentariosProductos (id_producto, comentario) VALUES (?, ?)', [id_producto, comentario]);
+      return { id: result.insertId, id_producto, comentario };
+    } catch (err) {
+      throw new Error('Hubo un error al añadir el comentario');
+    }
+  }
 }
+
+

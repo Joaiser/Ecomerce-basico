@@ -2,8 +2,7 @@ section{
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-   
+    align-items: center;    
 }
 
 .container-product{
@@ -13,12 +12,22 @@ section{
     align-items: center;
     gap: 40px;
     position: relative;
+    flex-direction: column;
 }
 
 .container-product article { 
     display: flex;
     justify-content: center;
+    align-items: center; 
+}
+
+#product-description{
+    width: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    gap: 40px;
+    position: relative;
     flex-direction: column;
 }
 
@@ -29,4 +38,49 @@ section{
 .container-product aside img{
     width: 300px;
     height: auto;
+}
+
+.comments-section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-direction: column;
+}
+
+.comments-section textarea{
+    width: 100%;
+    height: 100px;
+}
+
+.add-comment{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-direction: column;
+}
+
+.comment{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 627px){
+    .container-product{
+        flex-direction: column;
+    }
+    .container-product aside img{
+        width: 200px;
+    }
+    .container-product article p{
+        width: 80%;
+    }
+    
 }
