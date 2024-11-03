@@ -70,7 +70,8 @@ export function LoginPage () {
         setErrorMessage(error.response.data.message);
       }
     }
-};
+  };
+
   const handleRegister = async () => {
     if (!validateForm()) return; // Agregado para validar el formulario antes de enviar la solicitud
   
@@ -161,4 +162,4 @@ export function LoginPage () {
     </main>
   );
 }
-  export default LoginPage;
+export default LoginPage;

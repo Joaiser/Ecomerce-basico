@@ -90,23 +90,45 @@ export async function searchProductsController(req, res, next) {
 
 //Para comentarios de los productos
 
+// Añadir un comentario a un producto
+export async function addCommentController(req, res, next) {
+  try {
+    const { id_producto, comentario, id_cliente, id_administrador } = req.body;
+    console.log('Adding comment:', { id_producto, comentario, id_cliente, id_administrador }); // Log para verificar los datos
+    const result = await Product.addComment(id_producto, comentario, id_cliente, id_administrador);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+}
 
 // Obtener todos los comentarios de un producto
 export async function getCommentsByProductIdController(req, res, next) {
   try {
     const id = req.params.id;
-    const comments = await Product.getCommentsByProductId(id);
+    console.log(`Fetching comments for product ID: ${id}`);
+    const comments = await Product.getCommentsByProductId(id); // Usar la función correcta
+    console.log('Comments fetched:', comments);
     res.json(comments);
   } catch (err) {
     next(err);
   }
 }
 
-// Añadir un comentario a un producto
-export async function addCommentController(req, res, next) {
+// Eliminar un comentario de un producto
+export async function deleteCommentController(req, res, next) {
   try {
-    const { id_producto, comentario } = req.body;
-    const result = await Product.addComment(id_producto, comentario);
+    const isAdmin = req.headers['x-is-admin'] === 'true';
+    console.log(`Is Admin: ${isAdmin}`);
+
+    if (!isAdmin) {
+      return res.status(403).json({ message: 'Acceso denegado. Solo los administradores pueden eliminar comentarios.' });
+    }
+
+    const id = req.params.id;
+    console.log(`Deleting comment with ID: ${id}`);
+    const result = await Product.eliminarComentario(id);
+    console.log('Comment deleted:', result);
     res.json(result);
   } catch (err) {
     next(err);

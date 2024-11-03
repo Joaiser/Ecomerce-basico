@@ -1,5 +1,6 @@
 // En tu archivo de rutas (por ejemplo, routes.js)
 import express from 'express';
+
 import { 
   getAllProductsController, 
   getProductByIdController, 
@@ -10,7 +11,8 @@ import {
   searchProductsController,
   get_All_Products_Controller_Id,
   getCommentsByProductIdController,
-  addCommentController
+  addCommentController,
+  deleteCommentController
 } from './controller/productController.js';
 
 import { 
@@ -58,6 +60,9 @@ router.get('/products/search', searchProductsController);
 // Definir las rutas para comentarios
 router.get('/comentarios/:id', getCommentsByProductIdController);
 router.post('/comentarios', addCommentController);
+router.delete('/comentarios/:id', deleteCommentController);
+
+
 
 // Definir las rutas para publicaciones y respuestas en el foro
 router.post('/posts', createPostController);
