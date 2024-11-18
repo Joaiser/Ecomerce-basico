@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import cookie from 'js-cookie';
+import jwt_decode from 'jwt-decode'; 
 
 export const useForum = () => {
     const [username, setUsername] = useState(null);
@@ -8,11 +10,21 @@ export const useForum = () => {
     const [newReplyContent, setNewReplyContent] = useState({});
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
-        if (storedUsername) {
+        // Obtener los datos del usuario y rol desde las cookies
+        const storedUsername = cookie.get('username');
+        const storedAccessToken = cookie.get('accessToken');
+
+        if (storedUsername && storedAccessToken) {
+            try {
+                const decodedToken = jwt_decode(storedAccessToken);
+                const userIsAdmin = decodedToken?.role === 'admin';
+                setIsAdmin(userIsAdmin);
+
+            } catch (error) {
+                console.error("Error al decodificar el accessToken:", error);
+            }
+            
             setUsername(storedUsername);
-            setIsAdmin(storedIsAdmin);
         }
 
         // Obtener publicaciones del backend
@@ -34,7 +46,7 @@ export const useForum = () => {
         event.preventDefault();
     
         const postWithUsername = {
-            username: username, // Usar el username almacenado
+            username: username, // Usar el username almacenado en la cookie
             title: newPostTitle,
             content: newPostContent,
             parentPostId: null
@@ -54,7 +66,7 @@ export const useForum = () => {
         event.preventDefault();
     
         const replyWithUsername = {
-            username: username, // Usar el username almacenado
+            username: username, // Usar el username almacenado en la cookie
             content: newReplyContent[postId]
         };
     

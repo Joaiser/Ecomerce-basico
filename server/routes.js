@@ -1,5 +1,5 @@
-// En tu archivo de rutas (por ejemplo, routes.js)
 import express from 'express';
+import { authenticateAccessToken, authenticateRefreshToken, authorizeAdmin } from './middleware/authMiddleware.js';  
 
 import { 
   getAllProductsController, 
@@ -38,16 +38,18 @@ import {
 
 import { 
   registerAdmin, 
-  loginAdmin 
+  loginAdmin,
+  logout
 } from './controller/adminController.js';
 
 import { 
   sendMessageController 
 } from './controller/contactController.js';
 
+
 const router = express.Router();
 
-// Definir las rutas para productos
+// Rutas para productos
 router.get('/products', getAllProductsController);
 router.get('/products/:Id_producto', getProductByIdController);
 router.get('/products/category/:Genero', getProductsByCategoryController);
@@ -57,36 +59,43 @@ router.get('/todosproductos', get_All_Products_Controller);
 router.get('/todosproductos/:id', get_All_Products_Controller_Id);
 router.get('/products/search', searchProductsController);
 
-// Definir las rutas para comentarios
+// Rutas para comentarios
 router.get('/comentarios/:id', getCommentsByProductIdController);
 router.post('/comentarios', addCommentController);
 router.delete('/comentarios/:id', deleteCommentController);
 
-
-
-// Definir las rutas para publicaciones y respuestas en el foro
+// Rutas para publicaciones y respuestas en el foro
 router.post('/posts', createPostController);
-router.get('/posts', getPostsController);
+router.get('/posts', getPostController);
 router.delete('/posts/:postId', deletePostController);
 router.post('/posts/:postId/replies', createReplyController);
 router.delete('/posts/:postId/replies/:replyId', deleteReplyController);
 router.get('/posts/:postId', getIdPostController);
 
-// Definir las rutas para usuarios
+// Rutas para usuarios
 router.post('/users/create', createUser);
 router.post('/users/login', login);
 router.get('/users/:Id_cliente', getUserById);
 
-// Definir las rutas para concursantes
+// Rutas para concursantes
 router.get('/contestants', getAllContestantsController);
 router.get('/contestants/:id', getContestantByIdController);
 router.post('/contestants/register', registerContestantController);
 
-// Definir las rutas para administradores
+// Rutas para administradores
 router.post('/admins/register', registerAdmin);
 router.post('/admins/login', loginAdmin);
+router.post('/admins/logout', logout);
+router.get('/admin/dashboard', authenticateAccessToken, authorizeAdmin, (req, res) => {
+  // Si llegamos aquí, el token es válido y el usuario tiene acceso
+  console.log('[AdminRoute] Admin access granted:', req.admin.username);
+  res.send('This is a protected route for admins');
+});
 
-// Definir las rutas para contacto
+// Rutas para contacto
 router.post('/contact/send', sendMessageController);
+
+// Endpoint para renovar el accessToken
+router.post('/token/refresh', authenticateRefreshToken, authenticateAccessToken);
 
 export default router;
