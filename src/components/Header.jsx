@@ -7,6 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { SearchProducts } from './searchProducts';
 import jwt_decode from 'jwt-decode';
 import cookie from 'js-cookie';
+import {clearAccessToken} from '../utils/authUtils.js';
 
 export function Header({ changeFilters }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,6 +50,7 @@ export function Header({ changeFilters }) {
                 cookie.remove('accesToken')
                 setRole(null);
                 setUsername(null);
+                clearAccessToken();
                 alert('Logged out successfully');
             } else {
                 console.error('Failed to log out');

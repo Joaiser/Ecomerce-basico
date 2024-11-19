@@ -12,7 +12,7 @@ export const useForum = () => {
     useEffect(() => {
         // Obtener los datos del usuario y rol desde las cookies
         const storedUsername = cookie.get('username');
-        const storedAccessToken = cookie.get('accessToken');
+        const storedAccessToken = localStorage.getItem('accessToken');
 
         if (storedUsername && storedAccessToken) {
             try {

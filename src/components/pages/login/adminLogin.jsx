@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { storeAccessToken } from '../../../utils/authUtils.js';
 
 const AdminLogin = async (username, password) => {
     const adminData = { username, password };
@@ -7,6 +8,7 @@ const AdminLogin = async (username, password) => {
         const response = await axios.post('http://localhost:3000/admins/login', adminData, {
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${'accessToken'}`,
             },
             withCredentials: true, // Permite enviar cookies con la solicitud
         });
@@ -14,7 +16,8 @@ const AdminLogin = async (username, password) => {
         console.log('Response from server:', response.data);
 
         if (response.data.success) {
-            return response.data.token; // Retorna el token si el login es exitoso
+            storeAccessToken(response.data.accesToken); // Usa la función para guardar el token
+            return response.data.accesToken; // Devuelve el token en caso de que sea necesario
         } else {
             throw new Error('Login fallido');
         }

@@ -3,13 +3,13 @@ import './login.css';
 import { useNavigate } from 'react-router-dom';
 import UserLogin from './userLogin.jsx';
 import AdminLogin from './adminLogin.jsx';
+import { storeAccessToken } from '../../../utils/authUtils.js';
 import cookie from 'js-cookie';
 
 function Login() {
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [accessToken, setAccessToken] = useState(null);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -17,8 +17,7 @@ function Login() {
         try {
             // Intentamos primero como usuario
             const userToken = await UserLogin(nickname, password);
-            // Almacenamos el token y el nombre de usuario en cookies
-            cookie.set('accessToken', userToken, { expires: 1, secure: false });
+            storeAccessToken(userToken); // Guarda el token en localStorage
             cookie.set('username', nickname, { expires: 1, secure: false });
             navigate('/'); // Redirigir a la página principal
         } catch (userError) {
@@ -27,11 +26,9 @@ function Login() {
             try {
                 // Si falla como usuario, intentamos como administrador
                 const adminToken = await AdminLogin(nickname, password);
-                // Guardamos el admin token y username en cookies
-                cookie.set('accessToken', accessToken, { expires: 1, secure: false });
-                cookie.set('username', nickname, { expires: 7, secure: false });                
-                // Verifica si es admin y redirige al panel de administración
-                navigate('/admin'); 
+                storeAccessToken(adminToken); // Guarda el token de administrador
+                cookie.set('username', nickname, { expires: 7, secure: false });
+                navigate('/admin'); // Redirigir al panel de administración
             } catch (adminError) {
                 setErrorMessage(adminError.message || 'Error desconocido.');
             }

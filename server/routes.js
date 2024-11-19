@@ -66,7 +66,7 @@ router.delete('/comentarios/:id', deleteCommentController);
 
 // Rutas para publicaciones y respuestas en el foro
 router.post('/posts', createPostController);
-router.get('/posts', getPostController);
+router.get('/posts', getPostsController);
 router.delete('/posts/:postId', deletePostController);
 router.post('/posts/:postId/replies', createReplyController);
 router.delete('/posts/:postId/replies/:replyId', deleteReplyController);

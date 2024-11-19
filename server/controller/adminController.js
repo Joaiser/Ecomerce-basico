@@ -49,7 +49,7 @@ export async function loginAdmin(req, res) {
         const tokenPayload = { username, role: 'admin' };
         const {accesToken, refreshToken} = generateToken(tokenPayload);
 
-        // Configura la cookie con httpOnly, secure y SameSite
+        // Configura la cookie de refreshToken con httpOnly, secure y SameSite
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,  // No se puede acceder al token desde JavaScript
             secure: process.env.NODE_ENV === 'production' ? config.cookieOptions.secure : false,  // Solo usar HTTPS en producción
@@ -59,11 +59,13 @@ export async function loginAdmin(req, res) {
         });
 
         // Responde con un mensaje de éxito
-        res.status(200).json({ success: true, message: 'Login successful', accesToken });
+        res.status(200).json({ success: true, message: 'Login successful', accesToken, expiresIn: 600 });
+
+        return true;
 
     } catch (error) {
-        console.error('[LoginAdmin] Error logging in admin:', error);
-        res.status(500).json({ error: error.toString() });
+        console.error('Error al iniciar sesión:', error.response?.data || error.message);
+        return false; 
     }
 }
 
