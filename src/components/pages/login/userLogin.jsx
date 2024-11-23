@@ -1,13 +1,14 @@
 import axios from 'axios';
 
 const UserLogin = async (username, password) => {
-    const userData = { username, password };
+    const userData = { Nickname: username, Password_clientes: password }; // Cambiado para coincidir con el servidor
 
     try {
         const response = await axios.post('http://localhost:3000/users/login', userData, {
             headers: {
                 'Content-Type': 'application/json',
             },
+            withCredentials: true,
         });
 
         if (response.data?.userId) {

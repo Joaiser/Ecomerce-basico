@@ -31,18 +31,18 @@ export async function loginAdmin(req, res) {
         const { username, password } = req.body;
         
         if (!username || !password) {
-            return res.status(400).json({ error: 'Username and password are required.' });
+            return res.status(400).json({ error: 'Nombre y contraseña son requeridos.' });
         }
 
         const adminData = await getAdminInDB(username.trim());
         
         if (!adminData) {
-            return res.status(401).json({ success: false, message: 'Invalid username or password' });
+            return res.status(401).json({ success: false, message: 'Nombre o contraseña incorrectos' });
         }
 
         const isPasswordCorrect = await bcrypt.compare(password.trim(), adminData.password);
         if (!isPasswordCorrect) {
-            return res.status(401).json({ success: false, message: 'Invalid username or password' });
+            return res.status(401).json({ success: false, message: 'Nombre o contraseña incorrectos' });
         }
 
         // Si las credenciales son correctas, genera el token
@@ -61,7 +61,6 @@ export async function loginAdmin(req, res) {
         // Responde con un mensaje de éxito
         res.status(200).json({ success: true, message: 'Login successful', accesToken, expiresIn: 600 });
 
-        return true;
 
     } catch (error) {
         console.error('Error al iniciar sesión:', error.response?.data || error.message);

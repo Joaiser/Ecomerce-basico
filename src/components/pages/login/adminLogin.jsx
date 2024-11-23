@@ -13,7 +13,6 @@ const AdminLogin = async (username, password) => {
             withCredentials: true, // Permite enviar cookies con la solicitud
         });
 
-        console.log('Response from server:', response.data);
 
         if (response.data.success) {
             storeAccessToken(response.data.accesToken); // Usa la función para guardar el token
@@ -22,7 +21,7 @@ const AdminLogin = async (username, password) => {
             throw new Error('Login fallido');
         }
     } catch (error) {
-        console.error('[AdminLogin] Error:', error.response?.data || error.message);
+        error.message;
         throw new Error(error.response?.data?.message || 'Error desconocido');
     }
 };

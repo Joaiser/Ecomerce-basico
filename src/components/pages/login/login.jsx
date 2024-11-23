@@ -18,7 +18,7 @@ function Login() {
             // Intentamos primero como usuario
             const userToken = await UserLogin(nickname, password);
             storeAccessToken(userToken); // Guarda el token en localStorage
-            cookie.set('username', nickname, { expires: 1, secure: false });
+            cookie.set('username', nickname, { expires: 7, secure: false });
             navigate('/'); // Redirigir a la página principal
         } catch (userError) {
             setErrorMessage(userError.message || 'Error desconocido.');
@@ -64,6 +64,7 @@ function Login() {
                 </button>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
+            
         </main>
     );
 }

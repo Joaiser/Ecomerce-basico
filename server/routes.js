@@ -61,15 +61,15 @@ router.get('/products/search', searchProductsController);
 
 // Rutas para comentarios
 router.get('/comentarios/:id', getCommentsByProductIdController);
-router.post('/comentarios', addCommentController);
-router.delete('/comentarios/:id', deleteCommentController);
+router.post('/comentarios',authenticateAccessToken, addCommentController);
+router.delete('/comentarios/:id',authenticateAccessToken, authorizeAdmin, deleteCommentController);
 
 // Rutas para publicaciones y respuestas en el foro
-router.post('/posts', createPostController);
+router.post('/posts',authenticateAccessToken, createPostController);
 router.get('/posts', getPostsController);
-router.delete('/posts/:postId', deletePostController);
-router.post('/posts/:postId/replies', createReplyController);
-router.delete('/posts/:postId/replies/:replyId', deleteReplyController);
+router.delete('/posts/:postId',authenticateAccessToken, authorizeAdmin, deletePostController);
+router.post('/posts/:postId/replies',authenticateAccessToken, createReplyController);
+router.delete('/posts/:postId/replies/:replyId',authenticateAccessToken, authorizeAdmin, deleteReplyController);
 router.get('/posts/:postId', getIdPostController);
 
 // Rutas para usuarios
@@ -79,8 +79,8 @@ router.get('/users/:Id_cliente', getUserById);
 
 // Rutas para concursantes
 router.get('/contestants', getAllContestantsController);
-router.get('/contestants/:id', getContestantByIdController);
-router.post('/contestants/register', registerContestantController);
+router.get('/contestants/:id',authenticateAccessToken, authorizeAdmin, getContestantByIdController);
+router.post('/contestants/register',authenticateAccessToken, registerContestantController);
 
 // Rutas para administradores
 router.post('/admins/register', registerAdmin);
