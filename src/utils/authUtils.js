@@ -5,10 +5,10 @@ import jwtDecode from 'jwt-decode';
  * @param {string} accessToken - El token de acceso que se desea guardar.
  */
 export const storeAccessToken = (accessToken) => {
-    if (accessToken) {
+    if (accessToken && typeof accessToken === 'string') {
         localStorage.setItem('accessToken', accessToken);
     } else {
-        console.warn('Intentando almacenar un accessToken inválido.');
+        console.warn('Intentando almacenar un accessToken inválido: ', accessToken);
     }
 };
 
@@ -36,6 +36,25 @@ export const isAdmin = () => {
         return false;
     }
 };
+
+/**
+ * Comprueba si el usuario actual tiene el rol de user.
+ * @returns {boolean} `true` si el usuario es un usuario normal, `false` en caso contrario.
+ */
+export const isUser = () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) return false;
+
+    try {
+        const decodedToken = jwtDecode(accessToken);
+        return decodedToken.role === 'user'; // Comprobar el rol en el token
+    } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        return false;
+    }
+};
+
 
 /**
  * Obtiene el token de acceso almacenado.

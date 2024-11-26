@@ -47,7 +47,7 @@ export async function loginAdmin(req, res) {
 
         // Si las credenciales son correctas, genera el token
         const tokenPayload = { username, role: 'admin' };
-        const {accesToken, refreshToken} = generateToken(tokenPayload);
+        const {accessToken, refreshToken} = generateToken(tokenPayload);
 
         // Configura la cookie de refreshToken con httpOnly, secure y SameSite
         res.cookie('refreshToken', refreshToken, {
@@ -59,7 +59,7 @@ export async function loginAdmin(req, res) {
         });
 
         // Responde con un mensaje de éxito
-        res.status(200).json({ success: true, message: 'Login successful', accesToken, expiresIn: 600 });
+        res.status(200).json({ success: true, message: 'Login successful', accessToken, expiresIn: 600 });
 
 
     } catch (error) {

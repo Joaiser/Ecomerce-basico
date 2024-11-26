@@ -8,15 +8,14 @@ const AdminLogin = async (username, password) => {
         const response = await axios.post('http://localhost:3000/admins/login', adminData, {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${'accessToken'}`,
             },
             withCredentials: true, // Permite enviar cookies con la solicitud
         });
 
 
         if (response.data.success) {
-            storeAccessToken(response.data.accesToken); // Usa la función para guardar el token
-            return response.data.accesToken; // Devuelve el token en caso de que sea necesario
+            storeAccessToken(response.data.accessToken); // Usa la función para guardar el token
+            return response.data.accessToken; // Devuelve el token en caso de que sea necesario
         } else {
             throw new Error('Login fallido');
         }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './contact-form.css'
+import cookie from 'js-cookie';
 
 export function Contact() {
     const initialMessageState = {
-        nickname: localStorage.getItem('username'),
-        email: '',
+        nickname: cookie.get('username'),
+        email: '', //deberia hacer lo mismo que con el nickname
         message: ''
     };
 
@@ -23,7 +24,12 @@ export function Contact() {
         e.preventDefault();
         if (message.nickname) { // Comprueba si el nombre de usuario existe
             try {
-                const response = await axios.post('http://localhost:3000/contact/send', message);
+                const response = await axios.post('http://localhost:3000/contact/send', message, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                         'authorization' : `Bearer ${cookie.get('accessToken')}` 
+                    }
+                });
                 if (response.data.success) {
                     setResponseMessage({ type: 'success', text: 'Mensaje enviado con éxito' });
                     setMessage(initialMessageState); // Restablece el mensaje

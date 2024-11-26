@@ -16,6 +16,8 @@ import { Contest } from './components/pages/contest.jsx';
 import { Foro } from './components/pages/forum.jsx';
 import { Intercambios } from './components/pages/exchanges.jsx';
 import  Login from './components/pages/login/login.jsx';
+import { UserRegister } from './components/pages/login/userRegister.jsx';
+
 import { Pay } from './components/pages/payPage.jsx';
 import { Products } from './components/pages/products.jsx';
 
@@ -79,6 +81,7 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<UserRegister />} /> 
           <Route path="*" element={
             <Layout>
               <Routes>

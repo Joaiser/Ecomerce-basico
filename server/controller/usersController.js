@@ -60,7 +60,9 @@ export const login = async (req, res) => {
         const validatedData = loginSchema.parse(req.body);
 
         // Buscar al usuario en la base de datos
+        console.log('Validating login for Nickname:', validatedData.Nickname);
         const user = await User.getUserByNickname(validatedData.Nickname);
+        console.log('User found:', user);
         if (!user) {
             return res.status(400).json({ message: 'Usuario no encontrado' });
         }
@@ -86,15 +88,17 @@ export const login = async (req, res) => {
         // Responder con el token de acceso y la información del usuario
         res.status(200).json({
             message: 'Inicio de sesión exitoso',
-            accessToken,
-            expiresIn: 600,
-            user: { nickname: user.Nickname, role: 'user' },
+            user: {
+                Nickname: user.Nickname,
+                email: user.users_correo,
+            },
+            accessToken: accessToken,
         });
     } catch (err) {
         if (err instanceof z.ZodError) {
-            // Si el error proviene de Zod
-            return res.status(400).json({ errors: err.errors.map(e => e.message) });
-        }
+            const errorMessage = err.errors.map(error => error.message).join(', ');
+            return res.status(400).json({ message: `Datos inválidos: ${errorMessage}` });
+        }        
         console.error(err);
         res.status(500).json({ message: 'Ha ocurrido un error inesperado, prueba con otros datos.' });
     }

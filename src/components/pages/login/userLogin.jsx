@@ -1,27 +1,27 @@
 import axios from 'axios';
+import { storeAccessToken } from '../../../utils/authUtils';
 
 const UserLogin = async (username, password) => {
-    const userData = { Nickname: username, Password_clientes: password }; // Cambiado para coincidir con el servidor
+    const userData = { Nickname: username, Password_clientes: password };
 
     try {
         const response = await axios.post('http://localhost:3000/users/login', userData, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         });
-
-        if (response.data?.userId) {
-            localStorage.setItem('Id_cliente', response.data.userId);
-            return response.data;
+        
+        // Validamos si recibimos el token y el usuario
+        if (response.data?.accessToken && response.data?.user) {
+            const token = response.data.accessToken;
+            storeAccessToken(token); 
+            return token;
         } else {
-            throw new Error('Usuario no encontrado');
+            throw new Error('Inicio de sesión fallido: datos incompletos.');
         }
+        
     } catch (error) {
-        console.error('[UserLogin] Error:', error.response?.data || error.message);
-        throw error;
+        throw new Error(error.response?.data?.message || 'Error desconocido en el inicio de sesión.');
     }
 };
-
 
 export default UserLogin;
