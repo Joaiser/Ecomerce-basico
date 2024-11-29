@@ -4,6 +4,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import routes from './routes.js'; 
 import config from './config.js';
+import cookieParser from 'cookie-parser';
 
 // Configurar dotenv para leer el archivo .env en la raíz del proyecto
 dotenv.config();
@@ -23,6 +24,8 @@ app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:5173'], // Los orígenes permitidos
   credentials: true, // Permite el envío de cookies
 }));
+
+app.use(cookieParser());
 
 // Middleware para capturar errores de CORS de forma amigable
 app.use((err, req, res, next) => {

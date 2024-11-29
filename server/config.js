@@ -14,12 +14,12 @@ export default {
         secret: process.env.JWT_SECRET,
         refreshSecret: process.env.JWT_REFRESH_SECRET,
         userSecret: process.env.JWT_SECRET_USER,
-        expiry: '10m', // Tiempo de expiración del token
+        expiry: '3m', // Tiempo de expiración del token
         refreshExpiry: '7d' // Tiempo de expiración del token de refresco
     },
     cookieOptions: {
         httpOnly: true,
-        secure: false, // Solo en desarrollo
+        secure: process.env.NODE_ENV === 'production', // Solo en producción
         sameSite: 'strict'
     }
 };

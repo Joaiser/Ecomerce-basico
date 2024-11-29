@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateAccessToken, authenticateRefreshToken, authorizeAdmin } from './middleware/authMiddleware.js';  
+import { authenticateAccessToken,  authorizeAdmin } from './middleware/authMiddleware.js'; 
 
 import { 
   getAllProductsController, 
@@ -18,7 +18,7 @@ import {
 import { 
   createUser, 
   login, 
-  getUserById 
+  getUserById
 } from './controller/usersController.js';
 
 import { 
@@ -39,7 +39,7 @@ import {
 import { 
   registerAdmin, 
   loginAdmin,
-  logout
+  logout,
 } from './controller/adminController.js';
 
 import { 
@@ -89,13 +89,14 @@ router.post('/admins/logout', logout);
 router.get('/admin/dashboard', authenticateAccessToken, authorizeAdmin, (req, res) => {
   // Si llegamos aquí, el token es válido y el usuario tiene acceso
   console.log('[AdminRoute] Admin access granted:', req.admin.username);
-  res.send('This is a protected route for admins');
+  res.send('Ruta protegida para administradores');
 });
 
 // Rutas para contacto
 router.post('/contact/send', sendMessageController);
 
 // Endpoint para renovar el accessToken
-router.post('/token/refresh', authenticateRefreshToken, authenticateAccessToken);
+// router.post('/refresh-token', refreshAccessToken);
+
 
 export default router;

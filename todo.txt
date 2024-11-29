@@ -10,9 +10,8 @@ añadiré una manera de evaluar los productos, por ejemplo con un sistema de est
 donde 5 será la mejor evaluación posible y 0 estrellas la peor, 
 
 
-HECHO:
-
-
-HACIENDO = también me añadiré una sección de comentarios, 
+ también me añadiré una sección de comentarios, 
 donde los clientes podrán dejar sus respectivos comentarios
  tanto de productos como de la web/empresa. 
+
+ archivos borrados: axiosInterceptor, authContext, envolver app, funciones del backend

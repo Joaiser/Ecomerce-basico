@@ -2,10 +2,13 @@ import jwt from 'jsonwebtoken';
 import config from '../config.js';
 
 export function generateToken(payload) {
-    console.log("Generando token con payload:", payload); // Verifica el payload
-    const accessToken = jwt.sign(payload, config.jwt.secret, { expiresIn: config.jwt.expiry });
-    const refreshToken = jwt.sign(payload, config.jwt.refreshSecret, { expiresIn: config.jwt.refreshExpiry });
+    const accessToken = jwt.sign(payload, config.jwt.secret, {
+        expiresIn: config.jwt.expiry, // Utiliza la configuración de expiración del token
+    });
 
-    console.log("AccessToken generado:", accessToken); // Verifica que el token se haya generado correctamente
+    const refreshToken = jwt.sign(payload, config.jwt.refreshSecret, {
+        expiresIn: config.jwt.refreshExpiry, // Utiliza la configuración de expiración del token de refresco
+    });
+
     return { accessToken, refreshToken };
 }

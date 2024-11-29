@@ -1,5 +1,4 @@
 import { registerAdminInDB, getAdminInDB } from '../models/mysql/administrer.js';
-import jwt from 'jsonwebtoken';
 import config from '../config.js';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../tokenUtils/tokenUtils.js';
@@ -47,24 +46,21 @@ export async function loginAdmin(req, res) {
 
         // Si las credenciales son correctas, genera el token
         const tokenPayload = { username, role: 'admin' };
-        const {accessToken, refreshToken} = generateToken(tokenPayload);
+        const { accessToken, refreshToken } = generateToken(tokenPayload);
 
         // Configura la cookie de refreshToken con httpOnly, secure y SameSite
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,  // No se puede acceder al token desde JavaScript
             secure: process.env.NODE_ENV === 'production' ? config.cookieOptions.secure : false,  // Solo usar HTTPS en producción
-            maxAge: 7 * 24 *60 * 60 * 1000,  // Expira en 7 días
+            maxAge: 7 * 24 * 60 * 60 * 1000,  // Expira en 7 días
             sameSite: config.cookieOptions.sameSite,  // Asegura que solo se envíe la cookie en el mismo contexto (previene CSRF)
-
         });
 
-        // Responde con un mensaje de éxito
+        // Responde con un mensaje de éxito y el accessToken
         res.status(200).json({ success: true, message: 'Login successful', accessToken, expiresIn: 600 });
-
-
     } catch (error) {
         console.error('Error al iniciar sesión:', error.response?.data || error.message);
-        return false; 
+        res.status(500).json({ error: error.toString() });
     }
 }
 
@@ -77,3 +73,4 @@ export async function logout(req, res) {
     });
     res.status(200).json({ message: 'Logged out successfully' });
 }
+

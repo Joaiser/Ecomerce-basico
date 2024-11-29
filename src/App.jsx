@@ -1,9 +1,14 @@
 import { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
+//interceptor
+// import axiosInterceptor from './utils/axiosInterceptor.js';  
+
+
 // Contextos
 import { CartProvider } from './context/cart.jsx';
 import { FilterContext } from './context/filters.jsx';
+// import { AuthProvider } from './context/authContext.jsx';
 
 // Componentes generales
 import { Header } from './components/Header.jsx';
@@ -62,6 +67,8 @@ function ScrollToTop() {
   return null;
 }
 
+
+
 export function Layout({ children }) {
   return (
     <>
@@ -75,7 +82,10 @@ export function Layout({ children }) {
 function App() {
   const { filters, setFilters } = useContext(FilterContext);
 
+  
+
   return (
+    //<AuthProvider>
     <CartProvider>
       <Router>
         <ScrollToTop />
@@ -125,6 +135,7 @@ function App() {
         </Routes>
       </Router>
     </CartProvider>
+    //</AuthProvider>
   );
 }
 

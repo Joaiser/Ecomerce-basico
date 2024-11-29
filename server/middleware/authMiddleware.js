@@ -1,51 +1,24 @@
 import jwt from 'jsonwebtoken';
-import config from '../config.js';
 import { generateToken } from '../tokenUtils/tokenUtils.js';
+import config from '../config.js';
 
-// Middleware para autenticar el accessToken
 export function authenticateAccessToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; // Obtener el token del encabezado "Authorization"
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ message: 'Authorization header missing' });
 
-    if (!token) {
-        console.log('[AuthMiddleware] No token provided.');
-        return res.status(401).json({ message: 'Unauthorized: Token required' });
-    }
-
-    jwt.verify(token, config.jwt.secret, (err, decoded) => {
-        if (err) {
-            console.log('[AuthMiddleware] Invalid token:', err);
-            return res.status(401).json({ message: 'Unauthorized: Invalid token' });
-        }
-
-        req.user = decoded; // Adjuntar los datos del token decodificado a la solicitud
-        console.log('[AuthMiddleware] Token verified successfully:', decoded);
-        next(); // Continuar con la solicitud
-    });
+  const token = authHeader.split(' ')[1];
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+          if (err.name === 'TokenExpiredError') {
+              return res.status(401).json({ message: 'Token expired', expiredAt: err.expiredAt });
+          }
+          return res.status(403).json({ message: 'Invalid token' });
+      }
+      req.user = user;
+      next();
+  });
 }
 
-// Middleware para validar el refreshToken
-export function authenticateRefreshToken(req, res, next) {
-    const refreshToken = req.cookies.refreshToken; // Obtener el refreshToken de las cookies
-
-    if (!refreshToken) {
-        console.log('[AuthMiddleware] No refresh token provided.');
-        return res.status(401).json({ message: 'Unauthorized: Refresh token required' });
-    }
-
-    jwt.verify(refreshToken, config.jwt.refreshSecret, (err, decoded) => {
-        if (err) {
-            console.log('[AuthMiddleware] Invalid refresh token:', err);
-            return res.status(401).json({ message: 'Unauthorized: Invalid refresh token' });
-        }
-
-        req.user = decoded; // Adjuntar los datos del token decodificado a la solicitud
-        console.log('[AuthMiddleware] Refresh token verified successfully:', decoded);
-        next(); // Continuar con la solicitud
-    });
-}
-
-// Middleware para verificar que el usuario tiene rol de "admin"
 export function authorizeAdmin(req, res, next) {
     if (req.user.role !== 'admin') {
         console.log('[AuthMiddleware] Unauthorized access for user:', req.user.username);
@@ -56,26 +29,24 @@ export function authorizeAdmin(req, res, next) {
     next(); // Continuar si el usuario tiene permiso
 }
 
-// Controlador para manejar la renovación del accessToken
 export function refreshAccessToken(req, res) {
-    const user = req.user; // El token decodificado ya debería estar en req.user
-    const tokenPayload = { username: user.username, role: user.role };
+//   const refreshToken = req.cookies.refreshToken;
 
-    // Generar un nuevo accessToken usando los datos del refreshToken
-    const { accessToken } = generateToken(tokenPayload);
-    console.log('[AuthMiddleware] New access token generated:', accessToken);
+//   if (!refreshToken) {
+//       return res.status(401).json({ message: 'No refresh token provided' });
+//   }
 
-    // Enviar el nuevo accessToken al cliente
-    res.status(200).json({ accessToken });
-}
+//   // Verificar el refreshToken
+//   jwt.verify(refreshToken, config.jwt.refreshSecret, (err, user) => {
+//       if (err) {
+//           return res.status(403).json({ message: 'Invalid refresh token' });
+//       }
 
-// Middleware opcional para limpiar cookies (puede usarse para logout)
-export function clearCookie(req, res) {
-    res.clearCookie('refreshToken', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Strict',
-        path: '/',
-    });
-    res.status(200).json({ message: 'Cookie cleared' });
+//       // Si el refreshToken es válido, generar un nuevo accessToken
+//       const { accessToken } = generateToken({ username: user.username, role: user.role });
+
+//       console.log('[AuthMiddleware] New access token generated at:', new Date().toISOString(), 'Token:', accessToken);
+
+//       return res.status(200).json({ accessToken });
+//   });
 }

@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
 /**
  * Almacena el token de acceso en localStorage.
@@ -63,3 +64,25 @@ export const isUser = () => {
 export const getAccessToken = () => {
     return localStorage.getItem('accessToken');
 };
+
+
+// // Función para obtener un nuevo accessToken
+// export async function refreshAccessToken() {
+//     try {
+//         const response = await axios.post('/refresh-token', {}, { withCredentials: true });
+//         const { accessToken } = response.data;
+
+//         // Almacena el nuevo accessToken en el localStorage
+//         storeAccessToken(accessToken);
+//         console.log('[AuthUtils] New access token stored in localStorage:', accessToken);
+
+//         // Devuelve el nuevo accessToken para continuar con las peticiones
+//         return accessToken;
+//     } catch (error) {
+//         console.error('Error al renovar el token:', error);
+//         throw new Error('No se pudo renovar el token');
+//     }
+// }
+
+
+ 
