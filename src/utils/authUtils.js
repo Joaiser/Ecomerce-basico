@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import axios from 'axios';
+
 
 /**
  * Almacena el token de acceso en localStorage.
@@ -7,11 +7,13 @@ import axios from 'axios';
  */
 export const storeAccessToken = (accessToken) => {
     if (accessToken && typeof accessToken === 'string') {
+        // console.log('[AuthUtils] Almacenando accessToken en localStorage:', accessToken.slice(0, 10) + '...');
         localStorage.setItem('accessToken', accessToken);
     } else {
-        console.warn('Intentando almacenar un accessToken inválido: ', accessToken);
+        throw new Error("El token de acceso no es válido");
     }
 };
+
 
 /**
  * Elimina el token de acceso del localStorage.

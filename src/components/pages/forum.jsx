@@ -111,6 +111,7 @@ export function Foro() {
                                     )
                                     : post.content}
                             </p>
+                            {error && <div className="error-message">{error}</div>}
                             <p>Publicado por: {post.username}</p>
                             {isAdmin && (
                                 <>
@@ -140,6 +141,7 @@ export function Foro() {
                                     />
                                     <div id='post-buttons'>
                                         <button type="submit">Responder</button>
+                                        {error && <div className="error-message">{error}</div>}
                                         <button type="button" onClick={() => handlePostClick(post.id)}>Ver publicación</button>
                                     </div>
                                 </form>

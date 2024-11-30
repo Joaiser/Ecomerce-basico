@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateAccessToken,  authorizeAdmin } from './middleware/authMiddleware.js'; 
+import { authenticateAccessToken,  authorizeAdmin, refreshAccessToken } from './middleware/authMiddleware.js'; 
 
 import { 
   getAllProductsController, 
@@ -93,10 +93,10 @@ router.get('/admin/dashboard', authenticateAccessToken, authorizeAdmin, (req, re
 });
 
 // Rutas para contacto
-router.post('/contact/send', sendMessageController);
+router.post('/contact/send', sendMessageController, authenticateAccessToken);
 
 // Endpoint para renovar el accessToken
-// router.post('/refresh-token', refreshAccessToken);
+router.post('/refreshtoken', refreshAccessToken);
 
 
 export default router;

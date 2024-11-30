@@ -21,32 +21,48 @@ export function authenticateAccessToken(req, res, next) {
 
 export function authorizeAdmin(req, res, next) {
     if (req.user.role !== 'admin') {
-        console.log('[AuthMiddleware] Unauthorized access for user:', req.user.username);
+        // console.log('[AuthMiddleware] Unauthorized access for user:', req.user.username);
         return res.status(403).json({ message: 'Forbidden: Admins only' });
     }
 
-    console.log('[AuthMiddleware] Admin access granted for user:', req.user.username);
+    // console.log('[AuthMiddleware] Admin access granted for user:', req.user.username);
     next(); // Continuar si el usuario tiene permiso
 }
 
 export function refreshAccessToken(req, res) {
-//   const refreshToken = req.cookies.refreshToken;
+    // console.log('[AuthMiddleware] Received refresh token request');
+    // console.log('[AuthMiddleware] Cookies recibidas:', req.cookies);
 
-//   if (!refreshToken) {
-//       return res.status(401).json({ message: 'No refresh token provided' });
-//   }
+    const refreshToken = req.cookies.refreshToken;
 
-//   // Verificar el refreshToken
-//   jwt.verify(refreshToken, config.jwt.refreshSecret, (err, user) => {
-//       if (err) {
-//           return res.status(403).json({ message: 'Invalid refresh token' });
-//       }
+    // if (!refreshToken) {
+    //     // console.log('[AuthMiddleware] No refresh token provided');
+    //     return res.status(401).json({ message: 'No refresh token provided' });
+    // }
 
-//       // Si el refreshToken es válido, generar un nuevo accessToken
-//       const { accessToken } = generateToken({ username: user.username, role: user.role });
+    jwt.verify(refreshToken, config.jwt.refreshSecret, (err, user) => {
+        if (err) {
+            // console.log('[AuthMiddleware] Error verifying token:', err);
+            if (err.name === 'TokenExpiredError') {
+                return res.status(403).json({ message: 'Refresh token expired' });
+            }
+            return res.status(403).json({ message: 'Invalid refresh token' });
+        }
 
-//       console.log('[AuthMiddleware] New access token generated at:', new Date().toISOString(), 'Token:', accessToken);
+        // console.log('[AuthMiddleware] Token verificado, usuario:', user);
 
-//       return res.status(200).json({ accessToken });
-//   });
+        const { accessToken } = generateToken({ username: user.username, role: user.role });
+
+        // console.log(
+        //     '[AuthMiddleware] Nuevo accessToken generado:',
+        //     accessToken.slice(0, 10) + '...'
+        // );
+
+        res.setHeader('Cache-Control', 'no-store');
+        return res.status(200).json({
+            success: true,
+            message: 'Access token refreshed successfully',
+            accessToken
+        });
+    });
 }

@@ -14,7 +14,7 @@ export default {
         secret: process.env.JWT_SECRET,
         refreshSecret: process.env.JWT_REFRESH_SECRET,
         userSecret: process.env.JWT_SECRET_USER,
-        expiry: '3m', // Tiempo de expiración del token
+        expiry: '3s', // Tiempo de expiración del token
         refreshExpiry: '7d' // Tiempo de expiración del token de refresco
     },
     cookieOptions: {
