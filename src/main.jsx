@@ -7,8 +7,8 @@ import './index.css'
 const root = document.getElementById('root');
 createRoot(root).render(
   <FiltersProvider>
-    {/*<PayPalScriptProvider options={{ "client-id": "sb" }}>  Replace sb with your client id */}
+    <PayPalScriptProvider options={{ "client-id": "AaEGSw8rYal18Js4GxDAZFy5szZsC7Mc-W-q_C1G8mPXlWJ1C3UCRpcbi7zGmD9OqXkJqU_lHh7sIwl4" }}>  
     <App />
-    {/*</PayPalScriptProvider> */}
+    </PayPalScriptProvider> 
   </FiltersProvider>
 );

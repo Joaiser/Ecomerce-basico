@@ -66,10 +66,6 @@ export function Contact() {
                                 placeholder={message.nickname ? message.nickname : 'Nombre'}/>
                             </label>
                             <label>
-                                Correo electrónico:
-                                <input type="email" name="email" value={message.email} onChange={handleChange} placeholder='Correo Electrónico' className='dates' required/>
-                            </label>
-                            <label>
                                 Mensaje:
                                 <textarea name="message" value={message.message} onChange={handleChange} placeholder='Escribe aquí tu mensaje' className='dates' required></textarea>
                             </label>
