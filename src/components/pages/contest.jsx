@@ -4,6 +4,7 @@ import './contest.css';
 import Confetti from 'react-confetti';
 import cookie from 'js-cookie';
 import jwt_decode from 'jwt-decode';
+import axiosInstance from '../../utils/axiosInterceptor';
 
 export function Contest() {
     const [username, setUsername] = useState(null);
@@ -45,29 +46,18 @@ export function Contest() {
         setErrorMessage(null);
         setSuccessMessage(null);
         try {
-            const response = await fetch('http://localhost:3000/contestants/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-                body: JSON.stringify({ username }),
+            const response = await axiosInstance.post('http://localhost:3000/contestants/register', {
+                username
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success) {
-                    setIsRegistered(true);
-                    setSuccessMessage('¡Registro exitoso! Ahora estás participando en el concurso.');
-                } else {
-                    throw new Error(data.message || 'El nombre de usuario ya está registrado en el concurso.');
-                }
+            if (response.data.success) {
+                setIsRegistered(true);
+                setSuccessMessage('¡Registro exitoso! Ahora estás participando en el concurso.');
             } else {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Hubo un problema con tu registro.');
+                throw new Error(response.data.message || 'El nombre de usuario ya está registrado en el concurso.');
             }
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.response?.data?.message || 'Hubo un problema con tu registro.');
         }
     };
 
@@ -75,27 +65,16 @@ export function Contest() {
         setErrorMessage(null);
         setSuccessMessage(null);
         try {
-            const response = await fetch('http://localhost:3000/contestants', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            });
+            const response = await axiosInstance.get('http://localhost:3000/contestants');
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.length === 0) {
-                    throw new Error('No hay participantes en el concurso.');
-                }
-                const selectedWinner = data[Math.floor(Math.random() * data.length)];
-                setWinner(selectedWinner);
-                setSuccessMessage(`¡El ganador es ${selectedWinner.username}! 🎉`);
-            } else {
-                throw new Error('Hubo un error al obtener la lista de participantes.');
+            if (response.data.length === 0) {
+                throw new Error('No hay participantes en el concurso.');
             }
+            const selectedWinner = response.data[Math.floor(Math.random() * response.data.length)];
+            setWinner(selectedWinner);
+            setSuccessMessage(`¡El ganador es ${selectedWinner.username}! 🎉`);
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.response?.data?.message || 'Hubo un error al obtener la lista de participantes.');
         }
     };
 

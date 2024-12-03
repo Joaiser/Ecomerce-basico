@@ -74,7 +74,7 @@ export const login = async (req, res) => {
         }
 
         // Crear tokens
-        const tokenPayLoad = { Nickname: user.Nickname, role: 'user' };
+        const tokenPayLoad = { Nickname: user.Nickname, role: 'user', email: user.users_correo };
         const { accessToken, refreshToken } = generateToken(tokenPayLoad);
 
         // Configurar la cookie de refreshToken con httpOnly, secure y SameSite
@@ -131,5 +131,4 @@ export const getUserById = async (req, res) => {
         path: '/',
     });
     res.status(200).json({ message: 'Logged out successfully' });
- }
-
+}
