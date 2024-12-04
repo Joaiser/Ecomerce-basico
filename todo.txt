@@ -1,8 +1,8 @@
 POR ARREGLAR:
-AÑADIR TABLAS NECESARIAS EN LA BASE DE DATOS
-
-
-HAY QUE ARREGLAR LA PÁGINA DE PAGO
+salga nombre de quien ha escrito el comentario del producto
+allproducts y products
+cosas visuales, en todas las rutas
+Manejo de errores, en muchos sitios sale error no adecuado
 
 
 PODEMOS AÑADIR:
@@ -10,8 +10,5 @@ añadiré una manera de evaluar los productos, por ejemplo con un sistema de est
 donde 5 será la mejor evaluación posible y 0 estrellas la peor, 
 
 
- también me añadiré una sección de comentarios, 
-donde los clientes podrán dejar sus respectivos comentarios
- tanto de productos como de la web/empresa. 
 
- archivos borrados: axiosInterceptor, authContext, envolver app, funciones del backend
+BORRAR TODOS LOS LOGS!¡!¡!¡!

@@ -98,42 +98,63 @@ export class Product {
     }
   }
 
+  //PARA COMENTARIOS DE ALL_PRODUCTS
   
-  static async getCommentsByProductId(id) {
-    try {
-      const query = `
-        SELECT id, id_producto, comentario
-        FROM comentariosProductos
-        WHERE id_producto = ?`;
-      console.log(`Executing query: ${query} with id: ${id}`);
-      const [rows] = await pool.execute(query, [id]);
-      console.log('Query result:', rows);
-      return rows;
-    } catch (err) {
-      throw new Error('Hubo un error al obtener los comentarios del producto');
-    }
+ // Obtener un producto por ID
+ static async getProductById(id) {
+  try {
+    const query = `
+      SELECT id
+      FROM all_products
+      WHERE id = ?`;
+    const [rows] = await pool.execute(query, [id]);
+    return rows.length > 0;
+  } catch (err) {
+    throw new Error('Hubo un error al obtener el producto');
   }
+}
 
-  static async addComment(id_producto, comentario) {
-    try {
-      const [result] = await pool.execute(
-        'INSERT INTO comentariosProductos (id_producto, comentario) VALUES (?, ?)',
-        [id_producto, comentario]
-      );
-      return { id: result.insertId, id_producto, comentario };
-    } catch (err) {
-      throw new Error('Hubo un error al añadir el comentario');
-    }
+// Obtener comentarios de un producto por ID
+static async getCommentsByProductId(id) {
+  try {
+    const query = `
+      SELECT id, id_producto, comentario, username
+      FROM comentariosAllProducts
+      WHERE id_producto = ?`;
+    const [rows] = await pool.execute(query, [id]);
+    return rows;
+  } catch (err) {
+    throw new Error('Hubo un error al obtener los comentarios del producto');
   }
+}
 
-  static async eliminarComentario(id) {
-    try {
-      const [result] = await pool.execute('DELETE FROM comentariosProductos WHERE id = ?', [id]);
-      return result;
-    } catch (err) {
-      throw new Error('Hubo un error al eliminar el comentario');
+// Añadir un comentario a un producto
+static async addComment(id_producto, comentario, username) {
+  try {
+    if ([id_producto, comentario, username].includes(undefined)) {
+      throw new Error('Uno de los parámetros es undefined');
     }
+
+    const query = `
+      INSERT INTO comentariosAllProducts (id_producto, comentario, username)
+      VALUES (?, ?, ?)`;
+    const [result] = await pool.execute(query, [id_producto, comentario, username]);
+    return { id: result.insertId, id_producto, comentario, username };
+  } catch (err) {
+    console.error('Error al añadir el comentario:', err);
+    throw new Error('Error al añadir el comentario');
   }
+}
+
+// Eliminar un comentario por ID
+static async eliminarComentario(id) {
+  try {
+    const [result] = await pool.execute('DELETE FROM comentariosAllProducts WHERE id = ?', [id]);
+    return result;
+  } catch (err) {
+    throw new Error('Hubo un error al eliminar el comentario');
+  }
+}
 }
 
 export default Product;

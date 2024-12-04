@@ -7,7 +7,7 @@ import './productDetail.css';
 import { CartIcon } from '../icons.jsx';
 
 export function ProductAllDetail() {
-    const { id } = useParams(); // Asegúrate de que el parámetro coincida con la ruta
+    const { id } = useParams();
     const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
 
@@ -16,22 +16,18 @@ export function ProductAllDetail() {
         newComment,
         setNewComment,
         handleAddComment,
-        handleDeleteComment
+        handleDeleteComment,
+        isAdmin,
+        error,
     } = useComments(id);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/todosproductos/${id}`)
-            .then(response => {
-                setProduct(response.data);
-            })
-            .catch(error => {
-                console.error('Error al cargar el producto:', error);
-            });
+            .then(response => setProduct(response.data))
+            .catch(error => console.error('Error al cargar el producto:', error));
     }, [id]);
 
-    if (!product) {
-        return 'Cargando...';
-    }
+    if (!product) return 'Cargando...';
 
     return (
         <section>
@@ -42,20 +38,23 @@ export function ProductAllDetail() {
                             <img src={product.imagen_producto} alt={product.nombre_producto} />
                         </div>
                     </aside>
-                    <div id='product-description'>
+                    <div id="product-description">
                         <h1>{product.nombre_producto}</h1>
                         <p>{product.descripcion}</p>
                         <p>Precio: {product.precio}€</p>
-                        <button className="btn btn-primary" onClick={() => addToCart(product)}><CartIcon /></button>
+                        <button className="btn btn-primary" onClick={() => addToCart(product)}>
+                            <CartIcon />
+                        </button>
                     </div>
                 </article>
                 <div className="comments-section">
                     <h2>Comentarios</h2>
+                    {error && <p className="error">{error}</p>}
                     {comments.length > 0 ? (
                         comments.map(comment => (
                             <div key={comment.id} className="comment">
-                                <p>{comment.comentario}</p>
-                                {localStorage.getItem('isAdmin') === 'true' && (
+                                <p><strong>{comment.username}</strong>: {comment.comentario}</p>
+                                {isAdmin && (
                                     <button onClick={() => handleDeleteComment(comment.id)}>Eliminar</button>
                                 )}
                             </div>

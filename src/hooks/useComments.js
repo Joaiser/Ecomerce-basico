@@ -1,65 +1,66 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInterceptor';
+import jwtDecode from 'jwt-decode';
+import cookie from 'js-cookie';
 
 export const useComments = (productId) => {
-    const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
+    const [comments, setComments] = useState([]); // Estado para almacenar los comentarios
+    const [newComment, setNewComment] = useState(''); // Estado para almacenar el nuevo comentario
+    const [isAdmin, setIsAdmin] = useState(false); // Estado para almacenar si el usuario es administrador
+    const [error, setError] = useState(''); // Estado para almacenar errores
+    const [username, setUsername] = useState(''); // Estado para almacenar el nombre de usuario
 
     useEffect(() => {
-        // Obtener comentarios del backend
-        fetchComments();
+        const storedAccessToken = localStorage.getItem('accessToken'); // Obtener el token de acceso del almacenamiento local
+        if (storedAccessToken) {
+            try {
+                const decodedToken = jwtDecode(storedAccessToken); // Decodificar el token de acceso
+                setIsAdmin(decodedToken?.role === 'admin'); // Establecer si el usuario es administrador
+                setUsername(decodedToken.username); // Obtener el nombre de usuario de las cookies decideficandolo
+            } catch (error) {
+                setError('Error al decodificar el accessToken'); // Manejar errores de decodificación
+            }
+        }
+        fetchComments(); // Obtener los comentarios del producto
     }, [productId]);
 
     const fetchComments = () => {
-        axios.get(`http://localhost:3000/comentarios/${productId}`)
-            .then(response => {
-                setComments(response.data);
-            })
-            .catch(error => {
-                console.error('Error al cargar los comentarios:', error);
-            });
+        axiosInstance.get(`/comentarios/${productId}`)
+            .then(response => setComments(response.data)) // Establecer los comentarios en el estado
+            .catch(() => setError('Hubo un error al obtener los comentarios del producto')); // Manejar errores
     };
 
     const handleAddComment = () => {
-        const id_cliente = localStorage.getItem('Id_cliente');
-        const id_administrador = localStorage.getItem('Id_administrador');
-        if (!id_cliente && !id_administrador) {
-            alert('Debes iniciar sesión para añadir un comentario.');
+        if (!newComment.trim()) {
+            setError('El comentario no puede estar vacío'); // Validar que el comentario no esté vacío
             return;
         }
 
         const commentData = {
             id_producto: productId,
             comentario: newComment,
-            id_cliente: id_cliente ? parseInt(id_cliente) : null,
-            id_administrador: id_administrador ? parseInt(id_administrador) : null
+            username: username,
         };
 
-        console.log('Adding comment:', commentData); // Log para verificar los datos
-
-        axios.post(`http://localhost:3000/comentarios`, commentData)
-            .then(response => {
-                setComments([...comments, response.data]);
-                setNewComment('');
+        axiosInstance.post('/comentarios', commentData, {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }, // Enviar el token de acceso en los encabezados
+        })
+            .then(() => {
+                fetchComments(); // Actualizar los comentarios después de añadir uno nuevo
+                setNewComment(''); // Limpiar el campo de nuevo comentario
             })
-            .catch(error => {
-                console.error('Error al añadir el comentario:', error);
-            });
+            .catch(() => setError('Error al añadir el comentario')); // Manejar errores
     };
 
     const handleDeleteComment = (commentId) => {
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        axios.delete(`http://localhost:3000/comentarios/${commentId}`, {
-            headers: {
-                'x-is-admin': isAdmin
-            }
+        axiosInstance.delete(`/comentarios/${commentId}`, {
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Enviar el token de acceso en los encabezados
+                'x-is-admin': isAdmin.toString() // Enviar si el usuario es administrador en los encabezados
+            },
         })
-            .then(response => {
-                setComments(comments.filter(comment => comment.id !== commentId));
-            })
-            .catch(error => {
-                console.error('Error al eliminar el comentario:', error);
-            });
+            .then(() => fetchComments()) // Actualizar los comentarios después de eliminar uno
+            .catch(() => setError('Error al eliminar el comentario')); // Manejar errores
     };
 
     return {
@@ -68,6 +69,8 @@ export const useComments = (productId) => {
         setNewComment,
         fetchComments,
         handleAddComment,
-        handleDeleteComment
+        handleDeleteComment,
+        isAdmin,
+        error,
     };
 };
