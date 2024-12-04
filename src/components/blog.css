@@ -41,6 +41,7 @@
     cursor: pointer;
 }
 
+
 @media screen and (max-width: 538px){
     #container { 
         grid-template-columns: repeat(

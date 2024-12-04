@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ClearCartIcon, RemoveFromCartIcon, CartIcon } from "./icons";
 import { useCart } from '../hooks/useCart.js';
 import './Cart.css';
+import cookie from 'js-cookie';
 
 export function Cart () {
     const cartCheckboxId = useId()
@@ -10,7 +11,7 @@ export function Cart () {
     const cartCheckboxRef = useRef(null);
     const navigate = useNavigate();
     const handlePay = () => {
-        const user = localStorage.getItem('username');
+        const user = cookie.get('username');
         if (!user) {
             alert('Inicia sesión o crea una cuenta para pagar');
             return; // Agrega un return aquí para evitar que se ejecute el resto de la función si el usuario no está logueado

@@ -111,6 +111,7 @@ export function Foro() {
                                     )
                                     : post.content}
                             </p>
+                            {error && <div className="error-message">{error}</div>}
                             <p>Publicado por: {post.username}</p>
                             {isAdmin && (
                                 <>
@@ -120,7 +121,16 @@ export function Foro() {
                             )}
                             {Array.isArray(post.replies) && post.replies.map((reply, replyIndex) => (
                                 <div key={replyIndex}>
-                                    <p>{reply.content.substring(0,MAX_CONTENT_PREVIEW_LENGTH)}<span>...</span></p>
+                                    <p>
+                                        {reply.content.length > MAX_CONTENT_PREVIEW_LENGTH
+                                            ? (
+                                                <>
+                                                    {reply.content.substring(0, MAX_CONTENT_PREVIEW_LENGTH)}
+                                                    <span>...</span>
+                                                </>
+                                            )
+                                            : reply.content}
+                                    </p>
                                     <p>Respondido por: {reply.username}</p>
                                     {isAdmin && (
                                         <>
@@ -140,6 +150,7 @@ export function Foro() {
                                     />
                                     <div id='post-buttons'>
                                         <button type="submit">Responder</button>
+                                        {error && <div className="error-message">{error}</div>}
                                         <button type="button" onClick={() => handlePostClick(post.id)}>Ver publicación</button>
                                     </div>
                                 </form>

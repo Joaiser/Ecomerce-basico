@@ -40,8 +40,17 @@
     width: 100%;
 }
 
+.post h2{
+    width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
 .post p {
     background-color: white;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 form {
@@ -97,40 +106,33 @@ button:hover {
     align-content: flex-start;
 }
 
-@media (max-width: 337px) {
-    #foro {
-        padding: 10px;
-        width: 100%;
-    }
-
-    #foro-content {
-        width: 100%;
-    }
-
-    #foro-content-presentation {
-        width: 100%;
-    }
-
-    .post-container {
-        grid-template-columns: 1fr;
-    }
-
-    .post {
-        flex: 0 0 100%;
-        margin: 5px 0;
-    }
-
-    input, textarea {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-    }
+#foro-content-presentation{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+
+#post-title{
+    width: 75%;
+}
+
+#post-content{
+    width: 75%;
+}
+
+
 
 @media (min-width: 2300px){
     .post-container {
         max-width: 1500px;
     }
+}
+
+@media (max-width: 675px){
+    .post-container {
+        grid-template-columns: 1fr;
+    }
+
 }

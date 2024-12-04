@@ -123,8 +123,11 @@ header div input{
     transform: scale(1.1);
 }
 
-
 @media screen and (max-width: 878px) {
+
+    header{
+        position: relative;
+    }
 
     .max-width{
         display: flex;
@@ -135,12 +138,13 @@ header div input{
     }
 
     .max-width div{
-        display: flex;
+        
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 20px;
         height: auto;
+        padding-bottom: 11px;
     }
 
     nav ul {
@@ -157,7 +161,7 @@ header div input{
 
     
     nav ul.open {
-        overflow-y: scroll;
+        overflow-y: none;
         width: 100%;
         height: auto;
         flex-direction: column;
@@ -168,13 +172,17 @@ header div input{
         visibility: visible;
         opacity: 1;
         z-index: 200;
-        margin-top: -8%;
+        top: -10px;
     }
     
     nav ul.open li {
         display: block;
         text-align: center;
-        padding: 0.5rem;
+       
+    }
+
+    #last-menu-opne{
+        padding-bottom: 40px;
     }
 
     nav ul.open li a:hover {
@@ -182,7 +190,6 @@ header div input{
         transition: border-color 0.5s;
         border-radius: 8px;
         border: 1px solid transparent;
-        padding: 0.6em 1.2em;
     }
 
     .menu-icon {
@@ -203,24 +210,135 @@ header div input{
 
     .account-2{
         position: absolute;
-        left: 36px;
+        left:  42px;
     }
 }
 
 @media screen and (max-width: 481px) {
     .cart-button {
         position: absolute;
-        top: 209px;
-        right: 32px;
-    }
-    .account {
-        position: absolute;
-        top: 153px;
+        top: 216px;
         right: 32px;
     }
 
     .account-2{
         top: 211px;
         position: absolute;
+    }
+
+    header div input{
+        margin: 0;
+        top: -26px;
+        position: relative;
+    }
+
+    .account-empty{
+        position: absolute;
+        top: 216px;
+    }
+
+    .account {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 341px){
+    .menu-icon {
+        display: block;
+        position: relative;
+        right: 0%;
+    }
+
+}
+
+@media screen and (max-width: 381px) {
+    .menu-icon {
+        top: -73px;
+        position: relative;
+    }
+    
+}
+
+
+/*HEADER EN TODOSPRODUCTOS*/
+
+/* Estilos específicos para el header en la página de productos */
+@media screen and (max-width: 877px) {
+    .header-products {
+        position: relative;
+        height: 540px;
+    }
+}
+
+@media screen and (max-width: 473px){
+    .header-products .cart-button {
+        align-items: center;
+        background: #09f;
+        border-radius: 9999px;
+        cursor: pointer;
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        padding: 4px;
+        transition: all .3s ease;
+        width: 93px;
+        z-index: 100;
+        top: 13px;
+    }
+
+    .header-products .account {
+        position: absolute;
+        top: 6px;
+        left: 32px;
+        display: flex;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 473px){
+    .header-products .cart-button{
+        position: absolute;
+        top: 6px;
+        right: 32px;
+    }
+}
+
+@media screen and (max-width: 341px) {
+    .header-products .menu-icon {
+        display: block;
+        position: relative;
+        right: 0%;
+    }
+}
+
+/*HEADER EN FORO */
+
+/* Estilos específicos para el header en la página de foro */
+@media screen and (max-width: 481px) {
+    .header-foro .cart-button {
+        position: absolute;
+        top: 216px;
+        right: 32px;
+    }
+}
+
+@media screen and (max-width: 412px) {
+    .header-foro .account {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 346px) {
+    .header-foro .menu-icon {
+        position: relative;
+        top: -77px;
+        display: block;
+        right: 0%;
+    }
+
+    .header-foro .account-2 {
+        top: 211px;
+        position: absolute;
+        left: 5%;
     }
 }

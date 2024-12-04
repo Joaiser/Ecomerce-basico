@@ -26,6 +26,33 @@
     transition: border-color 0.5s;
 }
 
+header{
+    position: relative;
+}
+
+/*HEADER EN TODOSPRODUCTOS*/
+
+/* Estilos específicos para el header en la página de productos */
+.header-products {
+    background-color: #f0f0f0; /* Ejemplo de estilo específico */
+    padding: 20px;
+}
+
+
+.header-products .filters label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.header-products .filters select,
+.header-products .filters input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
 @media screen and (max-width: 619px) {
     .filters, nav ul {
         flex-direction: column;

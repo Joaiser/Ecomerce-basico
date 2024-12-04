@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './contact-form.css'
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../utils/axiosInterceptor';
+import './contact-form.css';
+import cookie from 'js-cookie';
+import jwt_decode from 'jwt-decode';
 
 export function Contact() {
     const initialMessageState = {
-        nickname: localStorage.getItem('username'),
+        nickname: cookie.get('username'),
         email: '',
         message: ''
     };
 
     const [message, setMessage] = useState(initialMessageState);
     const [responseMessage, setResponseMessage] = useState({ type: '', text: '' });
+
+    useEffect(() => {
+        const storedAccessToken = localStorage.getItem('accessToken');
+        if (storedAccessToken) {
+            try {
+                const decodedToken = jwt_decode(storedAccessToken);
+                setMessage(prevState => ({ ...prevState, email: decodedToken.email }));
+            } catch (error) {
+                console.error('Error al decodificar el token:', error);
+            }
+        }
+    }, []);
 
     const handleChange = (e) => {
         setMessage({
@@ -23,7 +37,13 @@ export function Contact() {
         e.preventDefault();
         if (message.nickname) { // Comprueba si el nombre de usuario existe
             try {
-                const response = await axios.post('http://localhost:3000/contact/send', message);
+                const accessToken = localStorage.getItem('accessToken');
+                const response = await axiosInstance.post('/contact/send', message, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
                 if (response.data.success) {
                     setResponseMessage({ type: 'success', text: 'Mensaje enviado con éxito' });
                     setMessage(initialMessageState); // Restablece el mensaje
@@ -41,37 +61,35 @@ export function Contact() {
     };
 
     return (
-        <>
-            <section id='contact'>
-                <h1>Contacto</h1>
-                <div id='contact-center-form'>
-                    <div>
-                        <h2>¿Tienes alguna duda?</h2>
-                        <p>Si tienes alguna duda, sugerencia o problema, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.</p>
-                        <p>Correo electrónico: <a href="mailto:info@tusitio.com">aitor.v@hotmail.com</a></p>
-                    </div>
-                    <div>
-                        <h2>Formulario de contacto</h2>
-                        {responseMessage.text && <p className={`message ${responseMessage.type}`}>{responseMessage.text}</p>}
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Nombre:
-                                <input type="text" name="nickname" value={message.nickname} readOnly className='dates'
-                                placeholder={message.nickname ? message.nickname : 'Nombre'}/>
-                            </label>
-                            <label>
-                                Correo electrónico:
-                                <input type="email" name="email" value={message.email} onChange={handleChange} placeholder='Correo Electrónico' className='dates' required/>
-                            </label>
-                            <label>
-                                Mensaje:
-                                <textarea name="message" value={message.message} onChange={handleChange} placeholder='Escribe aquí tu mensaje' className='dates' required></textarea>
-                            </label>
-                            <input type="submit" value="Enviar" id='sent-message'/>
-                        </form>
-                    </div>
+        <section id='contact'>
+            <h1>Contacto</h1>
+            <div id='contact-center-form'>
+                <div>
+                    <h2>¿Tienes alguna duda?</h2>
+                    <p>Si tienes alguna duda, sugerencia o problema, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.</p>
+                    <p>Correo electrónico: <a href="mailto:info@tusitio.com">aitor.v@hotmail.com</a></p>
                 </div>
-            </section>
-        </>
+                <div>
+                    <h2>Formulario de contacto</h2>
+                    {responseMessage.text && <p className={`message ${responseMessage.type}`}>{responseMessage.text}</p>}
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Nombre:
+                            <input type="text" name="nickname" value={message.nickname} readOnly required className='dates'
+                            placeholder={message.nickname ? message.nickname : 'Nombre'}/>
+                        </label>
+                        <label>
+                            Email:
+                            <input type="email" name="email" value={message.email} onChange={handleChange} readOnly className='dates' placeholder='Correo electrónico' required />
+                        </label>
+                        <label>
+                            Mensaje:
+                            <textarea name="message" value={message.message} onChange={handleChange} placeholder='Escribe aquí tu mensaje' className='dates' required></textarea>
+                        </label>
+                        <input type="submit" value="Enviar" id='sent-message'/>
+                    </form>
+                </div>
+            </div>
+        </section>
     );
 }

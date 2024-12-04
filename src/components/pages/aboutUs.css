@@ -208,3 +208,73 @@
     border-left: 2px solid grey;
     border-right: 2px solid grey;
 }
+
+@media screen and (max-width: 885px) {
+    #wait-about-us-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 93.75rem;
+    }
+
+    #our-history {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 93.75rem;
+        margin-top: 50px;
+    }
+
+    #red-article-center div ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        gap: 20px;
+    }
+
+    #red-article-center div ul li {
+        display: block;
+        align-content: center;
+        justify-content: center;
+    }
+    
+    #contact-center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 150px;
+        margin-top: 50px;
+    }
+
+    #contact-characteristics {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        padding-block: 9%;
+        max-width: 93.75rem;
+    }
+
+    #contact-center div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+@media screen and (max-width: 356px){
+    #redes{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    }
+

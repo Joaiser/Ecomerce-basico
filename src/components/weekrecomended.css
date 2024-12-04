@@ -59,7 +59,6 @@
     color: #fff;
     position: absolute;
     top: 47%;
-    transform: translateY(-50%);
 }
 
 
@@ -151,5 +150,11 @@
 
     .legend{
         margin-right: -5%;
+    }
+}
+
+@media screen and (max-width: 337px){
+    .carousel-button-week-recomended{
+        width: 15%;
     }
 }

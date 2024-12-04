@@ -1,23 +1,14 @@
 POR ARREGLAR:
-HAY QUE HACER RESPONSIVE CIERTAS PÁGINAS, COMO LA DE
-FORO
 
-HAY QUE HACER QUE PRODUCT DETAIL BONITA Y QUE RECUPERE LAS RESPUESTAS
+cosas visuales, en todas las rutas
+Manejo de errores, en muchos sitios sale error no adecuado
 
-CUANDO SE HACE PEQUEÑA LA WEB EL MENU SE VE MAL, 
-APARECE EL DIV DEL FILTRO
-
-*HAY QUE HACER UNA VISTA PARA EL FORO Y QUE SEA OBLIGATORIO PONER TITULO 
-
-HAY QUE ARREGLAR LA PÁGINA DE PAGO
-
-ARREGLAR RESPONSIVE PÁGINA SOBRE NOSOTROS
 
 PODEMOS AÑADIR:
-Además, añadiré una manera de evaluar los productos, por ejemplo con un sistema de estrellas donde 5 será la mejor evaluación posible y 0 estrellas la peor, 
-también me añadiré una sección de comentarios, donde los clientes podrán dejar sus respectivos comentarios tanto de productos como de la web/empresa. 
+añadiré una manera de evaluar los productos, por ejemplo con un sistema de estrellas 
+donde 5 será la mejor evaluación posible y 0 estrellas la peor, 
+dashboard?
 
-HECHO:
 
 
-HACIENDO = *
+BORRAR TODOS LOS LOGS!¡!¡!¡!

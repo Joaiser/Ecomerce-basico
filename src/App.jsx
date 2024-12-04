@@ -1,9 +1,14 @@
 import { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
+//interceptor
+// import axiosInterceptor from './utils/axiosInterceptor.js';  
+
+
 // Contextos
 import { CartProvider } from './context/cart.jsx';
 import { FilterContext } from './context/filters.jsx';
+// import { AuthProvider } from './context/authContext.jsx';
 
 // Componentes generales
 import { Header } from './components/Header.jsx';
@@ -15,7 +20,9 @@ import { Contact } from './components/pages/contact.jsx';
 import { Contest } from './components/pages/contest.jsx';
 import { Foro } from './components/pages/forum.jsx';
 import { Intercambios } from './components/pages/exchanges.jsx';
-import { LoginPage } from './components/pages/login.jsx';
+import  Login from './components/pages/login/login.jsx';
+import { UserRegister } from './components/pages/login/userRegister.jsx';
+
 import { Pay } from './components/pages/payPage.jsx';
 import { Products } from './components/pages/products.jsx';
 
@@ -26,9 +33,10 @@ import { ScreensBlog } from './components/blogPages/screensBlog.jsx';
 import { Tipoteclado } from './components/blogPages/tipoteclado.jsx';
 
 // Componentes de detalles de productos
-import { ProductAllDetail } from './components/productDetails/productAllDetail.jsx';
+import { ProductDetail } from './components/productDetails/productDetail.jsx';
 import { ProductDetailWeekRecomended } from './components/productDetails/productDetailWeekRecomended.jsx';
 import { ProductGender } from './components/productGender/productGender.jsx';
+import { ProductAllDetail } from './components/productDetails/productAllDetail.jsx';
 
 // Componentes de la página principal
 import { Blog } from './components/blog.jsx';
@@ -59,6 +67,8 @@ function ScrollToTop() {
   return null;
 }
 
+
+
 export function Layout({ children }) {
   return (
     <>
@@ -72,12 +82,16 @@ export function Layout({ children }) {
 function App() {
   const { filters, setFilters } = useContext(FilterContext);
 
+  
+
   return (
+    //<AuthProvider>
     <CartProvider>
       <Router>
         <ScrollToTop />
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<UserRegister />} /> 
           <Route path="*" element={
             <Layout>
               <Routes>
@@ -93,7 +107,8 @@ function App() {
                 <Route path="/todosproductos" element={<Products />} />
                 <Route path="/todosproductos/:id" element={<ProductAllDetail />} />
                 <Route path="/sillasergonomicas" element={<ErgonomicChairs />} />
-                <Route path="/productos/:Id_producto" element={<ProductAllDetail />} /> 
+                <Route path="/productos/:Id_producto" element={<ProductDetail />} /> 
+                <Route path="/todosproductos/:id" element={<ProductAllDetail />} />
                 <Route path="/productos/recomendados/:Id_producto" element={<ProductDetailWeekRecomended />} />
                 <Route path="/productos/genero/:Genero" element={<ProductGender />} />
                 <Route path='/payPage' element={<Pay />} />
@@ -120,6 +135,7 @@ function App() {
         </Routes>
       </Router>
     </CartProvider>
+    //</AuthProvider>
   );
 }
 

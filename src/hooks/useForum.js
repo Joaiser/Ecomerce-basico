@@ -1,93 +1,100 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInterceptor.js'; // Importa la instancia personalizada
+import cookie from 'js-cookie';
+import jwt_decode from 'jwt-decode';
 
 export const useForum = () => {
     const [username, setUsername] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [posts, setPosts] = useState([]);
     const [newReplyContent, setNewReplyContent] = useState({});
+    const [error, setError] = useState(''); 
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
-        if (storedUsername) {
+        const storedAccessToken = localStorage.getItem('accessToken');
+        const storedUsername = cookie.get('username');
+
+        if (storedUsername && storedAccessToken) {
+            try {
+                const decodedToken = jwt_decode(storedAccessToken);
+                setIsAdmin(decodedToken?.role === 'admin');
+            } catch (error) {
+                setError('Error al decodificar el accessToken'); // Aquí estamos usando setError
+            }
             setUsername(storedUsername);
-            setIsAdmin(storedIsAdmin);
         }
 
-        // Obtener publicaciones del backend
         fetchPosts();
     }, []);
 
     const fetchPosts = () => {
-        axios.get('http://localhost:3000/posts')
+        axiosInstance.get('/posts')
             .then(response => {
                 setPosts(response.data);
             })
             .catch(error => {
-                // Manejar el error sin imprimir en la consola
-                throw error;
+                setError('Hubo un problema al eliminar la respuesta. Por favor, inténtalo de nuevo más tarde.'); // También aquí
             });
     };
 
-    const handlePostSubmit = (event, newPostTitle, newPostContent, fetchPosts) => {
+    const handlePostSubmit = (event, newPostTitle, newPostContent) => {
         event.preventDefault();
-    
+
         const postWithUsername = {
-            username: username, // Usar el username almacenado
+            username,
             title: newPostTitle,
             content: newPostContent,
-            parentPostId: null
+            parentPostId: null,
         };
-    
-        axios.post('http://localhost:3000/posts', postWithUsername)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva
+
+        axiosInstance.post('/posts', postWithUsername, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        })
+            .then(() => {
+                fetchPosts();
             })
             .catch(error => {
-                // Manejar el error sin imprimir en la consola
-                throw error;
+                setError('Error al crear publicación'); // Aquí también
             });
     };
 
-    const handleReplySubmit = (event, postId, fetchPosts) => {
+    const handleReplySubmit = (event, postId) => {
         event.preventDefault();
-    
+
         const replyWithUsername = {
-            username: username, // Usar el username almacenado
-            content: newReplyContent[postId]
+            username,
+            content: newReplyContent[postId],
         };
-    
-        axios.post(`http://localhost:3000/posts/${postId}/replies`, replyWithUsername)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de crear una nueva respuesta
+
+        axiosInstance.post(`/posts/${postId}/replies`, replyWithUsername)
+            .then(() => {
+                fetchPosts();
                 setNewReplyContent(prevState => ({ ...prevState, [postId]: '' }));
             })
             .catch(error => {
-                // Manejar el error sin imprimir en la consola
-                throw error;
+                setError('Error al crear respuesta:'); // Y aquí
             });
     };
 
-    const handleDeletePost = (postId, fetchPosts) => {
-        axios.delete(`http://localhost:3000/posts/${postId}`)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una
+    const handleDeletePost = (postId) => {
+        axiosInstance.delete(`/posts/${postId}`)
+            .then(() => {
+                fetchPosts();
             })
             .catch(error => {
-                // Manejar el error sin imprimir en la consola
-                throw error;
+                setError('Error al eliminar publicación'); // Y aquí
             });
     };
 
-    const handleDeleteReply = (postId, replyId, fetchPosts) => {
-        axios.delete(`http://localhost:3000/posts/${postId}/replies/${replyId}`)
-            .then(response => {
-                fetchPosts(); // Volver a obtener las publicaciones después de eliminar una respuesta
+    const handleDeleteReply = (postId, replyId) => {
+        axiosInstance.delete(`/posts/${postId}/replies/${replyId}`)
+            .then(() => {
+                fetchPosts();
             })
             .catch(error => {
-                // Manejar el error sin imprimir en la consola
-                throw error;
+                setError('Error al eliminar respuesta'); // Y aquí
             });
     };
 
@@ -101,6 +108,8 @@ export const useForum = () => {
         handlePostSubmit,
         handleReplySubmit,
         handleDeletePost,
-        handleDeleteReply
+        handleDeleteReply,
+        error, // Retorna el estado de error
+        setError, // Retorna la función para actualizar el estado de error
     };
 };

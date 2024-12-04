@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './contest.css';
 import Confetti from 'react-confetti';
+import cookie from 'js-cookie';
+import jwt_decode from 'jwt-decode';
+import axiosInstance from '../../utils/axiosInterceptor';
 
 export function Contest() {
     const [username, setUsername] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false); 
-    const [winner, setWinner] = useState(null); 
-    const [showConfetti, setShowConfetti] = useState(false); 
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [winner, setWinner] = useState(null);
+    const [showConfetti, setShowConfetti] = useState(false);
+
+    const location = useLocation();
 
     useEffect(() => {
-        if (winner) { 
+        if (winner) {
             setShowConfetti(true);
-            const timer = setTimeout(() => { 
+            const timer = setTimeout(() => {
                 setShowConfetti(false);
             }, 10000);
 
@@ -23,75 +29,61 @@ export function Contest() {
     }, [winner]);
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        setUsername(storedUsername);
-        setIsAdmin(isAdmin);
+        const storedAccessToken = localStorage.getItem('accessToken');
+        if (storedAccessToken) {
+            try {
+                const decodedToken = jwt_decode(storedAccessToken);
+                setUsername(cookie.get('username'));
+                setIsAdmin(decodedToken.role === 'admin');
+            } catch (error) {
+                console.error('Error al decodificar el token:', error);
+                setErrorMessage('Error en la autenticación. Por favor, inicia sesión nuevamente.');
+            }
+        }
     }, []);
 
     const handleRegister = async () => {
+        setErrorMessage(null);
+        setSuccessMessage(null);
         try {
-            const response = await fetch('http://localhost:3000/contestants/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username }),
+            const response = await axiosInstance.post('http://localhost:3000/contestants/register', {
+                username
             });
-            
-            if (response.headers.get('content-type').includes('application/json')) {
-                const data = await response.json();
-                if (data.success) {
-                    setIsRegistered(true);
-                    setErrorMessage('¡Registro exitoso!');
-                } else {
-                    throw new Error('El nombre de usuario ya está registrado en el concurso');
-                }
+
+            if (response.data.success) {
+                setIsRegistered(true);
+                setSuccessMessage('¡Registro exitoso! Ahora estás participando en el concurso.');
             } else {
-                throw new Error('El nombre de usuario ya está registrado en el concurso');
+                throw new Error(response.data.message || 'El nombre de usuario ya está registrado en el concurso.');
             }
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.response?.data?.message || 'Hubo un problema con tu registro.');
         }
     };
+
     const handleSelectWinner = async () => {
+        setErrorMessage(null);
+        setSuccessMessage(null);
         try {
-            const response = await fetch('http://localhost:3000/contestants', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-    
-            console.log('Respuesta del servidor:', response); // Añade este registro
-    
-            if (response.headers.get('content-type').includes('application/json')) {
-                const data = await response.json();
-                console.log('Datos del servidor:', data); // Añade este registro
-            
-                if (data.length === 0) {
-                    throw new Error('No hay participantes en el concurso');
-                }
-            
-                // Selecciona un ganador al azar de la lista de participantes
-                const winner = data[Math.floor(Math.random() * data.length)];
-                setWinner(winner);
-            } else {
-                throw new Error('Hubo un error al obtener la lista de participantes');
-            
+            const response = await axiosInstance.get('http://localhost:3000/contestants');
+
+            if (response.data.length === 0) {
+                throw new Error('No hay participantes en el concurso.');
             }
+            const selectedWinner = response.data[Math.floor(Math.random() * response.data.length)];
+            setWinner(selectedWinner);
+            setSuccessMessage(`¡El ganador es ${selectedWinner.username}! 🎉`);
         } catch (error) {
-            console.error('Error:', error); // Añade este registro
-            setErrorMessage(error.message);
+            setErrorMessage(error.response?.data?.message || 'Hubo un error al obtener la lista de participantes.');
         }
     };
 
     return (
-        <section id='concurso'>
-            <h1>Bienvenido al concurso para ganar un pc Gaming</h1>
-            <img 
+        <section id="concurso">
+            <h1>Bienvenido al concurso para ganar un PC Gaming</h1>
+            <img
                 src="static/img/imgrecomended/1582-pccom-ready-amd-ryzen-5-5600x-16gb-1tb-ssd-rtx-4060-comprar.webp"
-                alt="Imagen del PC Gaming" 
+                alt="Imagen del PC Gaming"
             />
             <p>Este es un increíble PC Gaming con las siguientes características:</p>
             <ul>
@@ -102,7 +94,7 @@ export function Contest() {
                 <li>Y mucho más...</li>
             </ul>
             {!username && (
-                <Link to={{ pathname: "/login", state: { from: location } }}>
+                <Link to={{ pathname: '/login', state: { from: location } }}>
                     <p>Por favor, inicia sesión para participar en el concurso.</p>
                 </Link>
             )}
@@ -112,18 +104,16 @@ export function Contest() {
             {username && isRegistered && (
                 <p>¡{username}, estás inscrito en el concurso! ¡Buena suerte!</p>
             )}
-            {username && isAdmin && (
+            {isAdmin && (
                 <button onClick={handleSelectWinner}>Seleccionar ganador</button>
             )}
             {winner && (
                 <>
-                    {showConfetti && <Confetti />} 
-                    <p>¡El ganador es: {winner.username}! 🎉</p>
+                    {showConfetti && <Confetti />}
+                    <p style={{color:'green'}}>¡El ganador es: {winner.username}! 🎉</p>
                 </>
             )}
-            {errorMessage && (
-                <p>{errorMessage}</p>
-            )}
+            {errorMessage && <p className="error">{errorMessage}</p>}
         </section>
-    )
+    );
 }
