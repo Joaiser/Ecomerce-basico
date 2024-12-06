@@ -5,8 +5,6 @@ Manejo de errores, en muchos sitios sale error no adecuado
 
 
 PODEMOS AÑADIR:
-añadiré una manera de evaluar los productos, por ejemplo con un sistema de estrellas 
-donde 5 será la mejor evaluación posible y 0 estrellas la peor, 
 dashboard?
 
 
