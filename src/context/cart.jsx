@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 
-export const CartContext = createContext()
+export const CartContext = createContext();
 
-export function CartProvider ({children}) {
+export function CartProvider({ children }) {
     const initialCart = JSON.parse(localStorage.getItem('cart')) || [];
     const [cart, setCart] = useState(initialCart);
 
@@ -10,46 +10,47 @@ export function CartProvider ({children}) {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
 
-    const addToCart = product => {
-        const productInCart = cart.findIndex(item => item.id === product.id)
+    const addToCart = (product, quantity = 1) => {
+        const productInCart = cart.findIndex(item => item.id === product.id);
         if (productInCart >= 0) {
-            const newCart = [...cart]
-            newCart[productInCart].quantity += 1
-            setCart(newCart)
+            const newCart = [...cart];
+            newCart[productInCart].quantity += quantity;
+            setCart(newCart);
         } else {
             setCart(prevState => ([
-                ...prevState, 
+                ...prevState,
                 {
-                    ...product, 
-                    quantity: 1
+                    ...product,
+                    quantity: quantity
                 }
-            ]))
+            ]));
         }
-    }
+    };
 
     const clearCart = () => {
-        setCart([])
-    }
+        setCart([]);
+    };
 
     const removeFromCart = product => {
-        const productInCart = cart.findIndex(item => item.id === product.id)
+        const productInCart = cart.findIndex(item => item.id === product.id);
         if (productInCart >= 0) {
-            const newCart = [...cart]
-            newCart[productInCart].quantity -= 1
+            const newCart = [...cart];
+            newCart[productInCart].quantity -= 1;
             if (newCart[productInCart].quantity === 0) {
-                newCart.splice(productInCart, 1)
+                newCart.splice(productInCart, 1);
             }
-            setCart(newCart)
+            setCart(newCart);
         }
-    }
+    };
 
-    return( 
+    return (
         <CartContext.Provider value={{
-            cart, 
-            addToCart, 
+            cart,
+            addToCart,
             clearCart,
-            removeFromCart}}>
+            removeFromCart
+        }}>
             {children}
         </CartContext.Provider>
-    )
+    );
 }
