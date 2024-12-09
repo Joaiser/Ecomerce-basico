@@ -13,7 +13,7 @@ export function Cart () {
     const navigate = useNavigate();
 
     const handlePay = () => {
-        const user = cookie.get('refreshToken');
+        const user = cookie.get('username');
         if (!user) {
             alert('Inicia sesión o crea una cuenta para pagar');
             navigate('/login');

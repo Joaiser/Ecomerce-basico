@@ -2,3 +2,5 @@ POR ARREGLAR:
 
 Vamos a hacer que cuando se busca un producto con el buscador, se muestre la imagen_producto
 
+
+Fecha entrega 12/12
