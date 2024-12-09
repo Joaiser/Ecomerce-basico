@@ -7,19 +7,19 @@ export async function registerAdmin(req, res) {
     try {
         const { username, password } = req.body;
 
-        console.log('[RegisterAdmin] Received data:', { username, password });
+        //console.log('[RegisterAdmin] Received data:', { username, password });
 
         if (!username || !password) {
-            console.log('[RegisterAdmin] Missing username or password');
+            //console.log('[RegisterAdmin] Missing username or password');
             return res.status(400).json({ error: 'Username and password are required.' });
         }
 
         const adminData = await registerAdminInDB(username, password);
-        console.log('[RegisterAdmin] Admin registered successfully:', adminData);
+        //console.log('[RegisterAdmin] Admin registered successfully:', adminData);
 
         res.json({ success: true, admin: adminData });
     } catch (error) {
-        console.error('[RegisterAdmin] Error registering admin:', error);
+        //console.error('[RegisterAdmin] Error registering admin:', error);
         res.status(500).json({ error: error.toString() });
     }
 }

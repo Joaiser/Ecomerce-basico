@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart.js';
-import './productDetail.css';
+import './productDetailWeekRecomended.css';
 import { CartIcon } from '../icons.jsx';
 
 export function ProductDetailWeekRecomended() {
@@ -23,11 +23,10 @@ export function ProductDetailWeekRecomended() {
     if (!product) {
         return 'Cargando...';
     }
-    console.log('Rendering ProductDetailWeekRecomended');
 
     return(
         <section>
-            <div className="container-product">
+            <div className="container-product-week-recomended">
                 <aside>
                     <div>
                         <img src={product.image} alt={product.Nombre} />

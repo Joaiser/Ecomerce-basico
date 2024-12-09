@@ -41,7 +41,6 @@ export const useCarousel = (totalSlides, initialIndex = 0) => {
     useEffect(() => {
         const carouselElement = carouselRef.current;
         if (!carouselElement) {
-            console.log('Carousel element not found');
             return;
         }
         carouselElement.addEventListener('mousedown', handleMouseDown);
@@ -60,7 +59,6 @@ export const useCarousel = (totalSlides, initialIndex = 0) => {
     useEffect(() => {
         const carouselElement = carouselRef.current;
         if (!carouselElement) {
-            console.log('Carousel element not found');
             return;
         }
         const totalWidth = Array.from(carouselElement.children).reduce((total, child) => {

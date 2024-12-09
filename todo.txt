@@ -1,12 +1,5 @@
 POR ARREGLAR:
 
-cosas visuales, en todas las rutas
-Manejo de errores, en muchos sitios sale error no adecuado
+Vamos a hacer que cuando se busca un producto con el buscador, se muestre la imagen_producto
 
 
-PODEMOS AÑADIR:
-dashboard?
-
-
-
-BORRAR TODOS LOS LOGS!¡!¡!¡!

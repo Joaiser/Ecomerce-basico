@@ -6,15 +6,18 @@ import './Cart.css';
 import cookie from 'js-cookie';
 
 export function Cart () {
-    const cartCheckboxId = useId()
+    const cartCheckboxId = useId();
     const { cart, removeFromCart, clearCart } = useCart();
     const cartCheckboxRef = useRef(null);
+    const cartRef = useRef(null);
     const navigate = useNavigate();
+
     const handlePay = () => {
-        const user = cookie.get('username');
+        const user = cookie.get('refreshToken');
         if (!user) {
             alert('Inicia sesión o crea una cuenta para pagar');
-            return; // Agrega un return aquí para evitar que se ejecute el resto de la función si el usuario no está logueado
+            navigate('/login');
+            return; // Agrega un return aquí para evitar que se ejecute el resto de la función si el usuario no está autenticado
         }
         if (cart.length === 0) { // Verifica si el carrito está vacío
             alert('Tu carrito está vacío');
@@ -30,6 +33,19 @@ export function Cart () {
         sessionStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (cartRef.current && !cartRef.current.contains(event.target) && cartCheckboxRef.current && !cartCheckboxRef.current.contains(event.target)) {
+                cartCheckboxRef.current.checked = false;
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     const calculateTotal = () => {
         return cart.reduce((total, product) => total + product.precio * product.quantity, 0);
     }
@@ -41,7 +57,7 @@ export function Cart () {
         </label>
         <input type="checkbox" id={cartCheckboxId} hidden ref={cartCheckboxRef}/>
 
-        <aside className="cart">
+        <aside className="cart" ref={cartRef}>
         <ul style={{ maxHeight: '550px', overflowY: 'scroll', overflowX:'hidden'}}>
             {cart.map((product) => (
                 <li key={product.id}>
@@ -55,7 +71,7 @@ export function Cart () {
                         <small>
                             Qty: {product.quantity}
                         </small>
-                        <button onClick={() => removeFromCart(product)}>-</button>
+                        <button onClick={() => removeFromCart(product)}><RemoveFromCartIcon/></button>
                     </footer>
                 </li>
             ))}
