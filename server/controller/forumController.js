@@ -11,12 +11,12 @@ export async function createPostController(req, res) {
 
     try {
         const userId = await getUserIdByUsername(username);
-        console.log('User ID:', userId); // Agregar log de userId
+        //console.log('User ID:', userId); 
         const result = await createPost(userId, title, content, parentPostId);
-        console.log('Create Post Result:', result); // Agregar log de resultado de creación de post
+        //console.log('Create Post Result:', result); // Agregar log de resultado de creación de post
         res.status(201).json({ message: 'Post creado exitosamente', postId: result.insertId });
     } catch (error) {
-        console.error('Error al crear el post:', error); // Agregar log de error
+        //console.error('Error al crear el post:', error); 
         res.status(500).json({ message: 'Error al crear el post', error });
     }
 }

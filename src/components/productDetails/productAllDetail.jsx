@@ -10,6 +10,7 @@ export function ProductAllDetail() {
     const { id } = useParams();
     const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
+    const [expandedComments, setExpandedComments] = useState({});
 
     const {
         comments,
@@ -27,6 +28,13 @@ export function ProductAllDetail() {
             .catch(error => console.error('Error al cargar el producto:', error));
     }, [id]);
 
+    const toggleExpand = (commentId) => {
+        setExpandedComments(prevState => ({
+            ...prevState,
+            [commentId]: !prevState[commentId]
+        }));
+    };
+
     if (!product) return 'Cargando...';
 
     return (
@@ -35,7 +43,7 @@ export function ProductAllDetail() {
                 <article>
                     <aside>
                         <div>
-                            <img src={product.imagen_producto} alt={product.nombre_producto} />
+                            <img src={product.imagen_producto} alt={product.nombre_producto} onError={(e) => e.target.src = 'ruta/a/imagen/por_defecto.jpg'} />
                         </div>
                     </aside>
                     <div id="product-description">
@@ -51,14 +59,28 @@ export function ProductAllDetail() {
                     <h2>Comentarios</h2>
                     {error && <p className="error">{error}</p>}
                     {comments.length > 0 ? (
-                        comments.map(comment => (
-                            <div key={comment.id} className="comment">
-                                <p><strong>{comment.username}</strong>: {comment.comentario}</p>
-                                {isAdmin && (
-                                    <button onClick={() => handleDeleteComment(comment.id)}>Eliminar</button>
-                                )}
-                            </div>
-                        ))
+                        comments.map(comment => {
+                            const isExpanded = expandedComments[comment.id];
+                            const truncatedComment = comment.comentario.length > 200 ? comment.comentario.substring(0, 200) + '...' : comment.comentario;
+                            return (
+                                <div key={comment.id} className="comment">
+                                    <p id='name-Coment'>
+                                        <strong>{comment.username}</strong>
+                                    </p>
+                                    <p id="coment-content">
+                                        {isExpanded ? comment.comentario : truncatedComment}
+                                        {comment.comentario.length > 200 && (
+                                            <span className="toggle-expand" onClick={() => toggleExpand(comment.id)}>
+                                                {isExpanded ? ' Ver menos' : ' Ver más'}
+                                            </span>
+                                        )}
+                                    </p>
+                                    {isAdmin && (
+                                        <button onClick={() => handleDeleteComment(comment.id)}>Eliminar</button>
+                                    )}
+                                </div>
+                            );
+                        })
                     ) : (
                         <p>No hay comentarios aún.</p>
                     )}

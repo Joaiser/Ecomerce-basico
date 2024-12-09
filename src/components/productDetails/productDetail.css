@@ -64,12 +64,39 @@ section{
 }
 
 .comment{
+    width: 81%;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+#name-Coment{
+    background-color: #646cff;
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+}
+
+#coment-content {
+    background-color: #262626;
+    padding: 16px;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40px;
     flex-direction: column;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.toggle-expand {
+    color: #1e90ff;
+    cursor: pointer;
+    margin-left: 5px;
 }
 
 @media screen and (max-width: 627px){

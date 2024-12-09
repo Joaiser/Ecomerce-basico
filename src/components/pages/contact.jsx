@@ -67,7 +67,7 @@ export function Contact() {
                 <div>
                     <h2>¿Tienes alguna duda?</h2>
                     <p>Si tienes alguna duda, sugerencia o problema, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.</p>
-                    <p>Correo electrónico: <a href="mailto:info@tusitio.com">aitor.v@hotmail.com</a></p>
+                    <p>Correo electrónico: <a href="mailto:info@tusitio.com">aitorsergiojose.v@hotmail.com</a></p>
                 </div>
                 <div>
                     <h2>Formulario de contacto</h2>

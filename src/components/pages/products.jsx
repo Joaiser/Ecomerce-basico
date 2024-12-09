@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FilterContext } from '../../context/filters.jsx';
 import { useFilters } from '../../hooks/useFilters.js';
 import { AddToCartIcon } from '../icons.jsx';
@@ -10,10 +10,23 @@ export function Products() {
     const { filters } = useContext(FilterContext);
     const { addToCart, cart } = useCart();
     const { filteredProducts, isLoading, error } = useFilters(filters);
+    const [quantities, setQuantities] = useState({});
 
     useEffect(() => {
     }, [filteredProducts]);
-    
+
+    const handleQuantityChange = (productId, quantity) => {
+        setQuantities(prevQuantities => ({
+            ...prevQuantities,
+            [productId]: quantity
+        }));
+    };
+
+    const handleAddToCart = (product) => {
+        const quantity = quantities[product.id] || 1;
+        addToCart(product, quantity);
+    };
+
     if (isLoading) {
         return <div>Cargando productos...</div>;
     }
@@ -39,10 +52,18 @@ export function Products() {
                                 <strong>{product.nombre_producto}</strong> - €{product.precio}
                             </div>
                         </Link>
-                        <div>
-                            <button onClick={() => addToCart(product)}>
+                        <div style={{display:'flex', justifyContent:'space-between'}}>
+                            
+                            <button onClick={() => handleAddToCart(product)}>
                                 <AddToCartIcon />
                             </button>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantities[product.id] || 1}
+                                onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
+                                className="quantity-input"
+                            />
                         </div>
                     </li>
                 ))}

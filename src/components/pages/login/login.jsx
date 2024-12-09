@@ -71,12 +71,13 @@ function Login() {
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
 
                 { (
-                    <div style={{display:'flex', marginBlock:'33px'}}>
+                    <><div style={{ display: 'flex', marginBlock: '33px' }}>
                         <p>No tienes una cuenta creada?</p>
-                        <Link to="/register">
-                            <button className="form-button">Crear cuenta</button>
-                        </Link>
-                    </div>
+                    </div><div>
+                            <Link to="/register">
+                                <button className="form-button">Crear cuenta</button>
+                            </Link>
+                        </div></>
                 )}
             </form>
         </main>

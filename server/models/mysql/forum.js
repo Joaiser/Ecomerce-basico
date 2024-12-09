@@ -20,8 +20,6 @@ export async function createPost(userId, title, content, parentPostId = null) {
   const params = [userId, title, content, parentPostId];
   try {
       const [result] = await pool.execute(sql, params);
-      console.log('SQL Query:', sql); // Agregar log de la consulta SQL
-      console.log('Params:', params); // Agregar log de los parámetros
       return result;
   } catch (error) {
       console.error('Error en createPost:', error); // Agregar log de error
@@ -171,17 +169,15 @@ export async function getUserIdByUsername(username) {
     
     try {
         // Buscar en la tabla clientes
-        console.log(`Buscando en clientes con Nickname: ${username}`);
         const [rowsClientes] = await pool.execute(sqlClientes, [username]);
-        console.log('Resultado de clientes:', rowsClientes);
+        //console.log('Resultado de clientes:', rowsClientes);
         if (rowsClientes.length > 0) {
             return rowsClientes[0].id;
         }
   
         // Buscar en la tabla administradores
-        console.log(`Buscando en administradores con username: ${username}`);
         const [rowsAdministradores] = await pool.execute(sqlAdministradores, [username]);
-        console.log('Resultado de administradores:', rowsAdministradores);
+       //console.log('Resultado de administradores:', rowsAdministradores);
         if (rowsAdministradores.length > 0) {
             return rowsAdministradores[0].id;
         }
@@ -189,7 +185,7 @@ export async function getUserIdByUsername(username) {
         // Si no se encuentra en ninguna tabla, lanzar un error
         throw new Error('Usuario no encontrado');
     } catch (error) {
-        console.error('Error en getUserIdByUsername:', error);
+        //console.error('Error en getUserIdByUsername:', error);
         throw error;
     }
   }

@@ -106,11 +106,11 @@ export function Header({ changeFilters }) {
                 <button className="menu-icon" onClick={handleMenuClick}>☰</button>
                 <nav>
                     <ul className={isMenuOpen ? 'open' : ''}>
-                        <li><Link to="/" onClick={closeMenu}>Inicio</Link></li>
-                        <li><Link to="/todosproductos" onClick={closeMenu}>Productos</Link></li>
-                        <li><Link to="/foro" onClick={closeMenu}>Foro</Link></li>
-                        <li><Link to="/nosotros" onClick={closeMenu}>Nosotros</Link></li>
-                        <li id='last-menu-opne'><Link to="/contacto" onClick={closeMenu}>Contacto</Link></li>
+                        <li className='enlaces'><Link to="/" onClick={closeMenu}>Inicio</Link></li>
+                        <li className='enlaces'><Link to="/todosproductos" onClick={closeMenu}>Productos</Link></li>
+                        <li className='enlaces'><Link to="/foro" onClick={closeMenu}>Foro</Link></li>
+                        <li className='enlaces'><Link to="/nosotros" onClick={closeMenu}>Nosotros</Link></li>
+                        <li className='enlaces' id='last-menu-opne'><Link to="/contacto" onClick={closeMenu}>Contacto</Link></li>
                     </ul>
                 </nav>
             </div>

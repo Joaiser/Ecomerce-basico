@@ -19,18 +19,17 @@ export async function getContestantByIdController(req, res, next) {
   }
 }
 
-
 export async function registerContestantController(req, res, next) {
-    try {
-      const username = req.body.username;
-      const result = await Contest.register(username);
-      console.log(result);
-      if (result.affectedRows > 0) {
-        res.json({ success: true, data: result });
-      } else {
-        res.json({ success: false });
-      }
-    } catch (err) {
-      next(err);
+  try {
+    const username = req.body.username;
+    const result = await Contest.register(username);
+    if (result.affectedRows > 0) {
+      res.json({ success: true, data: result });
+    } else {
+      res.status(400).json({ success: false, message: 'El nombre de usuario ya está registrado en el concurso.' });
     }
+  } catch (err) {
+    console.error('Error al registrar el concursante:', err);
+    res.status(500).json({ success: false, message: err.message });
+  }
 }

@@ -57,7 +57,8 @@ export function Contest() {
                 throw new Error(response.data.message || 'El nombre de usuario ya está registrado en el concurso.');
             }
         } catch (error) {
-            setErrorMessage(error.response?.data?.message || 'Hubo un problema con tu registro.');
+            console.error('Error en el registro:', error);
+            setErrorMessage(error.response?.data?.message || error.message || 'Hubo un problema con tu registro.');
         }
     };
 
@@ -74,7 +75,8 @@ export function Contest() {
             setWinner(selectedWinner);
             setSuccessMessage(`¡El ganador es ${selectedWinner.username}! 🎉`);
         } catch (error) {
-            setErrorMessage(error.response?.data?.message || 'Hubo un error al obtener la lista de participantes.');
+            console.error('Error al seleccionar el ganador:', error);
+            setErrorMessage(error.response?.data?.message || error.message || 'Hubo un error al obtener la lista de participantes.');
         }
     };
 

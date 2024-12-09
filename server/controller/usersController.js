@@ -49,7 +49,6 @@ export const createUser = async (req, res) => {
             // Si el error proviene de Zod
             return res.status(400).json({ errors: err.errors.map(e => e.message) });
         }
-        console.error(err);
         res.status(500).json({ message: 'Ha ocurrido un error inesperado, prueba con otros datos.' });
     }
 };
@@ -60,9 +59,7 @@ export const login = async (req, res) => {
         const validatedData = loginSchema.parse(req.body);
 
         // Buscar al usuario en la base de datos
-        console.log('Validating login for Nickname:', validatedData.Nickname);
         const user = await User.getUserByNickname(validatedData.Nickname);
-        console.log('User found:', user);
         if (!user) {
             return res.status(400).json({ message: 'Usuario no encontrado' });
         }
@@ -99,7 +96,6 @@ export const login = async (req, res) => {
             const errorMessage = err.errors.map(error => error.message).join(', ');
             return res.status(400).json({ message: `Datos inválidos: ${errorMessage}` });
         }        
-        console.error(err);
         res.status(500).json({ message: 'Ha ocurrido un error inesperado, prueba con otros datos.' });
     }
 };
@@ -118,7 +114,6 @@ export const getUserById = async (req, res) => {
         // Responder con la información del usuario
         res.json(user);
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Ha ocurrido un error inesperado, prueba con otros datos.' });
     }
 };

@@ -39,15 +39,15 @@
   .cart-button {
     align-items: center;
     background: #09f;
-    border-radius: 9999px;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     height: 32px;
     justify-content: center;
     padding: 4px;
-    transition: all .3s ease;
+    transition: all .5s ease;
     width: 93px;
-    z-index: 100;
+    z-index: 1;
   }
   
   .cart-button:hover {
@@ -64,3 +64,4 @@
   #your-cart{
     color: white;
   }
+

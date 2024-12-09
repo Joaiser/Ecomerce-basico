@@ -94,7 +94,6 @@ router.post('/admins/register', registerAdmin);
 router.post('/admins/login', loginAdmin);
 router.post('/admins/logout', logout);
 router.get('/admin/dashboard', authenticateAccessToken, authorizeAdmin, (req, res) => {
-  console.log('[AdminRoute] Admin access granted:', req.admin.username);
   res.send('Ruta protegida para administradores');
 });
 
