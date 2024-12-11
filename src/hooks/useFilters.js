@@ -1,25 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { FilterContext } from '../context/filters';
 
-export function useFilters(filter) {
-    const initialProduct = {
-        "id": 1,
-        "nombre_producto": "Intel Pentium N4020",
-        "imagen_producto": "/static/img/imgpc/1710-alurin-go-start-intel-pentium-n4020-8gb-256gb-ssd-156-comprar.webp",
-        "descripcion": "Procesador económico Intel Pentium N4020, ideal para tareas básicas y navegación web.",
-        "precio": "100.00",
-        "categoria": "Ordenadores"
-    };
-
-    const [products, setProducts] = useState([initialProduct]);
-    const [recommendedProducts, setRecommendedProducts] = useState([]);
-    const [allProducts, setAllProducts] = useState([]);
+export function useFilters() {
+    const { filters } = useContext(FilterContext);  // Aquí tomamos los filtros del contexto
+    const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {   
+    useEffect(() => {
         setIsLoading(true);
         setError(null);
-    
+
         fetch('http://localhost:3000/todosproductos')
             .then((res) => {
                 if (res.ok) {
@@ -38,16 +29,13 @@ export function useFilters(filter) {
             });
     }, []);
 
-    let filteredProducts = [...products, ...recommendedProducts, ...allProducts];
-    if (filter) {
-      filteredProducts = filteredProducts.filter(product => {
+    // Ahora usamos los filtros del contexto para filtrar los productos
+    const filteredProducts = products.filter(product => {
         return (
-          product.precio >= filter.minprice &&
-          (filter.category === 'all' || 
-          product.categoria === filter.category)
-        )
-      });
-    }
+            product.precio >= filters.minprice &&
+            (filters.category === 'all' || product.categoria === filters.category)
+        );
+    });
 
     return { filteredProducts, isLoading, error };
 }

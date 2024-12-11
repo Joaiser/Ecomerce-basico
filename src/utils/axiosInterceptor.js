@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { storeAccessToken } from './authUtils.js';
+import { storeAccessToken, getAccessToken } from './authUtils.js';
 
 // Crea una instancia de Axios
 const axiosInstance = axios.create({
@@ -33,8 +33,15 @@ axiosInstance.interceptors.response.use(
                 // Reintenta la solicitud original
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
+                // Si la renovación del token falla, redirige al usuario a la página de inicio de sesión
+                window.location.href = '/login';
                 return Promise.reject(refreshError);
             }
+        }
+
+        // Si no hay token de acceso, redirige al usuario a la página de inicio de sesión
+        if (!getAccessToken()) {
+            window.location.href = '/login';
         }
 
         return Promise.reject(error); // Devuelve otros errores sin modificar
